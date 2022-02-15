@@ -1,0 +1,121 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.statistics-block {
+  @include border-radius(5px);
+  @include size(calc((100% / 3) - 30px), 125px);
+  background: $sidebar-footser;
+
+  &__title {
+    padding: 30px;
+
+    h4 {
+      @extend %proxima-semibold;
+      @include font-size($fz-25 + 1px);
+      margin: 0 0 15px;
+      line-height: 1;
+    }
+
+    p {
+      color: $text-color;
+    }
+  }
+
+  &__icon {
+    @include size(125px);
+    @include font-size($fz-60);
+    padding: 20px 15px;
+      i {
+        @include font-size(inherit);
+      }
+  }
+
+  &.blue {
+    @include hover-focus-active {
+      .statistics-block__icon {
+        @include transition(.3s);
+        background: $darker-blue;
+      }
+    }
+
+    .statistics-block__title {
+      color: $blue;
+    }
+
+    .statistics-block__icon {
+      @include transition(.3s);
+      background: $blue;
+    }
+  }
+
+  &.orange {
+    @include hover-focus-active {
+      .statistics-block__icon {
+        @include transition(.3s);
+        background: $darker-orange;
+      }
+    }
+
+    .statistics-block__title {
+      color: $dark-orange;
+    }
+
+    .statistics-block__icon {
+      @include transition(.3s);
+      background: $dark-orange;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .statistics-block {
+    @include size(calc((100% / 3) - 25px), 90px);
+
+    &__title {
+      padding: 20px;
+
+      h4 {
+        @include font-size($fz-20);
+        margin: 0 0 10px;
+      }
+
+      p {
+        @include font-size($fz-14);
+      }
+    }
+
+    &__icon {
+      @include size(80px,90px);
+      @include font-size($fz-36);
+      padding: 10px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .statistics-block {
+    @include size(100%, 60px);
+    margin-bottom: 15px;
+
+    &__title {
+      padding: 20px;
+
+      h4 {
+        @include font-size($fz-18);
+        margin: 0 0 10px;
+      }
+
+      p {
+        @include font-size($fz-12);
+      }
+    }
+
+    &__icon {
+      @include size(60px);
+      @include font-size($fz-30);
+      padding: 10px;
+    }
+  }
+}
+
+

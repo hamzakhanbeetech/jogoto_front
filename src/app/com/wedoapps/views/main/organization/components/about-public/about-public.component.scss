@@ -1,0 +1,188 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+@include category-icon;
+
+//hours dropdown
+.hours-dropdown {
+  margin-bottom: 10px;
+  &__btn {
+    color: $dark-gray;
+    span{
+      @include font-size(inherit);
+    }
+    &::after{
+      display: none;
+    }
+    &__clock {
+      margin-right: 9px;
+      margin-top: 1px;
+    }
+    &__arrow {
+      margin-left: 43px;
+    }
+    &__status {
+      color: $blue;
+      margin-top: 6px;
+    }
+  }
+  .dropdown-menu {
+    @include border-radius(5px);
+    box-shadow: 0 0 10px $border-color;
+    padding: 15px 18px;
+    width: 370px;
+    top: -20px !important;
+    table {
+      @extend %proxima-regular;
+      color: $dark-gray;
+      tr {
+        td {
+          padding: 15px 0;
+        }
+        &.active {
+          color: $blue
+        }
+      }
+    }
+  }
+}
+
+//hours-dropdown end
+
+
+:host::ng-deep {
+  app-page-about {
+    app-map-image {
+      width: auto !important;
+      margin-left: 20px;
+      a {
+        width: 415px;
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.page-intro {
+  @extend %proxima-regular;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  color: $dark-gray;
+  padding: 18px 0 0;
+  margin-bottom: 20px;
+  &__type {
+    @include font-size(inherit);
+    margin-bottom: 14px;
+    i {
+      &::before {
+        margin: 0 9px 0 0;
+      }
+    }
+  }
+  &__description {
+    margin-bottom: 18px;
+    padding-left: 30px;
+  }
+}
+.about-categories{
+  padding-left: 30px;
+}
+@include media-breakpoint-down(lg) {
+  //hours dropdown
+  .hours-dropdown {
+    margin-bottom: 10px;
+    &__btn {
+      @include font-size($fz-14);
+      &__arrow {
+        margin-left: 27px;
+      }
+    }
+    .dropdown-menu {
+      width: 325px;
+      top: -18px !important;
+      table {
+        @include font-size($fz-14);
+      }
+    }
+  }
+  //hours-dropdown end
+ :host::ng-deep {
+    app-page-about {
+      app-map-image {
+        a {
+          width: 370px;
+        }
+      }
+    }
+  }
+  .page-intro {
+    @include font-size($fz-14);
+    &__description {
+      margin-bottom: 16px;
+      padding-left: 25px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  ::ng-deep {
+    app-page-about {
+      app-map-image {
+        a {
+          max-width: 290px;
+        }
+      }
+    }
+  }
+  .page-intro {
+    @include font-size($fz-12);
+    &__description {
+      margin-bottom: 12px;
+    }
+    &__type{
+      margin-bottom: 8px;
+    }
+  }
+  //hours dropdown
+  .hours-dropdown {
+    margin-bottom: 10px;
+    &__btn {
+      @include font-size($fz-12);
+      &__arrow {
+        margin-left: 27px;
+      }
+     &__clock {
+        margin-right: 7px;
+      }
+    }
+    .dropdown-menu {
+      width: 300px;
+      top: -16px !important;
+      table {
+        @include font-size($fz-12);
+        tr{
+          td{
+            padding: 10px 0;
+          }
+        }
+      }
+    }
+  }
+  //hours-dropdown end
+}
+
+@include media-breakpoint-down(xs) {
+  :host::ng-deep {
+    app-page-about {
+      app-map-image {
+        width: 100% !important;
+        margin-left: 0;
+        a {
+          width: 100%;
+          min-width: 100%;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}

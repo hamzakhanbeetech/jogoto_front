@@ -1,0 +1,182 @@
+@import '../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.home__subtitle {
+  background-size: cover;
+  background: rgba(0,0,0,0);
+  margin-top: 64px;
+}
+
+.home {
+  @include size(100%, auto);
+  min-height: calc(100vh - 70px);
+  background: url("../../../../../../assets/images/home/home-main.jpg") no-repeat;
+  background-size: cover;
+
+
+  &__filter {
+    background: $black-transparent;
+    padding: 50px;
+    height: inherit;
+    min-height: inherit;
+
+    &__title {
+      @extend %display-bold;
+      @include font-size($fz-60);
+      margin: 0 0 15px;
+      line-height: 1;
+    }
+
+    &__location {
+      @include font-size($fz-24);
+      margin-top: 8px;
+      margin-bottom: 8px;
+      &__btn{
+        background:transparent;
+        @include font-size(inherit);
+        color: inherit;
+        &:focus{
+          outline: none;
+        }
+      }
+      >span{
+        @include font-size(inherit);
+      }
+      .ok-btn{
+        @include font-size($fz-14);
+        margin-left: 10px;
+      }
+      .autocomplete{
+        margin-left: 15px;
+        app-mat-autocomplete{
+          ::ng-deep{
+            .location {
+              .input-container input{
+                background: transparent;
+                color: $white;
+              }
+              .x::before{
+                color: $white;
+              }
+              .suggestions-container{
+                text-align: left;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.home__search {
+  &__fiter{
+    width:calc(100% / 3 - 20px);
+  };
+  @include search-filter;
+}
+
+@include media-breakpoint-down(lg) {
+  .home {
+    &__filter {
+      padding: 50px 15px;
+
+      &__title {
+        @include font-size($fz-52);
+        margin-bottom: 10px;
+      }
+
+      &__location {
+        @include font-size($fz-24);
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .home {
+    &__filter {
+      padding: 50px 15px;
+
+      &__title {
+        @include font-size($fz-52);
+        margin-bottom: 10px;
+      }
+
+      &__location {
+        @include font-size($fz-24);
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+  .home {
+    &__subtitle {
+      @include font-size($fz-12);
+      margin-top: 32px;
+    }
+
+    &__filter {
+      &__title {
+        @include font-size($fz-24);
+      }
+
+      &__location {
+        @include font-size($fz-12);
+        margin-bottom: 30px;
+        >span,.ok-btn{
+          height: 30px;
+        }
+        .ok-btn{
+          @include font-size($fz-12);
+          padding: 3px 15px !important;
+        }
+        app-mat-autocomplete{
+          ::ng-deep{
+            .autocomplete-container,.location .input-container input{
+              height: 30px;
+            }
+            .location .input-container input{
+              //padding: 3px 34px 3px 5px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .ok-btn{
+    @include font-size($fz-12);
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .home {
+    @include size(100%, 45vh);
+    min-height: 230px;
+    margin-bottom: 80px;
+    &__filter {
+      padding: 34px 15px;
+      height: inherit;
+      &__location{
+        flex-direction: column;
+        .autocomplete{
+          margin-top: 15px;
+          margin-left: 0;
+        }
+      }
+    }
+
+    &__search {
+      background: $white;
+      width: 290px;
+
+      &__btn-group {
+        margin-top: 0;
+      }
+    }
+  }
+}

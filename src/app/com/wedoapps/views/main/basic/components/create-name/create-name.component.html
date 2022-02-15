@@ -1,0 +1,20 @@
+<div>
+    <p class="input__title">{{'create-event.title' | translate}}</p>
+    <p class="input__desc mb-0">{{description | translate}}</p>
+</div>
+<div class="form-group">
+    <input (blur)="eventForMarkingTouched.emit()" maxlength="60" [ngClass]="{'error':hasError}" [formControl]="control" type="text" id="title" class="form-control shadow-none" [placeholder]="'create-event.clear_title' | translate">
+    <ul class="list-unstyled d-flex justify-content-end characters">
+        <li *ngIf="hasError && control.touched &&  control.invalid" class="mr-auto">
+            <p class="m-0 position-absolute text-danger">{{"create-event.name_error" | translate}}</p>
+        </li>
+      <li *ngIf="hasError && control.touched && isEventCreate && !control.invalid" class="mr-auto">
+        <p class="m-0 position-absolute text-danger">{{'create-event.name_length_error'| translate}}</p>
+      </li>
+        <li *ngIf="serverErr" class="mr-auto">
+            <p class="m-0 position-absolute text-danger">{{serverErr}}</p>
+        </li>
+        <li class="after">{{control.value ? control.value.length : '0'}}</li>
+        <li>60</li>
+    </ul>
+</div>

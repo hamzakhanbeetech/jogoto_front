@@ -1,0 +1,57 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+  <h3 class="mb-0 header__title" mat-dialog-title>{{users.length}} {{"event.users_modal_title" | translate}}</h3>
+  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+<div mat-dialog-content class="user-modal">
+  <form action="" class="col-12">
+    <div class="form-group position-relative">
+      <input type="search" class="form-control shadow-none" [placeholder]="'event.enter_user' | translate"
+              [formControl] = "searchUser">
+      <button type="button" class="bg-transparent border-0 position-absolute user-modal__search "><i class="icon-search"></i></button>
+    </div>
+  </form>
+
+  <section *ngIf="!noUser;else noResult">
+    <ul class="list-unstyled col-12 date-time">
+      <li class="d-flex justify-content-between align-items-center user-modal__user" *ngFor="let user of loadUsers">
+        <div class="d-flex align-items-center">
+          <a target="_blank" [routerLink]="[(user.register_type === 'individual' ? '/user/' + user._id : '/organization/' + user._id)|localize]"
+             class="d-block rounded-circle overflow-hidden user-modal__user__image float-left text-decoration-none">
+            <img [src]="user.poster.min" class="w-100 h-100" [alt]="user.name + ' ' + user.surname">
+          </a>
+          <a  target="_blank"   [routerLink]="[(user.register_type === 'individual' ? '/user/' + user._id : '/organization/' + user._id)|localize]" class="user-modal__user__title text-decoration-none">
+            {{user.name}} {{user.surname}}
+          </a>
+        </div>
+        <button class="user-modal__user__follow border-0 text-white mb-0"
+                *ngIf="user._id !== userId"
+                (click)="followUnfollow(this.user)">
+          <span *ngIf="user.im_follow;else follow">{{"event.unfollow" | translate}}</span>
+          <ng-template #follow>
+            <span>{{"event.follow" | translate}}</span>
+          </ng-template>
+        </button>
+      </li>
+    </ul>
+    <div class="form-group mb-0 position-relative col-12" *ngIf="users.length>6">
+      <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+      <!--[ngClass]="'disabled'"-->
+      <button class="user-modal__see-more w-100  d-flex
+    justify-content-center" *ngIf="load;else seeLess" (click)="seeMoreUsers()">
+        <span>{{'see_more' | translate}} </span>
+      </button>
+      <ng-template #seeLess>
+        <button class="user-modal__see-more w-100  d-flex
+    justify-content-center" (click)="seeLessUsers()">
+          <span>{{'see_less' | translate}} </span>
+        </button>
+      </ng-template>
+      <!--<p class="user-modal__error position-absolute">This is an error message from server</p>-->
+    </div>
+  </section>
+  <ng-template #noResult>
+    <app-no-result class="d-block"></app-no-result>
+  </ng-template>
+</div>

@@ -1,0 +1,36 @@
+<section class="sidebar d-flex align-items-center justify-content-between">
+  <p class="sidebar__title m-0">{{"calendar-page.calendar_filters" | translate}}</p>
+  <button type="button" (click)="resetFilterData()" class="sidebar__reset border-0 bg-transparent">{{"calendar-page.reset" | translate}}</button>
+</section>
+<ngb-accordion #acc="ngbAccordion" class="sidebar d-none d-sm-block">
+  <ngb-panel id="toggle-1" [title]="'calendar-page.location' | translate">
+    <ng-template ngbPanelContent>
+      <app-event-filter-where-content [saveState]="saveState"></app-event-filter-where-content>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel id="toggle-2" [title]="'filter.categories' | translate">
+    <ng-template ngbPanelContent>
+      <app-event-filter-categories-content [saveState]="true"></app-event-filter-categories-content>
+    </ng-template>
+  </ngb-panel>
+<!--  <ngb-panel id="toggle-3" [title]="'event.event_filters' | translate">-->
+<!--    <ng-template ngbPanelContent>-->
+<!--      <app-event-filter-content [saveState]="true"></app-event-filter-content>-->
+<!--    </ng-template>-->
+<!--  </ngb-panel>-->
+</ngb-accordion>
+<div class="d-sm-none">
+  <button mat-button (click)="openDialog('dropdownWhere',title.dropdownWhere)"  type="button" class="filter-btn bg-white d-block w-100 text-left position-relative">
+    {{'calendar-page.location' | translate}}
+  </button>
+  <button mat-button (click)="openDialog('dropdownCats',title.dropdownCats)"  type="button" class="filter-btn bg-white d-block w-100 text-left position-relative">
+    {{'filter.category' | translate}}</button>
+
+<!--  <button mat-button (click)="openDialog('dropdownFilter',title.dropdownFilter)"  type="button"  class="filter-btn bg-white d-block w-100 text-left position-relative">-->
+<!--    {{'event.event_filters' | translate}}</button>-->
+</div>
+
+<footer class="text-right">
+  <button type="reset" (click)="resetFilterData()" class="sidebar__reset border-0 bg-transparent">{{"calendar-page.reset" | translate}}</button>
+</footer>
+

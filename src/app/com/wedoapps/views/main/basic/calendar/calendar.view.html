@@ -1,0 +1,51 @@
+<main class="container-fluid calendar">
+
+  <ng-template #calendarDropdown></ng-template>
+
+  <section class="container">
+    <div class="row">
+      <app-sidebar [saveState]="true" (resetData)="resetFilterData()" class="d-block"></app-sidebar>
+      <section class="calendar__tabs position-relative">
+        <button (click)="exportCalendar($event)" class="calendar__tabs__export position-absolute text-white border-0"
+                type="button">
+          {{"calendar-page.export" | translate}}
+        </button>
+        <tabset class="position-relative">
+          <tab [heading]="'calendar-page.month' | translate" id="month">
+            <full-calendar #calendarMonth
+                           (eventClick)="calendarEventClick($event, calendarSelectors.month)"
+                           defaultView="dayGridMonth"
+                           [firstDay]="1"
+                           [plugins]="calendarPlugins"
+                           [eventTextColor]="fullCalendarOptions.color"
+                           [eventTimeFormat]="fullCalendarOptions.timeFormat"
+                           [weekends]="true"
+                           [events]="events"
+                           [locales]="locals"
+                           [locale]="local"
+                           (datesRender)="btnListener('monthCalendarComponent')"
+            ></full-calendar>
+          </tab>
+          <tab [heading]="'calendar-page.week' | translate" id="week">
+            <full-calendar [eventTimeFormat]="fullCalendarOptions.timeFormat"
+                           [firstDay]="1"
+                           [eventTextColor]="fullCalendarOptions.color" (eventClick)="calendarEventClick($event, calendarSelectors.week)"
+                           id="weekCalendar"
+                           #calendarWeek
+                           (datesRender)="btnListener('weekCalendarComponent')"
+                           defaultView="timeGridWeek" [plugins]="calendarPluginsWeek" [events]="events"
+                           [weekends]="true"></full-calendar>
+          </tab>
+          <tab [heading]="'calendar-page.day' | translate" id="day">
+            <full-calendar [eventTimeFormat]="fullCalendarOptions.timeFormat"
+                           [firstDay]="1"
+                           (datesRender)="btnListener('dayCalendarComponent')"
+                           [eventTextColor]="fullCalendarOptions.color" (eventClick)="calendarEventClick($event, calendarSelectors.day)" #calendarDay
+                           defaultView="timeGridDay" [plugins]="calendarPluginsWeek" [events]="events"
+                           [weekends]="true"></full-calendar>
+          </tab>
+        </tabset>
+      </section>
+    </div>
+  </section>
+</main>

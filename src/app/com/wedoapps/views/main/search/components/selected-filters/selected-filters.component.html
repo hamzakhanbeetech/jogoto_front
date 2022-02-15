@@ -1,0 +1,43 @@
+<section class="container-fluid selected-filter">
+  <section class="container p-0">
+    <button class="border-0 bg-transparent see-more mb-3"
+            (click)="onClickClearAll()">{{'filter.remove_all' | translate}}</button>
+    <!--TODO if filter-name category add category color else default after close remove this butten and reset this fild in filter section-->
+    <div class="col-11 pl-0">
+      <button type="button" class="selected-filter__btn d-inline-block text-truncate overflow-hidden position-relative"
+              [style.borderColor]="selectedCategory.styleData.color"
+              [ngStyle]="{'color': selectedCategory.styleData.color}"
+              *ngFor="let selectedCategory of selectedCategories;let ind=index"
+              (click)="openFilter.emit('dropdownCats')">
+            <span>{{selectedCategory?.name}}</span>
+        <i class="icon-close close-icon position-absolute" (click)="onClickRemoveCategory(ind, $event)"></i>
+      </button>
+      <button type="button" class="selected-filter__btn d-inline-block text-truncate overflow-hidden position-relative"
+              *ngFor="let selectedFilter of selectedFilters?.filters;let ind=index"
+              (click)="openFilter.emit('dropdownFilter')">
+        <span >{{selectedFilter}}</span>
+        <i class="icon-close close-icon position-absolute" (click)="onClickRemoveFilter(ind, $event)"></i>
+      </button>
+      <button type="button" class="selected-filter__btn d-inline-block text-truncate overflow-hidden position-relative"
+              (click)="openFilter.emit('dropdownWhen')"
+              *ngIf="selectedFilters?.startDate || selectedFilters?.endDate">
+        <span>{{selectedFilters?.startDate | date:'dd-MM-yyyy'}} - {{selectedFilters?.endDate | date:'dd-MM-yyyy'}}</span>
+        <i class="icon-close close-icon position-absolute" *ngIf="showDateCrossBtn" (click)="onClickRemoveDates($event)"></i>
+      </button>
+      <button type="button" class="selected-filter__btn d-inline-block text-truncate overflow-hidden position-relative"
+              (click)="openFilter.emit('dropdownWhere')"
+              *ngIf="selectedFilters?.autocomplete">
+        <span>{{selectedFilters?.autocomplete}}</span>
+        <i class="icon-close close-icon position-absolute" (click)="onClickRemoveAutocomplete($event)"></i>
+      </button>
+      <button type="button" class="selected-filter__btn d-inline-block text-truncate overflow-hidden position-relative"
+              (click)="openFilter.emit('dropdownWhere')"
+              *ngIf="selectedFilters?.distance">
+        <span> {{"filter.radius" | translate}} - {{selectedFilters?.distance}}</span>
+        <i class="icon-close close-icon position-absolute" *ngIf="showDistanceCrossBtn"
+           (click)="onClickRemoveDistance()"></i>
+      </button>
+
+    </div>
+  </section>
+</section>

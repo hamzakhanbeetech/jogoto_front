@@ -1,0 +1,186 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+@include modals-header;
+
+app-share-on-group-modal {
+  display: block;
+
+  .form-control {
+    @include login-input;
+    padding: 14px 20px 14px 50px;
+  }
+}
+
+
+.share-group-modal {
+  //min-height: 250px;
+
+  &__search {
+    color: $blue;
+    top: 50%;
+    transform: translate(10px, -50%);
+  }
+
+  &__group {
+    margin-bottom: 15px;
+
+    &__image {
+      @include border-radius(3px);
+      @include size(60px);
+      img{
+        @include object-fit
+      }
+    }
+
+    &__share {
+      @include size(auto, 30px !important);
+      @include login-btn;
+      padding: 0 16px;
+    }
+
+    &__join {
+      @include size(135px, 30px !important);
+      @include gray-btn-icon;
+    }
+
+    &__title {
+      @include font-size($fz-16);
+      line-height: 1;
+      color: $text-color;
+      @include hover-focus-active {
+        color: $text-color;
+      }
+    }
+
+    &__type {
+      color: $lighter-gray;
+      margin: 5px 0 10px;
+    }
+
+    &__members, &__type, &__join, &__share {
+      @include font-size($fz-14);
+      line-height: 1;
+    }
+
+    &__members {
+      @include members-list;
+    }
+
+    &__info {
+      line-height: 0;
+      margin-left: 10px;
+    }
+  }
+
+  &__see-more {
+    @include login-btn;
+    background: $sidebar-footser;
+    border: 1px solid $border-color;
+    color: $dark-gray;
+    margin-bottom: 12px;
+    @include hover-focus-active {
+      background: $sidebar-footser !important;
+    }
+
+    .spinner-border {
+      border: 2px solid $dark-gray;
+      border-right-color: transparent;
+    }
+  }
+
+  &__error {
+    @include error;
+  }
+
+  &_description {
+    @include font-size($fz-14);
+    color: $text-color;
+    margin-bottom: 20px;
+  }
+}
+
+//no search result block
+.no-search-result {
+  color: $text-color;
+  padding: 60px;
+  min-height: 210px;
+  &__icon {
+    @include font-size($fz-52);
+    margin-right: 20px;
+    line-height: 1;
+  }
+}
+
+//no search result block end
+
+@include media-breakpoint-down(sm) {
+  .no-search-result {
+    &__description {
+      @include font-size($fz-12);
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  app-share-on-group-modal {
+    .form-control {
+      padding: 14px 20px 14px 50px;
+    }
+  }
+  .share-group-modal {
+    &__group {
+      &__image {
+        @include border-radius(3px);
+        @include size(56px);
+      }
+
+      &__title, &__share {
+        @include font-size($fz-14)
+      }
+
+      &__members, &__type {
+        @include font-size($fz-12);
+      }
+
+      &__join, &__share {
+        height: 28px;
+      }
+    }
+
+    &__see-more {
+      padding: 5px;
+    }
+
+    &_description {
+      @include font-size($fz-12);
+    }
+  }
+  //no search result
+  .no-search-result {
+    &__description {
+      @include font-size($fz-14);
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .header {
+    padding-top: 0;
+  }
+  .share-group-modal__group {
+    &__title, &__share, &__join {
+      @include font-size($fz-12)
+    }
+
+    &__members, &__type {
+      @include font-size($fz-10);
+      line-height: 1;
+    }
+  }
+}
+
+.search-results {
+  overflow: auto;
+  max-height: 380px;
+}

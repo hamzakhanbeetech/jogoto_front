@@ -1,0 +1,37 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../../assets/scss/base/mixins';
+
+.social-icons {
+  display: inline-grid;
+  &__items {
+    @extend %proxima-semibold;
+    @include size(100%, 40px);
+    @include font-size($fz-16);
+    @include border-radius(5px);
+    background: $more-gray;
+    border: 1px solid $more-gray;
+    color: $text-color;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+
+    img {
+      height: 20px;
+      margin-right: 21px;
+    }
+  }
+}
+#appleid-signin{
+  background-color: transparent ;
+  img{
+    height: 25px !important;
+  }
+}
+
+.overlapping-layer{
+  width: 247px;
+  height: 50px;
+  z-index: 999;
+  position:absolute;
+  background-color:transparent
+}

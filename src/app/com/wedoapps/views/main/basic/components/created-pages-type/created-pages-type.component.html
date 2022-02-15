@@ -1,0 +1,15 @@
+<h3 class="status">
+    {{title}}
+</h3>
+<div class="radio-container d-flex flex-wrap justify-content-between overflow-hidden">
+    <div (click)="value.emit(type.value)" class="position-relative radio-container__item" *ngFor="let type of checkType">
+        <input type="radio" [id]="type.value" name="event-type" [checked]="type.value == checked" [value]="type.value" class="w-100 h-100 position-absolute invisible">
+        <label [for]="type.value" class="w-100 h-100 mb-0 d-flex">
+            <i [ngClass]="type.icon"></i>
+            <div>
+                <p class="create__container__title">{{type?.title}}</p>
+                <p class="create__container__desc mb-0">{{type?.description}}</p>
+            </div>
+        </label>
+    </div>
+</div>

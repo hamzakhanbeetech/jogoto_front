@@ -1,0 +1,50 @@
+<app-home-filter-section></app-home-filter-section>
+<!--incoming events page-->
+<app-incoming-events class="d-block"></app-incoming-events>
+<!--incoming events page end-->
+
+<!--Statistics block show onlini professional users-->
+<section class="container-fluid" *ngIf="isAuthorized && userType==='professional'">
+  <section class="container">
+    <div class="row">
+      <app-block-title-see-more class="w-100 without-see-more" [title]="'statistic.statistics' | translate">
+      </app-block-title-see-more>
+      <app-statistics class="w-100"></app-statistics>
+    </div>
+  </section>
+</section>
+<!--Statistics block end-->
+
+<!--events block-->
+<section class="container-fluid">
+    <section class="container">
+        <div class="row">
+            <app-block-title-see-more class="w-100 without-see-more"
+                                      [title]=" 'home.'+ eventTitle | translate"
+                                      [link]="'search'"
+                                      [queryParams]="{'type':'event','lat':_lat,'lon':_lon,'distance':50}">
+            </app-block-title-see-more>
+            <div class="position-relative main-section w-100">
+                <app-loading  *ngIf="!eventsNearYou"
+                    class="main-section__loading pt-5 d-flex justify-content-center position-absolute w-100 h-100 bg-white"></app-loading>
+                <div class="d-flex flex-wrap events-near" *ngIf="eventsNearYou">
+                    <app-event-column *ngFor="let nearEvent of eventsNearYou" [eventItem]="nearEvent"
+                        [isShowUserIcons]="false" [isShowDescription]="false" [userIsLoggedIn]="isAuthorized">
+                    </app-event-column>
+                </div>
+              <span class="d-flex justify-content-center" *ngIf="eventsNearYou">
+                    <a [routerLink]="'search'|localize"
+                       [queryParams]="{'type':'event', 'autocomplete':place, 'lat':_lat,'lon':_lon, 'distance':50}"
+                       class="see-more-btn text-white text-center mx-auto text-decoration-none">{{'home.see_events' | translate}}</a>
+              </span>
+            </div>
+        </div>
+  </section>
+</section>
+<!--events block end-->
+
+<!--footer block-->
+<app-onboarding-footer></app-onboarding-footer>
+
+<!--error success messages block-->
+<app-allert-message></app-allert-message>

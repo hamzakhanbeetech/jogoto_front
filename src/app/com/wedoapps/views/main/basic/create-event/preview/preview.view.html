@@ -1,0 +1,140 @@
+<main class="container-fluid event">
+  <section class="container">
+    <section class="row d-flex">
+      <section class="event__left overflow-hidden">
+        <section class="bg-white event__container overflow-hidden">
+          <figure class="event__container__image position-relative d-flex align-items-center justify-content-center">
+            <app-event-date [eventDate]="comeData" [locale]="locale" *ngIf="incomingDate"></app-event-date>
+            <img [src]="event?.poster.cropped.link" class="w-100 h-100" [alt]="event?.name" *ngIf="event"/>
+            <figcaption class="position-absolute event__container__names w-100">
+
+              <span
+                class="text-center position-relative event__container__image__category"
+                *ngFor="let category of event?.category"
+                [ngStyle]="{'background':category.styleData.color,'borderColor':category.styleData.color}">
+                {{category.name}}
+              </span>
+            </figcaption>
+          </figure>
+          <div class="d-flex col justify-content-between align-items-start">
+            <div>
+              <h3 class="event__container__title w-100 text-break">{{event?.name}}</h3>
+              <p *ngIf="incomingDate" class="event__container__start-end">
+                <span>{{incomingDate.start | date:' EEE, d MMM, yyyy':undefined:locale|titlecase  }}
+                  <span *ngIf="!event.dateHidden">{{incomingDate.start | date:'HH:mm'}}</span> </span>
+                <span> <span *ngIf="!event.dateHidden"> - </span> {{incomingDate.end | date:' EEE, d MMM, yyyy':undefined:locale|titlecase  }} <span *ngIf="!event.dateHidden">{{incomingDate.end | date:'HH:mm'}}</span></span>
+              </p>
+              <p class="event__container__type w-100 text-capitalize">
+                <ng-container *ngIf="event?.visibility == 'public'; else private">
+                  {{'create-event.public_event'|translate}}
+                </ng-container>
+                <ng-template #private>
+                  {{'create-event.private_event'|translate}}
+                </ng-template>
+              </p>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap" *ngIf="event?.organizer._id">
+            <div class="col-12 col-sm-6">
+              <div
+                class="d-block rounded-circle overflow-hidden event__container__creater-image float-left text-decoration-none">
+                <img [src]="event.organizer.image || event.organizer.poster.cropped.link" class="w-100 h-100" [alt]="event.organizer.name + ' ' + event.organizer.surname">
+              </div>
+              <div class="d-flex flex-column justify-content-between h-100">
+                <p class="event__container__type mb-0">{{"created_by" | translate}}</p>
+                <p class="event__container__creater-name mb-0 text-decoration-none">
+                  {{event.organizer.name}} {{event.organizer.surname}}</p>
+              </div>
+            </div>
+          </div>
+          <app-event-sidebar class="d-xl-none" [eventData]="event"
+                             *ngIf="event && showMobile"
+                             [isPreview]="true"
+                             (sortedEventDate)="getSortedDateLength($event)"
+          ></app-event-sidebar>
+          <section class="event__container__section">
+            <p class="event__container__type">{{"event.event_filters" | translate}}</p>
+            <div class="d-flex flex-wrap align-items-start" *ngIf="event?.filters[0]">
+              <p class="event__container__section__filter border-0 text-truncate" *ngFor="let filter of event?.filters">
+                {{filter}}
+              </p>
+            </div>
+          </section>
+          <section class="event__container__section">
+            <p class="event__container__type">{{'create-event.description_title'|translate}}</p>
+            <div class="position-relative description">
+              <p class="opacity text-break" *ngIf="!showMoreLessDesc && description?.length>800 ;else fullText"
+                 [innerHtml]="shortText"></p>
+              <ng-template #fullText>
+                <p [innerHtml]="description" class="text-break">
+                </p>
+              </ng-template>
+              <button class="border-0 bg-transparent see-more" *ngIf="description?.length>800"
+                      (click)="showMoreLessDescription()" type="button">
+                <span *ngIf="!showMoreLessDesc;else fullDescription">
+                  {{"show_more" | translate}}
+                </span>
+                <ng-template #fullDescription>
+                  <span>
+                    {{"show_less" | translate}}
+                  </span>
+                </ng-template>
+              </button>
+            </div>
+            <div class="event__container__section row" *ngIf="event?.organizer.register_type == 'professional' && event?.organizer?.facebookAutoShare">
+              <p class="event__container__type w-100">{{'create-event.social_networks'|translate}}</p>
+              <ul class="list-unstyled social-networks">
+                <li class="social-networks__item" *ngIf="event?.organizer?.facebookAutoShare">
+                  <app-checkbox
+                          (chackboxValue)="checkShareCheckbox($event, 'fb')"
+                          [value]="shareCheckBoxes.fb"
+                          class="check-all mb-0"
+                          [filterName]="'create-event.share_facebook' | translate">
+                  </app-checkbox>
+                </li>
+                <!--<li class="social-networks__item">-->
+                  <!--<app-checkbox class="check-all mb-0" [filterName]="'create-event.share_instagram' | translate">-->
+                  <!--</app-checkbox>-->
+                <!--</li>-->
+                <li class="social-networks__item" *ngIf="event?.organizer?.linkedinAutoShare">
+                  <app-checkbox class="check-all mb-0"
+                                (chackboxValue)="checkShareCheckbox($event, 'linkedIn')"
+                                [value]="shareCheckBoxes.linkedIn"
+                                [filterName]="'create-event.share_linkedin' | translate">
+                  </app-checkbox>
+                </li>
+                <li class="social-networks__item" *ngIf="event?.organizer?.twitterAutoShare">
+                  <app-checkbox class="check-all mb-0"
+                                (chackboxValue)="checkShareCheckbox($event, 'tw')"
+                                [value]="shareCheckBoxes.tw"
+                                [filterName]="'create-event.thare_twitter' | translate">
+                  </app-checkbox>
+                </li>
+              </ul>
+            </div>
+            <div class="d-flex justify-content-end" *ngIf="!event?.archive">
+              <button (click)="RedirectEditPage(event?._id)" class="event__container__edit text-capitalize"
+                      type="button">
+                <i class="icon-edit"></i>
+                {{"login.edit" | translate}}</button>
+              <button class="event__container__publish text-white text-capitalize mb-0 d-flex align-items-center justify-content-center" type="button"
+                      (click)="publishEvent(event?._id)">{{"login.publish" | translate}}
+                <span class="spinner-border" role="status" *ngIf="loading">
+                    <span class="sr-only">Loading...</span>
+                </span>
+              </button>
+            </div>
+          </section>
+        </section>
+      </section>
+      <app-event-sidebar class="d-xl-block"
+                         [eventData]="event"
+                         [locale]="locale"
+                         [isPreview]="true"
+                         *ngIf="event && showDesctop"
+                         (sortedEventDate)="getSortedDateLength($event)"
+      ></app-event-sidebar>
+    </section>
+  </section>
+</main>
+<app-allert-message></app-allert-message>

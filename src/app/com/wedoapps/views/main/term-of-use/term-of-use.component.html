@@ -1,0 +1,173 @@
+<main>
+  <section class="container-fluid term-container">
+    <h1 class="text-white text-center container term-container__title">{{"term-of-use.title" | translate}}</h1>
+  </section>
+  <section class="container-fluid">
+    <div class="container p-sm-0">
+      <div class="d-flex justify-content-end align-items-center term">
+        <a [href]='pdfFile' class="bg-transparent border-0 term__download" download>
+          <i class="icon-download-arrow"></i>
+        </a>
+        <p class="term__version mb-0">{{"term-of-use.last_updated" | translate}}</p>
+      </div>
+      <p class="term-desc">{{"term-of-use.desc" | translate}}</p>
+    </div>
+  </section>
+  <section class="container p-sm-0">
+    <tabset class="term-tab">
+      <tab [heading]="'term-of-use.members' | translate">
+        <h3 class="terms-title">{{"term-of-use.table_contents" | translate}}</h3>
+        <ol class="terms-menu">
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="membersActivity"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.our_activity" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="membersFees"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.our_fees" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="membersCommitment"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.our_commitment" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="membersYourCommitment"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.your_commitment" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="membersOthers"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.others" | translate}}</a>
+          </li>
+        </ol>
+        <ol class="terms-description">
+          <li id="membersActivity">
+            <h3 class="terms-title text-uppercase">{{"term-of-use.our_activity" | translate}}</h3>
+            <p class="dear-partner">{{"term-of-use.members_tab.dear_member" | translate}}</p>
+            <p>{{"term-of-use.members_tab.online_platform" | translate}}</p>
+            <p>{{"term-of-use.members_tab.terms_govern" | translate}}</p>
+            <p>{{"term-of-use.members_tab.charge" | translate}}</p>
+            <p>{{"term-of-use.members_tab.personal_data" | translate}}</p>
+            <p>{{"term-of-use.members_tab.know_more" | translate}}</p>
+          </li>
+          <li id="membersFees"><h3 class="terms-title text-uppercase">{{"term-of-use.our_fees" | translate}}</h3>
+            <p>{{"term-of-use.members_tab.instead_paying" | translate}}</p>
+            <p>{{"term-of-use.members_tab.since_protecting" | translate}}</p>
+            <p>{{"term-of-use.members_tab.since_mission" | translate}}</p>
+            <p>{{"term-of-use.members_tab.provide_organizers" | translate}}</p>
+            <p>{{"term-of-use.members_tab.learn_about" | translate}}
+              <a [routerLink]="'/privancy-policy/'|localize" class="text-decoration-none">{{"term-of-use.members_tab.privacy_notice" | translate}}</a>
+            </p>
+          </li>
+          <li id="membersCommitment"><h3
+            class="terms-title text-uppercase">{{"term-of-use.our_commitment" | translate}}</h3>
+            <p>{{"term-of-use.members_tab.give_access" | translate}}</p>
+            <p>{{"term-of-use.members_tab.make_platform" | translate}}</p>
+            <p>{{"term-of-use.members_tab.liable" | translate}}</p>
+          </li>
+          <li id="membersYourCommitment"><h3
+            class="terms-title text-uppercase">{{"term-of-use.your_commitment" | translate}}</h3>
+            <p>{{"term-of-use.members_tab.thank_you" | translate}}</p>
+            <p>{{"term-of-use.members_tab.providing" | translate}}</p>
+            <p>{{"term-of-use.members_tab.find_events" | translate}}</p>
+            <p>{{"term-of-use.members_tab.accept_following" | translate}}</p>
+            <ul class="accept-list list-unstyled">
+              <li class="position-relative">{{"term-of-use.members_tab.create_events" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.members_tab.collect_data" | translate}}</li>
+              <li class="position-relative" [innerHtml]="'term-of-use.members_tab.create_groups' | translate"></li>
+              <li class="position-relative">{{"term-of-use.members_tab.activities" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.members_tab.not_upload" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.members_tab.not_use" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.members_tab.accept" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.members_tab.copyrights" | translate}}</li>
+            </ul>
+          </li>
+          <li id="membersOthers"><h3 class="terms-title text-uppercase">{{"term-of-use.others" | translate}}</h3>
+            <p>
+              <span>{{"term-of-use.members_tab.updating_terms" | translate}}</span>
+              {{"term-of-use.members_tab.constantly_work" | translate}}</p>
+            <p>
+              <span>{{"term-of-use.members_tab.liability" | translate}}</span>
+              {{"term-of-use.members_tab.held_liable" | translate}}</p>
+            <p>
+              <span>{{"term-of-use.members_tab.disputes" | translate}}</span>
+              {{"term-of-use.members_tab.avoid_dispute" | translate}}</p>
+            <p>
+              <span>{{"term-of-use.members_tab.transfer_rights" | translate}}</span>
+              {{"term-of-use.members_tab.transfer_obligations" | translate}}</p>
+          </li>
+        </ol>
+      </tab>
+      <tab [heading]="'term-of-use.organizers' | translate">
+        <h3 class="terms-title text-uppercase">{{"term-of-use.table_contents" | translate}}</h3>
+        <ol class="terms-menu">
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="organizersActivity"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.our_activity" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="organizersFees"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.our_fees" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="organizersCommitment"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.our_commitment" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="organizersYourCommitment"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.your_commitment" | translate}}</a>
+          </li>
+          <li class="terms-menu__item"><a [routerLink]="'/term-of-use/'|localize" fragment="organizersOthers"
+                                          class="terms-menu__item__link text-decoration-none text-uppercase">{{"term-of-use.others" | translate}}</a>
+          </li>
+        </ol>
+        <ol class="terms-description">
+          <li id="organizersActivity">
+            <h3 class="terms-title text-uppercase">{{"term-of-use.our_activity" | translate}}</h3>
+            <p class="dear-partner">{{"term-of-use.organizers_tab.dear_partner" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.online_platform" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.terms_govern" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.charge" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.personal_data" | translate}}</p>
+          </li>
+          <li name="organizersFees"><h3 class="terms-title text-uppercase">{{"term-of-use.our_fees" | translate}}</h3>
+            <p>{{"term-of-use.organizers_tab.platform_covered" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.marketing" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.use_services" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.accept" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.promotion" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.enough_members" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.declines" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.protecting" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.provide_organizers" | translate}}</p>
+          </li>
+          <li id="organizersCommitment"><h3
+            class="terms-title text-uppercase">{{"term-of-use.our_commitment" | translate}}</h3>
+            <p>{{"term-of-use.organizers_tab.platform" | translate}}</p>
+            <p>{{"term-of-use.organizers_tab.since_organizer" | translate}}</p>
+          </li>
+          <li id="organizersYourCommitment"><h3
+            class="terms-title text-uppercase">{{"term-of-use.your_commitment" | translate}}</h3>
+            <ul class="accept-list list-unstyled ml-0">
+              <li class="position-relative">{{"term-of-use.organizers_tab.access_collect" | translate}}</li>
+              <li class="position-relative" [innerHtml]="'term-of-use.organizers_tab.create_groups' | translate"></li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.activities" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.not_upload" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.not_use" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.accept_internally" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.copyrights" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.agree_ensure" | translate}}</li>
+              <li class="position-relative">{{"term-of-use.organizers_tab.give_right" | translate}}</li>
+            </ul>
+          </li>
+          <li id="organizersOthers">
+            <h3 class="terms-title text-uppercase">{{"term-of-use.others" | translate}}</h3>
+            <p>
+              <span>{{"term-of-use.members_tab.updating_terms" | translate}}</span>
+              {{"term-of-use.members_tab.constantly_work" | translate}}</p>
+            <p>
+              <span>{{"term-of-use.members_tab.liability" | translate}}</span>
+              {{"term-of-use.members_tab.held_liable" | translate}}</p>
+            <p>
+              <span>{{"term-of-use.members_tab.disputes" | translate}}</span>
+              {{"term-of-use.members_tab.avoid_dispute" | translate}}</p>
+            <p>
+              <span>{{"term-of-use.members_tab.transfer_rights" | translate}}</span>
+              {{"term-of-use.members_tab.transfer_obligations" | translate}}</p>
+          </li>
+        </ol>
+      </tab>
+    </tabset>
+  </section>
+</main>
+<app-onboarding-footer></app-onboarding-footer>

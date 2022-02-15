@@ -1,0 +1,465 @@
+*, body, html {
+  margin: 0;
+  padding: 0;
+  @extend %proxima-regular;
+}
+body, html{
+  font-size: $fz-16;
+}
+body {
+  top: 0 !important;
+}
+
+.shadow {
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.15) !important;
+}
+
+body .ui-datepicker table td > a.ui-state-active, body .ui-datepicker table td > span.ui-state-active {
+  background: $blue;
+  color: $white;
+}
+
+.cdk-global-scrollblock {
+  .cdk-overlay-container {
+    z-index: 10000;
+  }
+
+  .cdk-overlay-pane {
+    transform: translateX(0) translateY(0) !important;
+  }
+}
+
+.fc-day-grid-event .fc-content {
+  cursor: pointer;
+}
+
+input, button, select, a {
+  &:focus, &:hover, &:active {
+    outline: none !important;
+    transition: .3s;
+  }
+}
+
+input:read-only {
+  background: $gray;
+}
+
+.autocomplete-container {
+  box-shadow: none !important;
+  background: transparent;
+
+  .not-found {
+    position: relative;
+    z-index: 1;
+    color:$dark-gray
+  }
+}
+
+.check-all {
+  margin-bottom: 20px;
+
+  .container-checkbox {
+    input:checked ~ .text {
+      color: $blue;
+    }
+  }
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.t-0 {
+  top: 0
+}
+
+app-onboarding-header, app-header {
+  z-index: 8000;
+}
+
+main-view {
+  display: block;
+}
+
+.see-more {
+  @include font-size($fz-14);
+  color: $blue;
+}
+
+.map-info {
+  margin-bottom: 5px;
+  .info-block {
+    max-width: calc(100% - 128px);
+  }
+;
+  &:not(:last-child) {
+    padding-bottom: 5px;
+    border-bottom: 1px solid $lighter-gray;
+  }
+
+  &__image {
+    @include size(125px, 85px);
+    min-width: 125px;
+    max-width: 125px;
+    margin-right: 8px;
+
+    img {
+      @include object-fit
+    }
+  }
+
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-16);
+    @include hover-focus-active {
+      color: $event-title;
+    }
+    color: $event-title;
+    margin: 13px 0;
+  }
+
+  &__date {
+    @include font-size($fz-14);
+    color: $dark-orange
+  }
+}
+
+//radio buttons
+.mat-radio-label-content {
+  @extend %proxima-regular;
+  color: $text-color;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+.mat-radio-outer-circle {
+  border-color: $blue;
+  border-width: 1px !important;
+}
+
+.mat-radio-label {
+  margin-right: 50px;
+  margin-bottom: 0;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: $blue;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-inner-circle {
+  transform: scale(.7);
+}
+
+//radio buttons end
+.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option {
+  height: 28px !important;
+}
+
+body[data-gr-c-s-loaded="true"] .mat-select-panel:not([class*=mat-elevation-z]) {
+  padding: 15px 0;
+}
+
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background: $white;
+  color: $blue;
+
+  &::before {
+    background: $blue;
+    @include size(2px, 100%);
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.mat-slide-toggle .mat-slide-toggle-ripple {
+  display: none !important;
+}
+
+.upload-btn-wrapper {
+  .btn {
+    @include border-radius(5px);
+    @include font-size($fz-16);
+    border: 1px solid $white;
+    color: $white;
+    background-color: $black-upload;
+    padding: 13px 15px;
+    line-height: 1;
+    cursor: pointer;
+
+    i {
+      @include font-size($fz-20);
+      margin-right: 10px;
+    }
+  }
+
+  input[type=file] {
+    font-size: 0;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.reset-inputs {
+  color: $blue;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+
+.text-danger {
+  @include font-size($fz-12);
+  color: $error !important;
+  margin-top: 3px !important;
+}
+
+.mat-slide-toggle.mat-checked {
+  .mat-slide-toggle-bar {
+    background-color: $blue-transparent;
+    box-shadow: none !important;
+  }
+
+  .mat-slide-toggle-thumb {
+    background-color: $blue;
+  }
+
+  .mat-ripple-element {
+    background-color: $blue-transparent;
+  }
+}
+
+.search-user {
+  border-bottom: 1px solid $blue;
+  margin-bottom: 23px;
+  margin-top: 27px;
+
+  &__title {
+    @include font-size($fz-24);
+    font-weight: normal;
+    span {
+      @include font-size(inherit);
+      font-weight: normal;
+    }
+    max-width: 50%;
+    word-wrap: break-word;
+  }
+
+  &__input {
+    @include login-input;
+    padding: 14px 40px 14px 50px;
+    width: 420px;
+  }
+
+  &__reset {
+    right: 20px;
+  }
+
+  &__btn, &__reset {
+    color: $blue;
+    top: 50%;
+    transform: translate(10px, -50%);
+  }
+}
+
+.cropper {
+  outline: $black-shadow solid 100vw !important;
+}
+
+.edit-profile {
+  &__input, &__textarea, &__hours {
+    &__save, &__cancel, &__remove {
+      margin: 0 0 0 20px !important;
+    }
+
+    &__edit, &__save, &__cancel, &__remove, &__add {
+      @include font-size($fz-16);
+      color: $blue;
+
+    }
+
+    &__remove {
+      color: $error-alert;
+    }
+  }
+}
+
+//ok container and button for filters
+.dropdown-footer {
+  border-top: 1px solid $border-color;
+  margin: 20px 0 0;
+  padding-top: 20px;
+}
+
+.ok-btn {
+  @include blue-btn;
+  @include border-radius(5px !important);
+  padding: 10px 24px;
+}
+
+.goog-te-banner-frame {
+  display: none;
+}
+
+@include media-breakpoint-down(lg) {
+  .map-info {
+    &__title {
+      margin: 10px 0;
+      @include font-size($fz-14);
+    }
+
+    &__date {
+      @include font-size($fz-12);
+    }
+  }
+  .see-more {
+    @include font-size($fz-14);
+  }
+  .upload-btn-wrapper {
+    .btn {
+      @include font-size($fz-14);
+      padding: 12px 15px;
+
+      i {
+        @include font-size($fz-16);
+      }
+    }
+  }
+  .reset-inputs {
+    @include font-size($fz-14 !important);
+    right: 10px;
+  }
+  .search-user {
+    &__title {
+      @include font-size($fz-18);
+    }
+
+    &__input {
+      padding: 14px 40px 14px 50px;
+      width: 320px;
+    }
+  }
+  .edit-profile {
+    &__input, &__textarea, &__hours {
+      &__edit, &__save, &__cancel, &__remove, &__add {
+        @include font-size($fz-14)
+      }
+    }
+  }
+  //ok container and button for filters
+  .dropdown-footer {
+    margin: 15px 0 0;
+    padding-top: 15px;
+  }
+  .ok-btn {
+    @include font-size($fz-14);
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .upload-btn-wrapper {
+    .btn {
+      @include font-size($fz-12);
+      padding: 10px 8px;
+
+      i {
+        @include font-size($fz-14);
+      }
+    }
+  }
+  .text-danger {
+    @include font-size($fz-10);
+  }
+  .search-user {
+    margin-top: 22px;
+
+    &__title {
+      @include font-size($fz-14);
+      margin-bottom: 11px !important;
+      width: 100%;
+    }
+
+    form {
+      width: 100%;
+    }
+
+    &__input, .form-group {
+      width: 290px;
+    }
+
+    &__input {
+      padding: 14px 40px 14px 50px;
+    }
+  }
+  body .ui-datepicker table {
+    @include font-size($fz-12);
+  }
+  .edit-profile {
+    &__input, &__textarea, &__hours {
+      &__edit, &__save, &__cancel, &__remove, &__add {
+        @include font-size($fz-14)
+      }
+    }
+  }
+  //ok container and button for filters
+  .dropdown-footer {
+    margin: 25px 0 0;
+    padding-top: 15px;
+  }
+  .ok-btn {
+    @include font-size($fz-12);
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .search-user {
+    form {
+      .form-group {
+        width: inherit;
+      }
+    }
+
+    &__input {
+      padding: 14px 40px 14px 50px;
+      width: inherit;
+    }
+  }
+  .ok-btn {
+    width: 100%;
+  }
+}
+
+.pi {
+  @extend %fontello;
+  &.pi-chevron-up {
+    &::before {
+      content: '\e844';
+    }
+  }
+  &.pi-chevron-down {
+    &::before {
+      content: '\e800';
+    }
+  }
+  &.pi-chevron-right {
+    &::before {
+      content: '\e80e';
+    }
+  }
+  &.pi-chevron-left {
+    &::before {
+      content: '\e80f';
+    }
+  }
+}

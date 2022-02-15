@@ -1,0 +1,52 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+@include modals-header;
+
+app-give-feedback-modal {
+  display: block;
+}
+
+.feedback-modal {
+  &__send {
+    @include login-btn
+  }
+
+  &__subtitle {
+    color: $text-color;
+    margin-bottom: 15px;
+  }
+
+  &__btn {
+    @include filter-btn-gray;
+    margin-bottom: 10px;
+    max-width: 100%;
+    cursor: pointer;
+
+    &.active {
+      background: $blue;
+      color: $white
+    }
+    input {
+      -webkit-appearance: none;
+      opacity: 0;
+    }
+  }
+  &__error {
+    @include error
+  }
+  &__textarea {
+    @include login-input;
+    resize: none;
+    height: 100px !important;
+    @include hover-focus-active {
+
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+    .header {
+      padding-top: 0 !important;
+    }
+}

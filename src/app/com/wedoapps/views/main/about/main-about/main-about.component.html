@@ -1,0 +1,13 @@
+<main class="container-fluid about-page p-0">
+  <section class="about-page__bg">
+    <section class="container d-flex flex-column justify-content-center align-items-center">
+      <h1 class="text-white about-page__title text-center">{{"about-page.title" | translate}}</h1>
+      <div class="d-flex flex-column flex-sm-row about-page__links">
+        <a [routerLink]="'/about/individual'|localize"
+           class="text-white about-page__links__individual text-uppercase text-decoration-none text-center">{{"about-page.individual" | translate}}</a>
+        <a [routerLink]="'/about/organizer'|localize"
+           class="text-white about-page__links__organizer text-uppercase text-decoration-none text-center">{{"about-page.organizer" | translate}}</a>
+      </div>
+    </section>
+  </section>
+</main>

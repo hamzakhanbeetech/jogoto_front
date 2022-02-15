@@ -1,0 +1,216 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.tabs-block {
+  width: 725px;
+  ::ng-deep {
+    .ui-dropdown {
+      border: none !important;
+      min-width: 110px;
+      max-width: 120px;
+      label.ui-dropdown-label {
+        @include font-size($fz-16);
+        @extend %proxima-semibold;
+        color: $dark-gray;
+        padding: 0 32px 0 0;
+      }
+      .pi-chevron-down:before {
+        @extend %fontello;
+        content: '\e800';
+        color: $dark-gray
+      }
+      .ui-dropdown-panel {
+        border: none;
+        padding: 15px 0;
+        .ui-dropdown-items {
+          @include font-size($fz-16);
+          @extend %proxima-regular;
+          border: none;
+          .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover,
+          .ui-dropdown-item-group:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+            @include dropdown-list-hover;
+            position: relative;
+          }
+          .ui-dropdown-item.ui-state-highlight,
+          .ui-dropdown-item-group.ui-state-highlight {
+            @include dropdown-list-hover;
+            background: $white;
+            color: $blue;
+            position: relative;
+            &::before {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+app-loading {
+  margin: 27px;
+}
+
+app-event-row {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.events-filter {
+  right: 0;
+  top: -5px;
+  z-index: 10;
+}
+
+:host::ng-deep {
+  @include tabs;
+  .nav-tabs {
+    border: none;
+    margin-bottom: 32px;
+    line-height: 1;
+    margin-top: 10px;
+    .nav-item {
+      margin-right: 25px;
+      .nav-link {
+        @include font-size($fz-18);
+        @extend %proxima-semibold;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .tabs-block {
+    width: 100%;
+  }
+
+  :host::ng-deep {
+    .nav-tabs .nav-item .nav-link {
+      @include font-size($fz-14);
+    }
+    app-event-row{
+      .event{
+        &__close {
+          position: absolute;
+          right: 30px;
+          top: 30px;
+          &__btn {
+            background: rgba(0, 0, 0, .5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
+  ::ng-deep {
+    body .ui-dropdown {
+      min-width: 100px;
+      max-width: 100px;
+      @include font-size($fz-12);
+      label.ui-dropdown-label {
+        @include font-size($fz-14);
+      }
+      .ui-dropdown-panel {
+        .ui-dropdown-items {
+          @include font-size($fz-14);
+        }
+      }
+    }
+  }
+  app-event-row {
+    width: calc(100% / 2 - 8px);
+    &:nth-child(2n + 1) {
+      margin-right: 16px;
+    }
+    ::ng-deep {
+      .event {
+        .d-flex.flex-column.flex-sm-row {
+          flex-wrap: wrap !important;
+        }
+
+        &__image {
+          @include size(100%, 260px);
+          margin-bottom: 16px;
+        }
+        &-data__title {
+          margin: 13px 0 8px;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  :host::ng-deep {
+    .nav-tabs .nav-item {
+      margin-right: 10px;
+      .nav-link {
+        @include font-size($fz-12);
+      }
+    }
+    .tab-content {
+      margin-top: 46px;
+    }
+  }
+  ::ng-deep {
+    body .ui-dropdown {
+      @include font-size($fz-10);
+      min-width: 80px;
+      max-width: 80px;
+      label.ui-dropdown-label {
+        @include font-size($fz-12);
+      }
+      .ui-dropdown-panel {
+        .ui-dropdown-items {
+          @include font-size($fz-12);
+        }
+      }
+    }
+  }
+  app-event-row {
+    width: 100%;
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+    :host::ng-deep {
+      .event {
+        .d-flex.flex-column.flex-sm-row {
+          flex-direction: row !important;
+        }
+
+        &__image {
+          @include size(200px, 166px);
+          margin-bottom: 0;
+        }
+        &-data__title {
+          margin: 13px 0 8px;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .events-filter {
+    top: 20px;
+  }
+  app-event-row {
+    width: 100%;
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+    :host::ng-deep {
+      .event {
+        .d-flex.flex-column.flex-sm-row {
+          flex-direction: column !important;
+        }
+
+        &__image {
+          @include size(100%, 190px);
+        }
+      }
+    }
+  }
+}

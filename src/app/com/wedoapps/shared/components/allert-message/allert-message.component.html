@@ -1,0 +1,11 @@
+<div *ngIf="display" class="alert message-block
+ alert-dismissible border-0 d-inline-flex align-items-center justify-content-between position-fixed"
+     [ngClass]="{'text-white success-message': (successOrNot.type == 'success'), 'error-message text-white': (successOrNot.type == 'error'), 'cookies-message': (successOrNot.type == 'cookies')}">
+    <p class="mb-0">
+        {{successOrNot.messageText|translate}}
+        <a [routerLink]="'/privancy-policy/'|localize" (click)="clickToClose()" *ngIf="successOrNot.type == 'cookies'">cookies</a>
+    </p>
+    <button type="button" class="close position-static p-0" data-dismiss="alert">
+        <i class="icon-close" (click)="clickToClose()"></i>
+    </button>
+</div>

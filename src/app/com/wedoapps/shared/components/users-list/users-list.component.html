@@ -1,0 +1,50 @@
+<section class="w-100 user d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center">
+    <a routerLink="{{navRout|localize}}"
+       [attr.href]="page ? null : '#'"
+       class="user__image d-block overflow-hidden rounded-circle text-decoration-none">
+      <img [src]="user?.poster?.min" class="w-100 h-100" [alt]="user?.name + ' ' + user?.surname">
+    </a>
+    <div class="use__info d-flex flex-column justify-content-center">
+      <a routerLink="{{navRout|localize}}"
+         [attr.href]="page ? null : '#'"
+         class="user__info__name text-decoration-none">{{user?.name}} {{user?.surname}}</a>
+      <p class="user__info__position text-truncate" *ngIf="user.admin || user.moderator || isCreator">
+        <span *ngIf="isCreator">{{"creator_admin" | translate}}</span>
+        <span *ngIf="user.admin">{{"admin" | translate}}</span>
+        <span *ngIf="user.moderator">{{"moderator" | translate}}</span>
+      </p>
+    </div>
+  </div>
+
+  <!--TODO hide all block if the role admin creater-->
+  <div class="d-flex" *ngIf="!page">
+    <button type="button" class="follow-user border-0 text-white d-none d-sm-block" (click)="followUser(user._id)" *ngIf="user._id !==_user_id && !user.im_follow">{{"event.follow" | translate}}</button>
+    <div class="btn-group" dropdown *ngIf="permition && !isCreator && !(_user_id == user._id)">
+      <button id="user" dropdownToggle type="button"
+              class="user__settings dropdown-toggle" aria-controls="dropdown-basic">
+        <i class="icon-more"></i>
+      </button>
+      <ul id="user" *dropdownMenu class="dropdown-menu user__settings__dropdown border-0 shadow"
+          role="menu" aria-labelledby="button-basic">
+        <li role="menuitem" *ngIf="permitionToMakeAdmin">
+          <button type="button" class="dropdown-item position-relative" (click)="makeAdmin(user._id)">{{"group.make_administration" | translate}}</button>
+        </li>
+        <li role="menuitem" *ngIf="permitionToMakeModerator" >
+          <button type="button"
+            class="dropdown-item position-relative" (click)="makeModerator(user._id)">{{"group.make_moderator" | translate}}</button>
+        </li>
+        <li role="menuitem" *ngIf="permitionToMakeMember">
+          <button type="button" class="dropdown-item position-relative" (click)="makeMember(user._id)">{{"group.make_member" | translate}}</button>
+        </li>
+        <li role="menuitem" *ngIf="permitionToRemoveMember">
+          <button type="button" class="dropdown-item position-relative" (click)="removeMember(user._id)">{{"group.remove_from_group" | translate}}</button>
+        </li>
+        <li role="menuitem" class="d-sm-none" *ngIf="user._id !==_user_id && !user.im_follow">
+          <button type="button"  class="dropdown-item position-relative" (click)="followUser(user._id)">{{"event.follow" | translate}}</button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>

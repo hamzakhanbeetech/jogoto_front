@@ -1,0 +1,91 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+.create__container {
+    @include create-title-desc
+}
+
+.status {
+    @extend %proxima-semibold;
+    @include font-size($fz-18);
+    margin: 28px 0 16px;
+}
+
+.radio-container {
+    &__item {
+        @include border-radius(5px);
+        width: calc((100% / 2) - 10px);
+        border: 1px solid $gray-border;
+        label {
+            padding: 18px 15px;
+            background: $white;
+            cursor: pointer;
+            i {
+                @include font-size(20px);
+                color: $blue;
+                margin-right: 15px;
+                line-height: 1;
+                &:before {
+                    margin: 0;
+                }
+            }
+        }
+        input[type=radio]:checked~label {
+            background: #e6e6e6;
+        }
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .status {
+        @include font-size($fz-14);
+        margin: 28px 0 16px;
+    }
+    .radio-container {
+        &__item {
+            width: calc((100% / 2) - 10px);
+            label {
+                padding: 10px;
+                background: $white;
+                cursor: pointer;
+                i {
+                    @include font-size(18px);
+                    margin-right: 20px;
+                    &.icon-public-globe,
+                    &.icon-closed {
+                        @include font-size(26px);
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .status {
+        @include font-size($fz-14);
+        margin: 22px 0 6px;
+    }
+    .radio-container {
+        &__item {
+            label {
+                i {
+                    @include font-size(14px);
+                    &.icon-public-globe,
+                    &.icon-closed {
+                        @include font-size(22px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .radio-container__item {
+        width: 100%;
+        &:first-of-type {
+            margin-bottom: 10px;
+        }
+    }
+}

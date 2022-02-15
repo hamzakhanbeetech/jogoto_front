@@ -1,0 +1,55 @@
+<form class="login" (ngSubmit)="userLogin()" [formGroup]="loginForm">
+  <h3 class="login__title text-center">{{'login.login_title' | translate}}</h3>
+  <!--TODO add 'login__input-error' class if input isn't valid-->
+  <div class="form-group login__input position-relative" [ngClass]="{'login__input-error': isFormValid('email') }">
+    <input type="email" class="form-control shadow-none" formControlName="email"
+      [placeholder]="'login.email' | translate" />
+    <p class="mt-1 position-absolute"
+       *ngIf="isFormValid('email')  && loginForm.get('email').hasError('required')">
+      {{'registration.email_required' | translate}}
+    </p>
+    <p class="mt-1 position-absolute"
+       *ngIf="isFormValid('email') && loginForm.get('email').hasError('pattern')">
+      {{'login.email_err' | translate}}
+    </p>
+  </div>
+  <div class="form-group login__input position-relative"
+    [ngClass]="{'login__input-error':isFormValid('password') || loginForm.get('password').hasError('minlength') }">
+    <input type="password" class="form-control shadow-none" formControlName="password"
+      [placeholder]="'login.password' | translate" />
+    <p class="mt-1 position-absolute"
+      *ngIf="this.loginForm.get('password').touched && loginForm.get('password').hasError('required')">
+      {{'login.required_pass' | translate}}
+    </p>
+    <p class="mt-1 position-absolute" *ngIf="loginForm.get('password').hasError('minlength')">
+      {{'registration.invalid_pass' | translate}}
+    </p>
+  </div>
+  <div class="d-flex justify-content-between login__checkbox">
+    <app-checkbox class="d-block" formControlName="rememberMe" [filterName]="'login.remember' | translate">
+    </app-checkbox>
+    <a [routerLink]="'/auth/forgot'|localize" class="login__forgot text-decoration-none">{{'login.forgot' | translate}}</a>
+  </div>
+  <div class="form-group mb-0 position-relative">
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+    <button class="login__btn text-white text-uppercase w-100 border-0 d-flex
+    justify-content-center align-items-center" [ngClass]="{'disabled':loginForm.invalid || loading}"
+      [disabled]="loginForm.invalid || loading" type="submit">
+      <span>{{'login.login' | translate}} </span>
+      <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+      <span class="spinner-border" role="status" *ngIf="loading">
+        <span class="sr-only">Loading...</span>
+      </span></button>
+    <p class="error position-absolute" *ngIf="serverError && !loginForm.dirty">{{serverError}}</p>
+  </div>
+  <p class="login__alternative d-flex align-items-center justify-content-center">
+    <span>{{'or' | translate}}</span>
+  </p>
+  <app-social-login class="d-flex"></app-social-login>
+  <div class="login__singnup">
+    <p class="mb-0 text-center">
+      {{'registration.have_account' | translate}}
+      <a [routerLink]="'/auth/registration'|localize" class="login__singnup__link text-decoration-none">{{'login.sign_up' | translate}}</a></p>
+  </div>
+</form>
+<app-allert-message></app-allert-message>

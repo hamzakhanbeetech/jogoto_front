@@ -1,0 +1,262 @@
+<div class="tab-section position-relative">
+  <tabset #staticTabs>
+
+    <!--activites and events tab-->
+    <tab [heading]="'page.activity_events' | translate" id="activity" class="tab" (selectTab)="changeTab($event)">
+      <section class="d-flex  justify-content-between block-header align-items-center" *ngIf="!isFollowerPage">
+        <h2 class="block-header__title my-0">{{"statistic.statistics" | translate}}</h2>
+        <!--open when ready-->
+<!--        <a [routerLink]="null" class="block-header__link text-decoration-none">{{"statistic.see_more_tats" | translate}}<i-->
+<!--          class="icon-right-open-big"></i></a>-->
+        <span [routerLink]="null" class="block-header__link text-decoration-none">{{"statistic.see_more_tats" | translate}}<i
+          class="icon-right-open-big"></i></span>
+      </section>
+      <section class="d-flex justify-content-between flex-wrap" *ngIf="!isFollowerPage">
+        <div class="d-flex justify-content-between align-items-center
+  statistics-block blue shadow text-decoration-none overflow-hidden flex-row-reverse flex-md-column">
+          <div class="statistics-block__icon text-white d-flex align-items-center justify-content-center">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+              <i class="icon-statistics"></i>
+              <p class="mb-0 statistics-block__icon__text">
+                {{'statistic.statistics' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="statistics-block__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li><a href="javascript:void(0);"
+                     class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{"statistic.events" | translate}}</span> <span>{{organization?.events_count}}</span></a></li>
+              <li><a href="javascript:void(0);"
+                     class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{'groups' | translate}}</span> <span>{{organization?.my_groups_count}}</span></a></li>
+              <li><a href="javascript:void(0);"
+                     class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{'visitors' | translate}}</span> <span>{{organization?.visitors}}</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center
+  statistics-block blue shadow text-decoration-none overflow-hidden flex-row-reverse flex-md-column">
+          <div class="statistics-block__icon text-white d-flex align-items-center justify-content-center">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+              <i class="icon-calendar"></i>
+              <p class="mb-0 statistics-block__icon__text">
+                {{'statistic.events' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="statistics-block__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li><a [routerLink]="[('/basic/events/'+organization?._id || '')|localize] "
+                     [queryParams]="{type: 'created',filter: 'all'}"
+                     class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{"created" | translate}}</span> <span>{{organization?.created_events_count}}</span></a></li>
+              <li><a [routerLink]="[('/basic/events/'+organization?._id || '')|localize] "
+                     [queryParams]="{type:'created', filter: 'incoming'}"
+                     class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{'upcoming' | translate}}</span> <span>{{organization?.upcoming_events_count}}</span></a></li>
+              <li><a [routerLink]="[('/basic/events/'+organization?._id || '')|localize] "
+                     [queryParams]="{type:'created',filter: 'past'}"
+                     class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{'past' | translate}}</span> <span>{{organization?.past_events_count}}</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center
+  overflow-hidden statistics-block orange shadow text-decoration-none flex-row-reverse flex-md-column">
+          <div class="statistics-block__icon text-white d-flex align-items-center justify-content-center">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+              <i class="icon-group"></i>
+              <p class="mb-0 statistics-block__icon__text">
+                {{'groups' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="statistics-block__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li>
+                <a [routerLink]="[('/basic/groups/'+organization?._id || '')|localize]" [queryParams]="{type: 'manage'}"
+                   class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                  <span>{{"created" | translate}}</span>
+                  <span>{{organization?.my_groups_count}}</span>
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="[('/basic/groups/'+organization?._id || '')|localize]" [queryParams]="{type: 'in'}"
+                   class="statistics-block__items__item d-flex text-decoration-none justify-content-between">
+                  <span>{{'membership' | translate}}</span>
+                  <span>{{organization?.group_membership}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="d-flex justify-content-between flex-wrap" *ngIf="isFollowerPage">
+        <div class="d-flex justify-content-between align-items-center
+  statistics-organization blue shadow text-decoration-none overflow-hidden">
+          <div class="statistics-organization__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li>
+                <a [routerLink]="[('/basic/events/'+organization?._id || '')|localize] "
+                   [queryParams]="{type: 'created',filter:'all'}"
+                   class="statistics-organization__items__item d-flex text-decoration-none justify-content-between">
+                  <span>{{"created" | translate}}</span> <span>{{ organization?.created_events_count }}</span>
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="[('/basic/events/'+organization?._id || '')|localize] "
+                   [queryParams]="{type:'interested',filter: 'upcoming'}"
+                   class="statistics-organization__items__item d-flex text-decoration-none justify-content-between">
+                  <span>{{'upcoming' | translate}}</span> <span>{{ organization?.upcoming_events_count }}</span>
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="[('/basic/events/'+organization?._id || '')|localize] "
+                   [queryParams]="{type:'interested',filter: 'past'}"
+                   class="statistics-organization__items__item d-flex text-decoration-none justify-content-between">
+                  <span>{{'past' | translate}}</span> <span>{{ organization?.past_events_count }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="statistics-organization__icon text-white d-flex align-items-center justify-content-center">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+              <i class="icon-calendar"></i>
+              <p class="mb-0 statistics-organization__icon__text">
+                {{'statistic.events' | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <a [routerLink]="'/'|localize" class="d-flex justify-content-between align-items-center
+  overflow-hidden statistics-organization orange shadow text-decoration-none">
+          <div class="statistics-organization__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li><a [routerLink]="[('/basic/groups/'+ organization?._id || '')|localize]" [queryParams]="{type: 'manage'}"
+                     class="statistics-organization__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{"created" | translate}}</span> <span>{{ organization?.my_groups_count }}</span></a></li>
+              <li><a [routerLink]="[('/basic/groups/'+ organization?._id || '')|localize]" [queryParams]="{type: 'in'}"
+                     class="statistics-organization__items__item d-flex text-decoration-none justify-content-between">
+                <span>{{'membership' | translate}}</span> <span>{{ organization?.group_membership }}</span></a></li>
+            </ul>
+          </div>
+          <div class="statistics-organization__icon text-white d-flex align-items-center justify-content-center">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+              <i class="icon-group"></i>
+              <p class="mb-0 statistics-organization__icon__text">
+                {{'groups' | translate }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </section>
+
+      <ng-container *ngIf="isAuthorized">
+        <app-incoming-events></app-incoming-events>
+      </ng-container>
+
+      <ng-container *ngIf="createdEvents?.length">
+
+        <section class="d-flex  justify-content-between block-header align-items-center">
+          <h2 class="block-header__title my-0">{{"page.last_created_events" | translate}}</h2>
+        </section>
+
+        <section class="container row-container p-0" *ngIf="createdEvents?.length">
+          <div class="row position-relative main-section w-100 m-0">
+            <app-loading
+              class="main-section__loading pt-5 d-flex justify-content-center position-absolute w-100 h-100 bg-white"
+              *ngIf="isLoading"></app-loading>
+
+            <ng-container *ngIf="!isLoading">
+              <app-event-row *ngFor="let event of createdEvents" class="w-100 d-block created-events"
+                             (changeIncomingEvent)="changeIncomingEvent($event)"
+                             [incomingEvent]="event">
+              </app-event-row>
+            </ng-container>
+          </div>
+        </section>
+      </ng-container>
+    </tab>
+
+    <!--about tab-->
+    <tab [heading]="'page.about_us' | translate" id="about" (selectTab)="changeTab($event)">
+      <section class="d-flex  justify-content-between block-header align-items-center" *ngIf="!isBusiness">
+        <h2 class="block-header__title my-0">{{"page.public_info" | translate}}</h2>
+        <button
+          *ngIf="!isFollowerPage"
+          (click)="isPreview = !isPreview"
+          class="border-0 bg-transparent block-header__link text-decoration-none">
+          {{(isPreview ? "page.preview" : "page.edit") | translate}}
+        </button>
+        <!--TODO activate after click edit button-->
+        <!--<button class="border-0 bg-transparent block-header__link text-decoration-none">{{"page.preview" | translate}}</button>-->
+      </section>
+      <!--TODO activate after click edit button-->
+      <ng-container *ngIf="!isFollowerPage">
+        <app-about-page-edit [organization]="organization"
+                             (phonesData)="updatePhones($event)"
+                             (organData)="updateOrganizationInfo($event)"
+                             *ngIf="isPreview"></app-about-page-edit>
+      </ng-container>
+
+
+      <ng-template [ngIf]="!isPreview || isFollowerPage || isBusiness">
+        <!--public information-->
+        <app-about-public *ngIf="!isBusiness" [organization]="organization"></app-about-public>
+        <!--public information-->
+
+        <ng-container *ngIf="!isFollowerPage">
+          <section class="d-flex  justify-content-between block-header align-items-center" *ngIf="!isBusiness">
+            <h2 class="block-header__title my-0">{{"page.business_info" | translate}}</h2>
+            <button class="border-0 bg-transparent edit-profile__textarea__edit"
+                    (click)="isBusiness = !isBusiness"
+                    type="button">{{"page.edit" | translate}}
+            </button>
+          </section>
+          <section *ngIf="!isBusiness && isShowBusinessInfo">
+            <ul class="d-flex flex-wrap list-unstyled average">
+              <li *ngIf="organization?.employees" class="text-center"><p class="average__desc">
+                {{"user.numbers_employees" | translate}}</p>
+                <p class="average__number mb-0" [title]="organization?.employees">
+                  {{organization?.employees | largeNumbers}}
+                </p>
+              </li>
+              <li *ngIf="organization?.events_count_year" class="text-center">
+                <p class="average__desc">{{"user.average_events" | translate}}</p>
+                <p class="average__number mb-0" [title]="organization?.events_count_year">
+                  {{organization?.events_count_year | largeNumbers}}
+                </p>
+              </li>
+              <li *ngIf="organization?.attendees" class="text-center"><p class="average__desc">
+                {{"user.average_attendees" | translate}}</p>
+                <p class="average__number mb-0" [title]="organization?.attendees">
+                  {{organization?.attendees | largeNumbers}}
+                </p>
+              </li>
+              <li *ngIf="organization?.budget" class="text-center"><p class="average__desc">
+                {{"user.average_budget" | translate}}</p>
+                <p class="average__number mb-0" [title]="organization?.budget">
+                  $ {{organization?.budget | largeNumbers}}
+                </p>
+              </li>
+            </ul>
+          </section>
+        </ng-container>
+      </ng-template>
+      <!--show if the info block edited-->
+      <app-edit-business-info (businessData)="updateBusinessInfo($event)"
+                              (cancelEdit)="isBusiness = !isBusiness"
+                              *ngIf="isBusiness" [organization]="organization"></app-edit-business-info>
+    </tab>
+    <tab [heading]="'page.members' | translate" id="members" (selectTab)="changeTab($event)">
+      <app-organization-members (searchText)="searchModerators($event)"
+                                [moderators]="organization?.moderators"
+                                [followers]="organization?.followUsers"
+                                [searchResult]="data"
+                                [id]="organization?._id"></app-organization-members>
+    </tab>
+  </tabset>
+</div>

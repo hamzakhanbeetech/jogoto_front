@@ -1,0 +1,58 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.dropdown-footer {
+  margin-bottom: 20px;
+}
+
+.categories {
+  &__btn__filter {
+    @include filter-btn;
+  }
+
+  &__dropdown {
+    width: 760px;
+    padding: 20px 20px 0;
+    transform: translateX(-88.5%) !important;
+    left: 62% !important;
+    top: calc(100% + 10px) !important;
+
+    app-checkbox {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__btn {
+    @include border-radius(5px);
+    @include font-size($fz-14);
+    background: $gray;
+    color: $event-title;
+    padding: 5px 20px;
+    line-height: 1;
+    border: 1px solid;
+    margin: 0 20px 20px 0;
+    height: 44px;
+
+    i {
+      @include font-size($fz-30);
+      margin-right: 15px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .categories {
+    &__dropdown {
+      width: 680px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .categories {
+    &__dropdown {
+      width: 480px;
+      max-width: 480px;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<footer class="onboarding__footer container-fluid">
+  <div class="container px-0 d-flex justify-content-center  justify-content-md-between flex-wrap">
+    <ul class="d-flex justify-content-center list-unstyled order-md-2 onboarding__footer__social">
+      <li><a href="https://www.facebook.com/JogotoOfficial/" target="_blank" class="text-decoration-none fb"></a></li>
+      <li><a href="https://www.instagram.com/jogoto/" target="_blank" class="text-decoration-none instagram"></a></li>
+      <li><a href="https://www.linkedin.com/company/jogoto/about/" target="_blank" class="text-decoration-none in"></a></li>
+      <li><a href="https://twitter.com/jogoto5" target="_blank" class="text-decoration-none twitter"></a></li>
+    </ul>
+    <ul class="list-unstyled d-flex justify-content-center  footer-menu p-0 justify-content-md-end order-md-3">
+      <li class="footer-menu__item ml-0">
+        <a class="text-white" [routerLink]="'/privancy-policy'|localize">{{"settings.privacy_policy" | translate}}</a></li>
+      <li class="footer-menu__item">
+        <a [routerLink]="'/term-of-use'|localize" class="text-white">
+          {{"header.menu.terms_of_use" | translate}}
+        </a></li>
+    </ul>
+    <p class="mb-0 onboarding__footer__text p-0 order-md-1 text-center text-md-left order-md-1">© {{year}} Jogoto. All rights reserved</p>
+  </div>
+</footer>

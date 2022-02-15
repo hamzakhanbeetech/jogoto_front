@@ -1,0 +1,7 @@
+@import "../../../../../../assets/scss/base/variables";
+
+.search-loading{
+  color: $blue;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+}

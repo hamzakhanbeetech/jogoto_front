@@ -1,0 +1,72 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.about-individual {
+  @include about-pages;
+  &__hero {
+    background: url("../../../../../../../assets/images/about/aboutIndividual.jpg") no-repeat;
+  }
+  &__block {
+    &__item {
+      width: calc(100% / 3 - 18px);
+    }
+  }
+}
+
+.description {
+  margin: 45px auto;
+  &__about, &__why {
+    @include font-size($fz-26)
+  }
+  &__about {
+    max-width: 746px;
+  }
+  &__why {
+    @extend %proxima-semibold;
+    color: $blue;
+    margin: 35px 0;
+  }
+  &__desc {
+    @include font-size($fz-20);
+    margin-bottom: 35px;
+
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .description {
+    margin: 30px auto;
+    &__about, &__why {
+      @include font-size($fz-18)
+    }
+    &__about {
+      max-width: 516px;
+    }
+    &__why {
+      margin: 24px 0;
+    }
+    &__desc {
+      @include font-size($fz-16);
+      margin-bottom: 20px;
+
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .description {
+    margin: 22px auto;
+    &__about, &__why {
+      @include font-size($fz-14)
+    }
+    &__about {
+      max-width: 268px;
+    }
+    &__why {
+      margin: 18px 0;
+    }
+    &__desc {
+      @include font-size($fz-12);
+    }
+  }
+}

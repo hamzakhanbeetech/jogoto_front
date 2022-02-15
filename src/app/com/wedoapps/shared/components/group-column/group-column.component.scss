@@ -1,0 +1,101 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.group-column {
+    &__close {
+        @include size(40px);
+        background: rgba(0, 0, 0, .5);
+        border-radius: 50%;
+        right: 15px;
+        top: 15px;
+      }
+
+  &__image {
+    height: 160px;
+
+    img {
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-20);
+    margin: 0 0 10px;
+    color: $event-title;
+
+    &:hover {
+      color: $event-title;
+    }
+  }
+
+  &__description {
+    color: $dark-gray;
+    margin-bottom: 15px;
+  }
+
+  &__member {
+    @include members-list;
+  }
+
+  &__footer {
+    border-top: 1px solid $gray-border;
+    padding-top: 15px;
+
+    &__btn {
+      @extend %proxima-regular;
+      @include border-radius(5px);
+      line-height: 1;
+      background: $gray;
+      border: 1px solid $border-color;
+      padding: 10px 20px;
+
+      i {
+        color: $blue;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .group-column {
+    @include font-size($fz-14);
+    &__image {
+      height: 205px;
+    }
+
+    &__title {
+      @include font-size($fz-18);
+    }
+    &__footer {
+      padding-top: 15px;
+    }
+
+    .card-body {
+      padding: 20px 15px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .group-column {
+    @include font-size($fz-12);
+    &__image {
+      height: 175px;
+    }
+
+    &__title {
+      @include font-size($fz-16);
+    }
+
+    &__footer {
+      padding-top: 15px;
+    }
+
+    .card-body {
+      padding: 20px 15px;
+    }
+  }
+}

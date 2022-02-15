@@ -1,0 +1,49 @@
+<article *ngIf="!isFollowerPage">
+  <h4 class="title" *ngIf="user?.pages && user.pages.length > 0">{{"pages" | translate}}</h4>
+  <ul class="pages list-unstyled p-0 overflow-auto">
+    <li class="pages__item" *ngFor="let page of user?.pages">
+      <a [routerLink]="['/organization/'+ page._id|localize]" class="d-flex text-decoration-none align-items-center">
+        <figure class="pages__item__image border-0 overflow-hidden rounded-circle my-0">
+          <img [src]="page.poster.min" class="w-100 h-100" [alt]="page.name + ' ' + page.surname">
+        </figure>
+        <div>
+          <p class="text-truncate pages__item__name mb-1">{{ page.name }}</p>
+          <p class="text-truncate pages__item__company m-0">{{ page.professional_category }}</p>
+        </div>
+      </a>
+    </li>
+  </ul>
+</article>
+<section class="w-100">
+  <div ngbDropdown class="btn-group categories w-100 d-none d-sm-block"
+       *ngIf="!isFollowerPage || (isFollowerPage && user?.categories.length > 0)"
+       (openChange)="openChanged($event)">
+    <button class="bg-transparent border-0 w-100 d-flex justify-content-between title" type="button"
+            id="dropdownBasic1" ngbDropdownToggle [disabled]="isFollowerPage">
+      {{'interests' | translate}} <i class="icon-edit" *ngIf="!isFollowerPage"></i>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu categories__dropdown shadow">
+      <app-event-filter-categories-content class="d-block" [isUserPage]="true" [isClosed]="data"></app-event-filter-categories-content>
+      <div class="text-right w-100 dropdown-footer">
+        <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto" ngbDropdownItem (click)="isOK = true">Ok
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="btn-group categories w-100 d-block d-sm-none" *ngIf="!isFollowerPage || (isFollowerPage && user?.categories.length > 0)">
+    <button mat-button (click)="openDialog('dropdownCats',categories)" type="button"
+            [disabled]="isFollowerPage"
+            class="bg-transparent border-0 w-100 d-flex justify-content-between title">
+      {{'interests' | translate}} <i class="icon-edit" *ngIf="!isFollowerPage"></i>
+    </button>
+  </div>
+  <div>
+    <div class="categories__item d-inline-flex align-items-center justify-content-center"
+         *ngFor="let category of user?.categories"
+         [ngStyle]="{'border-color': category.styleData.color}">
+      <i [ngClass]="category.styleData.icon"
+         [ngStyle]="{'color': category.styleData.color}"></i>
+      {{ category.name }}
+    </div>
+  </div>
+</section>

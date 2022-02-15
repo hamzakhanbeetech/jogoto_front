@@ -1,0 +1,571 @@
+<main
+  itemscope
+  itemtype="http://schema.org/Event"
+  class="container-fluid event"
+  *ngIf="eventData ; else notAvailable"
+>
+  <section class="container">
+    <section class="row d-flex">
+      <section class="event__left overflow-hidden">
+        <section class="bg-white event__container overflow-hidden">
+          <figure
+            class="
+              event__container__image
+              position-relative
+              d-flex
+              align-items-center
+              justify-content-center
+            "
+          >
+            <app-event-date
+              *ngIf="incomingDate"
+              [locale]="locale"
+              [eventDate]="comeData"
+            ></app-event-date>
+            <img
+              itemprop="image"
+              [src]="eventData.poster.cropped.link"
+              (error)="onImageError()"
+              [hidden]="eventLoaded"
+              [alt]="eventData.name"
+              class="w-100 h-100"
+              alt=""
+              (load)="onEventLoadend()"
+            />
+            <app-loading
+              class="
+                w-100
+                h-100
+                d-flex
+                justify-content-center
+                align-items-center
+              "
+              *ngIf="eventLoaded"
+            ></app-loading>
+            <figcaption class="position-absolute event__container__names w-100">
+              <input
+                class="
+                  text-center
+                  position-relative
+                  event__container__image__category
+                "
+                type="submit"
+                *ngFor="let category of eventData.category"
+                (click)="getACategory(category._id)"
+                value="{{category.name}}"
+                [ngStyle]="{'background':category.styleData.color,'borderColor':category.styleData.color}"
+              />
+            </figcaption>
+          </figure>
+          <div class="col-12 d-xl-none">
+            <!--<a href=""-->
+            <!--class="promote-event d-flex text-white text-decoration-none align-items-center justify-content-center">-->
+            <!--<i class="icon-promotion"></i>-->
+            <!--{{'event.promote_this_event' | translate}}-->
+            <!--</a>-->
+          </div>
+          <div class="d-flex col justify-content-between align-items-start">
+            <div>
+              <h1
+                itemprop="name"
+                class="event__container__title w-100 text-break"
+              >
+                {{eventData.name}}
+              </h1>
+              <p
+                *ngIf="incomingDate && !isSameDay && !archiveEvent"
+                class="event__container__start-end"
+              >
+                <meta itemprop="startDate" content="{{incomingDate?.start}}" />
+                <span
+                  >{{incomingDate?.start | date:'EEE, d MMM,
+                  yyyy':undefined:locale|titlecase }}
+                  <span *ngIf="!eventData.startTimeHidden">
+                    {{incomingDate?.start | date:'HH:mm'}}</span
+                  >
+                </span>
+                <span *ngIf="!!incomingDate.end">
+                  <meta itemprop="endDate" content="{{incomingDate.end}}" />
+                  <span *ngIf="!eventData.endDateAndTimeHidden">
+                    - {{incomingDate.end | date:' EEE, d MMM,
+                    yyyy':undefined:locale|titlecase}}</span
+                  >
+                  <span
+                    *ngIf="!eventData.endDateAndTimeHidden && !eventData.endTimeHidden"
+                  >
+                    {{incomingDate.end | date:'HH:mm'}}</span
+                  ></span
+                >
+              </p>
+              <p
+                *ngIf="incomingDate && isSameDay && !archiveEvent"
+                class="event__container__start-end"
+              >
+                <span
+                  >{{incomingDate?.start | date:'EEE, d MMM,
+                  yyyy':undefined:locale|titlecase }}
+                  <span *ngIf="!eventData.startTimeHidden"
+                    >{{incomingDate?.start | date:'HH:mm'}}</span
+                  >
+                </span>
+                <span
+                  *ngIf="!!incomingDate.end && !eventData.endDateAndTimeHidden && !eventData.endTimeHidden"
+                >
+                  - {{incomingDate.end | date:'HH:mm'}}</span
+                >
+              </p>
+
+              <p class="event__container__type w-100 text-capitalize">
+                <ng-container
+                  *ngIf="eventData.visibility == 'public'; else private"
+                >
+                  {{'create-event.public_event'|translate}}
+                </ng-container>
+                <ng-template #private>
+                  {{'create-event.private_event'|translate}}
+                </ng-template>
+              </p>
+            </div>
+            <div
+              class="btn-group"
+              dropdown
+              *ngIf="eventData.organizer._id != userId && !eventData.im_organaizer && !archiveEvent"
+            >
+              <button
+                id="button-basic"
+                dropdownToggle
+                type="button"
+                class="event__container__settings border-0 dropdown-toggle"
+                aria-controls="dropdown-basic"
+              >
+                <i class="icon-more"></i>
+              </button>
+              <ul
+                id="dropdown-basic"
+                *dropdownMenu
+                class="dropdown-menu event__container__dropdown border-0 shadow"
+                role="menu"
+                aria-labelledby="button-basic"
+              >
+                <li role="menuitem">
+                  <button
+                    class="dropdown-item position-relative"
+                    *ngIf="whenInterestedOrNot"
+                    (click)="openNotificationSettingsModal()"
+                  >
+                    {{"event.notification_settings" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    (click)="openShareToGroupModal()"
+                    class="dropdown-item position-relative"
+                  >
+                    {{"event.share_to_group" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    *ngIf="!eventInFavoritesOrNot"
+                    class="dropdown-item position-relative"
+                    (click)="addEventToFavorites()"
+                  >
+                    {{"event.add_to_favorites" | translate}}
+                  </button>
+                  <button
+                    *ngIf="eventInFavoritesOrNot"
+                    class="dropdown-item position-relative"
+                    (click)="removeEventFromFavorites()"
+                  >
+                    {{"event.remove_from_favorites" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    class="dropdown-item position-relative"
+                    (click)="openReportEventModal()"
+                  >
+                    {{"event.report_event" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    class="dropdown-item position-relative"
+                    (click)="openBlockEventModal()"
+                  >
+                    {{"event.block" | translate}}
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="btn-group"
+              dropdown
+              *ngIf="(eventData.organizer._id == userId || eventData.im_organaizer ) && isAuthorized && !archiveEvent"
+            >
+              <button
+                id="button-basic"
+                dropdownToggle
+                type="button"
+                class="event__container__settings border-0 dropdown-toggle"
+                aria-controls="dropdown-basic"
+              >
+                <i class="icon-more"></i>
+              </button>
+              <ul
+                id="dropdown-basic"
+                *dropdownMenu
+                class="dropdown-menu event__container__dropdown border-0 shadow"
+                role="menu"
+                aria-labelledby="button-basic"
+              >
+                <li role="menuitem">
+                  <button
+                    [routerLink]="'/basic/create-event'|localize"
+                    [queryParams]="{event_id:eventData._id}"
+                    class="dropdown-item position-relative"
+                  >
+                    {{"event.edit_event" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    (click)="openDeleteEventModal()"
+                    class="dropdown-item position-relative"
+                  >
+                    {{"event.remove_event" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    [routerLink]="'/basic/create-event'|localize"
+                    [queryParams]="{event_id:eventData._id, new_event:true}"
+                    class="dropdown-item position-relative"
+                  >
+                    {{"event.duplicate_event" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    (click)="openShareToGroupModal()"
+                    class="dropdown-item position-relative"
+                  >
+                    {{"event.share_to_group" | translate}}
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    (click)="openNotificationSettingsModal()"
+                    class="dropdown-item position-relative"
+                  >
+                    {{"event.notification_settings" | translate}}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap">
+            <div
+              class="col-12 col-sm-6"
+              *ngIf="eventData.organizer && eventData.organizer._id"
+              itemprop="author"
+            >
+              <a
+                itemprop="url"
+                [routerLink]="[eventData.create_type==='user'?eventData.organizer.register_type === 'individual' ? '/user/' + eventData.organizer._id : '/organization/' + eventData.organizer._id:'/group/' + eventData.organizer._id ]|localize"
+                class="
+                  d-block
+                  rounded-circle
+                  overflow-hidden
+                  event__container__creater-image
+                  float-left
+                  text-decoration-none
+                "
+              >
+                <img
+                  [src]="eventData.organizer.poster.min"
+                  class="w-100 h-100"
+                  [alt]="eventData.organizer.name + ' ' + eventData.organizer.surname"
+                />
+              </a>
+              <div class="d-flex flex-column justify-content-between h-100">
+                <p class="event__container__type mb-0">
+                  {{"created_by" | translate}}
+                </p>
+                <a
+                  [routerLink]="[eventData.create_type==='user'?eventData.organizer.register_type === 'individual' ? '/user/' + eventData.organizer._id : '/organization/' + eventData.organizer._id:'/group/' + eventData.organizer._id ]|localize"
+                  class="
+                    event__container__creater-name
+                    mb-0
+                    text-decoration-none
+                  "
+                  >{{eventData.organizer.name}}
+                  {{eventData.organizer.surname}}</a
+                >
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 contact">
+              <p class="event__container__type mb-0" *ngIf="!eventData.event_create_type.is_me">
+                {{"source_name" | translate}}
+                <span *ngIf="!eventData.event_create_type.isLogo"> - </span>
+                <a
+                  itemprop="url"
+                  class="event__container__source-name mb-0"
+                  [href]="eventData.event_create_type.event_link"
+                  target="_blank"
+                  [ngClass]="{'d-block mt-1':eventData.event_create_type.isLogo}"
+                  >{{eventData.event_create_type.site}}</a
+                >
+              </p>
+              <div class="d-flex justify-content-end  ">
+                <button
+                *ngIf="!isEmpty(eventData.organizer)"
+                  class="translate__btn mr-1"
+                  (click)="contactOrganizer($event)"
+                >
+                  {{"event.contact_organizer" | translate}}
+                </button>
+                <button
+                *ngIf="(eventData.organizer._id == userId || eventData.im_organaizer ) && isAuthorized && !archiveEvent"
+                  [routerLink]="'/basic/create-event'|localize"
+                  [queryParams]="{event_id:eventData._id}"
+                  class="translate__btn mr-1"
+                >
+                  {{"event.edit_event" | translate}}
+                </button>
+              </div>
+            </div>
+            <div
+              class="col-12 col-sm-6 mt-2 mt-sm-0"
+              *ngIf="!eventData.event_create_type.is_me"
+            >
+              <a
+                *ngIf="eventData.organizer._id"
+                [routerLink]="[eventData.organizer.register_type === 'individual' ? '/user/' + eventData.organizer._id : '/organization/' + eventData.organizer._id]|localize"
+                class="
+                  d-none
+                  overflow-hidden
+                  event__container__creater-image
+                  float-left
+                  text-decoration-none
+                "
+              >
+                <img
+                  [src]="eventData.organizer?.poster?.min"
+                  class="w-100 h-100"
+                  [alt]="eventData.organizer?.name + ' ' + eventData.organizer?.surname "
+                />
+              </a>
+              <div class="d-flex align-items-center h-100">
+                <a
+                  itemprop="url"
+                  [href]="eventData.event_create_type.event_link"
+                  class="d-block event__container__source__logo"
+                  *ngIf="eventData.event_create_type.isLogo"
+                >
+                  <img
+                    [src]="eventData.event_create_type.logo"
+                    [alt]="eventData.event_create_type.site"
+                  />
+                </a>
+              
+              </div>
+            </div>
+          </div>
+          <app-event-sidebar
+            *ngIf="showMobile"
+            class="d-xl-none"
+            [eventData]="eventData"
+            [locale]="locale"
+            (sortedEventDate)="getSortedDateLength($event)"
+          ></app-event-sidebar>
+          <section
+            class="clearfix event__container__section"
+            *ngIf="incomingDate"
+          >
+            <p class="event__container__type" *ngIf="joinedUsersCount">
+              {{joinedUsersCount}} {{"event.users_modal_title" | translate}}
+            </p>
+            <div
+              class="d-flex flex-wrap justify-content-between align-items-start"
+              *ngIf="!archiveEvent"
+            >
+              <div
+                class="
+                  col-12 col-sm-9
+                  p-0
+                  d-flex
+                  justify-content-between justify-content-sm-start
+                "
+              >
+                <div>
+                  <a
+                    [routerLink]="[user.register_type === 'individual' ? '/user/' + user._id : '/organization/' + user._id]|localize"
+                    *ngFor="let user of joinedSixUsers"
+                    class="
+                      d-block
+                      rounded-circle
+                      overflow-hidden
+                      event__container__creater-image
+                      float-left
+                      text-decoration-none
+                    "
+                  >
+                    <img
+                      [src]="user.poster.min"
+                      class="w-100 h-100"
+                      [alt]="user.name + ' ' + user.surname"
+                    />
+                    {{user.register_type === 'individual' ? '/user/' + user._id
+                    : '/organization/' + user._id|localize}}
+                  </a>
+                </div>
+                <button
+                  *ngIf="joinedUsersCount>6"
+                  class="
+                    event__container__section__more
+                    rounded-circle
+                    border-0
+                  "
+                  (click)="openDialog()"
+                >
+                  <i class="icon-more"> </i>
+                </button>
+              </div>
+              <app-invite-btn
+                class="ml-auto"
+                *ngIf="incomingDate"
+                [evenId]="eventData._id"
+                [changePosition]="!!description.length"
+                [showInviteButton]="showInviteButton"
+                [showFileUpload]="true"
+              ></app-invite-btn>
+            </div>
+          </section>
+          <section
+            class="event__container__section"
+            [ngClass]="{'border-top-0 mt-0':archiveEvent}"
+            *ngIf="eventData.filters.length > 0"
+          >
+            <p class="event__container__type">
+              {{"event.event_filters" | translate}}
+            </p>
+            <div class="d-flex flex-wrap align-items-start">
+              <input
+                class="
+                  event__container__section__filter
+                  border-0
+                  text-truncate text-center
+                "
+                type="button"
+                *ngFor="let filter of eventData.filters"
+                (click)="getFilter($event)"
+                [value]="filter"
+              />
+            </div>
+          </section>
+          <section class="event__container__section" *ngIf="description.length">
+            <div
+              class="translate"
+              *ngIf="this.eventData.descriptionLanguage !== lang"
+            >
+              <button
+                type="button"
+                class="notranslate translate__btn w-100 text-center"
+                *ngIf="!translateDescription;else showOriginal"
+                (click)="googleTranslateElementInit()"
+              >
+                <span> {{"event.translate_description" | translate}} </span>
+              </button>
+              <ng-template #showOriginal>
+                <button
+                  type="button"
+                  class="notranslate translate__btn w-100 text-center"
+                  (click)="showOriginalText()"
+                >
+                  <span>
+                    {{"event.show_original_description" | translate}}
+                  </span>
+                </button>
+                <p class="notranslate translate__text text-center mb-0">
+                  {{"event.automatically_translated" | translate}}
+                </p>
+              </ng-template>
+            </div>
+            <p class="event__container__type">Description</p>
+            <div itemprop="description" class="position-relative description">
+              <p
+                class="position-relative text-break"
+                *ngIf="!showMoreLessDesc && !descriptionIsShort ;else fullText"
+              >
+                <span
+                  class="d-block w-100 h-100 position-absolute opacity"
+                ></span>
+                <span [innerHtml]="shortText"></span>
+              </p>
+              <ng-template #fullText>
+                <p [innerHtml]="description" class="text-break"></p>
+              </ng-template>
+              <button
+                class="border-0 bg-transparent see-more"
+                *ngIf="!descriptionIsShort"
+                (click)="showMoreLessDescription()"
+              >
+                <span *ngIf="!showMoreLessDesc;else fullDescription">
+                  {{"show_more" | translate}}
+                </span>
+                <ng-template #fullDescription>
+                  <span> {{"show_less" | translate}} </span>
+                </ng-template>
+              </button>
+            </div>
+          </section>
+        </section>
+      </section>
+      <app-event-sidebar
+        *ngIf="showDesctop"
+        class="d-none d-xl-block"
+        [eventData]="this.eventData"
+        (sortedEventDate)="getSortedDateLength($event)"
+        [locale]="locale"
+        (checkInterestedForNotificationSetting)="getInterestedOrNot($event)"
+        (whenAddDateToCalendar)="addDateToCalendarOrNot($event)"
+      ></app-event-sidebar>
+    </section>
+    <div class="row" *ngIf="similarEventsCount">
+      <app-block-title-see-more
+        class="w-100"
+        [title]=" 'event.events_near' | translate"
+        [link]="'/search'"
+      >
+      </app-block-title-see-more>
+      <div class="d-flex flex-wrap similar-events w-100">
+        <app-event-column
+          class="events-near__block similar-events__block"
+          *ngFor="let nearEvent of similarEvents"
+          [eventItem]="nearEvent"
+          [isShowUserIcons]="false"
+          [isShowDescription]="false"
+          [userIsLoggedIn]="isAuthorized"
+        >
+        </app-event-column>
+        <div class="text-center w-100">
+          <app-loading
+            *ngIf="eventLoading && similarEventsCount>skip"
+          ></app-loading>
+        </div>
+        <div
+          infiniteScroll
+          [infiniteScrollDistance]="0.4"
+          [infiniteScrollThrottle]="700"
+          (scrolled)="onEventScroll()"
+          *ngIf="similarEventsCount>skip"
+        ></div>
+      </div>
+    </div>
+  </section>
+</main>
+<ng-template #notAvailable>
+  <app-not-available *ngIf="eventAnavailable"></app-not-available>
+</ng-template>
+<app-allert-message></app-allert-message>

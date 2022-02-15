@@ -1,0 +1,24 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/variables';
+
+.categories__name {
+  border-top: 1px solid $gray-border;
+  padding: 10px 0;
+  margin: 20px 0 0;
+  line-height: 1;
+
+  app-event-category-btn {
+    &:last-of-type{
+      .event__category-btn {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .categories__name {
+    padding: 8px 0;
+    margin: 10px 0 0;
+  }
+}

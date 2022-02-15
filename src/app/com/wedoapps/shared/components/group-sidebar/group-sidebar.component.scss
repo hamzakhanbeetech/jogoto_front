@@ -1,0 +1,65 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.group__sidebar {
+  @include size(400px, auto);
+  margin-left: 30px;
+
+  &__container {
+    @include border-radius(5px);
+    box-shadow: 0 0 10px $border-color;
+    padding: 23px 15px;
+    margin-bottom: 20px;
+    @include group-sidebar;
+    &.interested-section {
+      z-index: 1000;
+      top: 90px;
+    }
+    &__inviter {
+      margin-bottom: 16px;
+    }
+    &__user {
+      padding-bottom: 20px;
+      border-bottom: 1px solid $border-color;
+      &-image {
+        @include user-image(60px, 40px, 32px);
+      }
+      &-name {
+        color: $text-color;
+        line-height: 1;
+        @include hover-focus-active {
+          color: $text-color;
+        }
+      }
+      &-role {
+        @include font-size($fz-14);
+        color: $blue;
+        line-height: 1;
+        margin-top: 8px;
+      }
+    }
+  }
+  .title {
+    @extend %proxima-semibold;
+    @include font-size($fz-16);
+    color: $dark-gray;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .btn-link {
+    color: $blue;
+    line-height: 1;
+  }
+  .users-list {
+    border-top: 1px solid $border-color;
+    padding-top: 23px;
+  }
+}
+.promote-group {
+  @include blue-btn;
+  @include font-size($fz-18);
+  height: 46px;
+  i{
+    margin-right: 15px;
+  }
+}

@@ -1,0 +1,67 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+@include modals-header;
+.save-img-btn {
+  @include login-btn;
+  margin-right: 15px;
+}
+
+.cancel-modal {
+  @include gray-btn-icon
+}
+
+app-profile-image-modal {
+  display: block;
+  max-height: 100vh;
+}
+
+.image-modal {
+  min-height: auto;
+  &__image {
+    margin: 0 auto;
+    max-width: 375px;
+    max-height: 375px;
+    min-width: 375px;
+    min-height: 375px;
+    .upload-btn-wrapper {
+      @include font-size($fz-14);
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .crop-actions {
+      right: 0;
+      z-index: 10;
+    }
+    .crop__btn {
+      @include crop-buttons;
+      @include font-size($fz-14);
+      width: 60px;
+      z-index: 1;
+    }
+  }
+  &__footer {
+    padding: 15px;
+    bottom: 0;
+    z-index: 10;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .image-modal {
+    &__image {
+      .upload-btn-wrapper {
+        @include font-size($fz-12);
+      }
+      .crop__btn {
+        @include font-size($fz-12);
+        width: 50px;
+        button {
+          @include font-size($fz-12);
+        }
+      }
+    }
+  }
+}

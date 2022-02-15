@@ -1,0 +1,36 @@
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "../../../../../../../../assets/scss/base/mixins";
+@include create-form-group;
+@include characters;
+
+.characters li:first-of-type::after {
+  content: "";
+  &__desc {
+    @include font-size($fz-12);
+  }
+}
+
+.characters li.after::after {
+  content: "/";
+  &__desc {
+    @include font-size($fz-12);
+  }
+}
+
+.input {
+  @include create-title-desc;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  &:hover {
+    border-color: #d0d2cf !important;
+  }
+  &__desc {
+    @include font-size($fz-12);
+  }
+}
+
+// Below code was making issue so i had to copy the inner content to above styles.
+// @include media-breakpoint-down(sm) {
+//   &__desc {
+//     @include font-size($fz-12);
+//   }
+// }

@@ -1,0 +1,51 @@
+<div class="position-relative">
+    <header class="d-flex justify-content-between align-items-center header col-12" mat-dialog-title>
+        <h3 class="mb-0 header__title" mat-dialog-title>{{"user.prof_image"|translate}}</h3>
+        <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+            <i class="icon-close"></i>
+        </button>
+    </header>
+
+    <div mat-dialog-content  class="image-modal">
+        <figure class="image-modal__image position-relative d-flex justify-content-center">
+            <div class="btn-group position-absolute text-white crop-actions" *ngIf="!isFirstDefault">
+                <div class="overflow-hidden crop__btn position-relative">
+                    <button type="button" class="btn text-white w-100" ><i class="icon-camera-fill"></i> </button>
+                    <input (change)="uploadProfilePhoto($event)" accept=".jpg, .png, .jpeg, .gif|image/*" type="file" class="position-absolute cropper-input overflow-hidden w-100 h-100" name="myfile" #uploadInput/>
+                </div>
+                <button  type="button" class="btn text-white crop__btn" (click)="cancel()" *ngIf="isUploaded"><i class="icon-close"></i> </button>
+            </div>
+            <div *ngIf="isFirstDefault" class="upload-btn-wrapper overflow-hidden d-inline-block position-absolute mb-0">
+                <button class="btn" *ngIf="!loading"><i class="icon-camera-fill"></i> {{"create-event.upload_photo" | translate}}</button>
+                <input (change)="uploadProfilePhoto($event)" accept=".jpg, .png, .jpeg, .gif|image/*" type="file"
+                       class="position-absolute w-100 h-100" name="myfile"/>
+            </div>
+            <app-loading class="d-flex align-items-center justify-content-center position-absolute w-100 h-100" *ngIf="loading || !cropperReady"></app-loading>
+            <img [src]="original" *ngIf="isFirstDefault" class="position-absolute w-100 h-100" alt="">
+            <image-cropper
+                    *ngIf="!isFirstDefault && !loading"
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1"
+                    format="jpeg"
+                    [imageBase64]="unCropped.data"
+                    (imageCropped)="imageCropped($event)"
+                    (loadImageFailed)="loadImageFailed()"
+                    [autoCrop]="false"
+                    [cropperMinWidth]='100'
+                    [cropper]="cropperPositionReady"
+                    (cropperReady)="changeCropper()"
+                    (imageLoaded)="imageLoaded()"
+            ></image-cropper>
+        </figure>
+    </div>
+    <div class="image-modal__footer bg-white w-100 position-sticky">
+        <p class="position-relative" *ngIf="showError">
+            <span class="text-danger position-absolute">{{errMess|translate}}</span>
+        </p>
+        <div class="text-right w-100">
+            <button class="save-img-btn text-white mb-0 border-0" [disabled]="!cropperReady" (click)="save()">{{"user.save"|translate}}</button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,10 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+  <h3 class="mb-0 header__title" mat-dialog-title>{{"create-group.import_members" | translate}}</h3>
+  <button type="button" mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+<div mat-dialog-content class="user-invite-by-doc overflow-hidden">
+  <app-upload-file class="d-block" [type]="data.type" (value)="getFile($event)" (error)="checkErr($event)"></app-upload-file>
+  <p class="error" *ngIf="typeError">{{"create-group.file_error" | translate}}</p>
+</div>

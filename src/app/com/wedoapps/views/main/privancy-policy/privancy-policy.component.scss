@@ -1,0 +1,286 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+ol {
+  padding-left: 20px;
+}
+
+.term-container {
+  background: url("../../../../../../assets/images/privancy.jpg") no-repeat center;
+  background-size: cover;
+  padding: 80px 15px 98px;
+
+  &__title {
+    @include font-size($fz-60);
+    @extend %display-bold;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, .6)
+  }
+}
+
+.term {
+  margin: 25px 0;
+
+  &__download {
+    @include font-size($fz-26);
+    color: $blue;
+  }
+
+  &__version {
+    color: $text-color;
+    margin-left: 20px;
+  }
+}
+
+.term-desc {
+  @include font-size($fz-18)
+}
+
+.terms-subtitle {
+  @include font-size($fz-18);
+  margin-bottom: 20px;
+}
+
+.terms-title, .terms-subtitle {
+  @extend %proxima-semibold;
+  color: $blue;
+
+  &.terms-title {
+    @include font-size($fz-20);
+  }
+}
+
+.terms-description {
+  @include font-size($fz-20);
+  @extend %proxima-semibold;
+
+  > li {
+    @extend %proxima-semibold;
+    padding-top: 30px;
+  }
+
+  ol {
+    padding: 20px;
+  }
+
+  p {
+    @extend %proxima-regular;
+    color: $dark-gray;
+    margin-bottom: 20px;
+    padding-left: 20px;
+
+    a {
+      color: $blue;
+      @include hover-focus-active {
+        color: $blue;
+      }
+    }
+  }
+}
+
+.terms-menu {
+  margin-top: 15px;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 30px;
+
+  &__item {
+    @include font-size($fz-18);
+    @extend %proxima-semibold;
+
+    &__link {
+      @extend %proxima-semibold;
+      color: $dark-gray;
+      @include hover {
+        color: $blue
+      }
+    }
+  }
+}
+
+.accept-list {
+  margin-left: 40px;
+  @extend %proxima-regular;
+
+  &.m-20 {
+    margin-left: 20px;
+  }
+
+  li {
+    font-family: inherit;
+    padding-left: 28px;
+    color: $dark-gray;
+    margin-bottom: 10px;
+
+    &::before {
+      content: '';
+      @include size(8px);
+      display: inline-block;
+      background: $black;
+      transform: rotate(45deg);
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+    a {
+      color: $blue;
+      @include hover-focus-active {
+        color: $blue;
+      }
+    }
+  }
+}
+.deep-accept-list {
+  margin-left: 40px;
+  @extend %proxima-regular;
+
+  &.m-20 {
+    margin-left: 20px;
+  }
+
+  li {
+    font-family: inherit;
+    padding-left: 28px;
+    color: $dark-gray;
+    margin-bottom: 10px;
+
+    a {
+      color: $blue;
+      @include hover-focus-active {
+        color: $blue;
+      }
+    }
+  }
+  li:first-child:before {
+    content: '';
+    @include size(8px);
+    display: inline-block;
+    background: $black;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  li:not(:first-child):before  {
+    content: '-';
+    margin-right: 10px;
+  }
+}
+.terms-description p.dear-partner, span {
+  @extend %proxima-semibold;
+}
+
+span {
+  border-bottom: 1px solid $dark-gray;
+}
+
+.types {
+  > li {
+    @extend %proxima-semibold;
+    margin: 20px 0;
+
+    .accept-list {
+      margin-top: 20px;
+
+      li {
+        margin-bottom: 10px;
+      }
+    }
+
+    p {
+      margin: 20px 0 16px;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .term-container {
+    padding: 55px 15px 55px;
+
+    &__title {
+      @include font-size($fz-40);
+    }
+  }
+
+  .term {
+    margin: 20px 0;
+
+    &__download {
+      @include font-size($fz-20);
+    }
+
+    &__version {
+      @include font-size($fz-14);
+    }
+  }
+
+  .term-desc {
+    @include font-size($fz-16)
+  }
+
+  .terms-title, .terms-description {
+    @include font-size($fz-16);
+
+    > li {
+      margin-bottom: 20px;
+    }
+
+    p {
+      @include font-size($fz-14);
+      margin-bottom: 10px;
+    }
+  }
+
+  .terms-menu {
+    &__item {
+      @include font-size($fz-16);
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .term-container {
+    padding: 40px 15px;
+
+    &__title {
+      @include font-size($fz-20);
+    }
+  }
+
+  .term {
+    margin: 10px 0;
+
+    &__download {
+      @include font-size($fz-18);
+    }
+
+    &__version {
+      @include font-size($fz-12);
+    }
+  }
+
+  .term-desc {
+    @include font-size($fz-14)
+  }
+
+  .terms-title, .terms-description {
+    @include font-size($fz-14);
+
+    > li {
+      margin-bottom: 20px;
+    }
+
+    p {
+      @include font-size($fz-12);
+      margin-bottom: 10px;
+    }
+  }
+
+  .terms-menu {
+    &__item {
+      @include font-size($fz-14);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+ <div ngbDropdown class="btn-group categories w-100" (openChange)="openChanged($event)">
+   <button  class="categories__btn__filter" type="button" id="dropdownCats" ngbDropdownToggle >
+     <i class="icon-category"></i>{{'filter.category' | translate}}
+   </button>
+   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu categories__dropdown shadow border-0">
+     <app-event-filter-categories-content [isClosed]="data" ></app-event-filter-categories-content>
+     <div class="text-right w-100 dropdown-footer">
+       <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto" ngbDropdownItem (click)="isOK = true">Ok</button>
+     </div>
+   </div>
+ </div>

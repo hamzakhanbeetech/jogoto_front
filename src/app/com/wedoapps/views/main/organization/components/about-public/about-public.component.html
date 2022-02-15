@@ -1,0 +1,58 @@
+<app-page-about class="d-flex flex-row-reverse justify-content-between flex-wrap flex-sm-nowrap"
+                [address]="organization?.address"
+                [coordinates]="organization?.location.coordinates"
+                [emails]="organization?.emails"
+                [phones]="organization?.phones"
+                [websiteUrl]="organization?.website">
+</app-page-about>
+<section class="page-intro">
+  <p class="page-intro__type" *ngIf="organization?.professional_category"><i class="icon-folder"></i> {{ organization?.professional_category }}</p>
+  <p class="page-intro__description" *ngIf="organization?.description">
+    {{ organization?.description }}
+  </p>
+  <div ngbDropdown class="d-inline-block hours-dropdown" *ngIf="organization?.open_times_checkbox !== 'no_hours' || businessHours.length === 0">
+    <button class="border-0 background-transparent bg-transparent d-flex hours-dropdown__btn" id="dropdownBasic1"
+            [ngStyle]="{'cursor': organization?.open_times_checkbox === 'always_open' ? 'default' : 'pointer' }"
+            ngbDropdownToggle>
+      <i class="icon-clock hours-dropdown__btn__clock"></i>
+      <span class="text-left">
+              <span>Hours
+                <ng-container *ngIf="organization?.open_times_checkbox !== 'always_open' && organization?.openTimes[day] && organization?.openTimes[day][0]">
+                  {{ organization?.openTimes[day][0].start + ' - ' + organization?.openTimes[day][0].end + (organization?.openTimes[day][1]  ? ', ' + organization?.openTimes[day][1].start + ' - ' + organization?.openTimes[day][1].end : '')}}
+                </ng-container>
+              </span>
+
+            <span class="d-block text-left hours-dropdown__btn__status" *ngIf="organization?.open_times_checkbox !== 'always_open'">
+              {{ isOpen ? 'Open now' : 'Closed now' }}
+            </span>
+
+            <span class="d-block text-left hours-dropdown__btn__status" *ngIf="organization?.open_times_checkbox === 'always_open'">
+              {{ 'page.always_open' | translate }}
+            </span>
+      </span>
+      <i class="icon-down-open-big hours-dropdown__btn__arrow" *ngIf="organization?.open_times_checkbox !== 'always_open'"></i>
+    </button>
+    <div class="border-0" ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="organization?.open_times_checkbox !== 'always_open'">
+      <table class="w-100">
+        <tr [ngClass]="{'active': i === day - 1}" *ngFor="let item of businessHours; let i = index">
+          <ng-container *ngIf="organization?.openTimes[(i + 1)][0]">
+            <td>{{'page.' + item.dayName | translate }}</td>
+            <td>{{organization?.openTimes[(i + 1)][0].start
+              + ' - ' + organization?.openTimes[(i + 1)][0].end + (organization?.openTimes[(i + 1)][1] ? ', ' +
+              organization?.openTimes[(i + 1)][1].start + ' - ' + organization?.openTimes[(i + 1)][1].end : '')}}
+            </td>
+          </ng-container>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+<section class="about-categories">
+  <div class="categories__item d-inline-flex align-items-center justify-content-center"
+       *ngFor="let cat of organization?.categories"
+       [ngStyle]="{'border-color': cat.styleData.color}">
+    <i [ngClass]="cat.styleData.icon"
+       [ngStyle]="{'color': cat.styleData.color}"></i>
+    {{ cat.name }}
+  </div>
+</section>

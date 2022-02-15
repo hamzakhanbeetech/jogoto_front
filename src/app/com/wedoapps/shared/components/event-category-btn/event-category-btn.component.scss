@@ -1,0 +1,14 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.event__category-btn {
+@include category-btn;
+  max-width: 143px;
+}
+
+@include media-breakpoint-down(xs){
+  .event__category-btn {
+    @include category-btn;
+    max-width: 140px;
+  }
+}

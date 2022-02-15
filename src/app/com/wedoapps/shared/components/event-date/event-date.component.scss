@@ -1,0 +1,41 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.event-day-block {
+  @include size(60px);
+  @extend %proxima-semibold;
+  background: $gray-border;
+  color: $blue;
+  padding: 9px 10px;
+  top: 20px;
+  left: 20px;
+  line-height: 1;
+  p {
+    @extend %proxima-semibold;
+    &:first-child {
+      margin-bottom: 3px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .event-day-block {
+    @include font-size($fz-14);
+    @include size(55px);
+    top: 15px;
+    left: 15px;
+    padding: 5px;
+    p {
+      &:first-child {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event-day-block {
+    @include font-size($fz-12);
+    @include size(40px);
+  }
+}

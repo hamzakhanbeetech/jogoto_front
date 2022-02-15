@@ -1,0 +1,27 @@
+<article class="event-data" *ngIf="data">
+  <a [routerLink]="data?.link|localize" [target]="hrefTarget" *ngIf="!isSettingPage"
+     class="event-data__title text-truncate text-decoration-none d-block">{{data?.name}}</a>
+  <p *ngIf="isSettingPage" class="event-data__title text-truncate text-decoration-none d-block">{{data?.name}}</p>
+  <p class="event-data__description m-0" *ngIf="isShowDescription && data?.description.length" [innerHtml]='data?.description|truncate'></p>
+  <div *ngIf="filterType!=='past'; else pastEvent">
+    <time class="event-data__date d-block" *ngIf="!isSameDay && !data.archive;else hours">
+      {{data.date.start| date:'EEEE, d MMM':undefined:locale|titlecase}}
+      <span *ngIf="!data.startTimeHidden">{{data.date.start| date:'HH:mm':undefined:locale|titlecase}}</span>
+      <ng-container *ngIf="!data.endDateAndTimeHidden">{{!!data.date.end?" - ":""}}{{data.date.end| date:'EEEE, d MMM':undefined:locale|titlecase}}</ng-container>
+      <span *ngIf="!data.endDateAndTimeHidden && !data.endTimeHidden">{{data.date.end| date:' HH:mm':undefined:locale|titlecase}}</span>
+    </time>
+    <ng-template #hours>
+      <time class="event-data__date d-block" *ngIf="!data.archive">
+        {{data.date.start| date:'EEEE, d MMM':undefined:locale|titlecase}}
+        <span *ngIf="!data.startTimeHidden"> {{data.date.start| date:'HH:mm':undefined:locale|titlecase}}</span>
+        <span *ngIf="!data.endDateAndTimeHidden && !data.endTimeHidden"> {{!!data.date.end?"-":""}}{{data.date.end| date:' HH:mm'}}</span></time>
+    </ng-template>
+  </div>
+  <ng-template #pastEvent>
+  <p class="event-data__date d-block">{{'pastEvent' | translate}}</p>
+  </ng-template>
+  <address class="m-0 text-truncate"><span
+    class="event-data__place text-decoration-none">{{data?.location?.place}}</span>
+    {{data?.location?.address?.address}}
+  </address>
+</article>

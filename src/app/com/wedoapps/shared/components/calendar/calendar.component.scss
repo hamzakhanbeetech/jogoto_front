@@ -1,0 +1,141 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+.ngb-dp-navigation-select {
+  display: none !important;
+}
+
+.ngb-dp-month-name {
+  @extend %proxima-semibold;
+  @include font-size($fz-14 !important);
+}
+
+ngb-datepicker {
+  border: none !important;
+  position: relative;
+}
+
+.bg-light {
+  background: transparent !important;
+}
+
+.ngb-dp-weekdays {
+  border-bottom: none !important;
+}
+
+.ngb-dp-weekday {
+  @extend %proxima-regular;
+  @include font-size($fz-12);
+  color: $black !important;
+  font-style: normal !important;
+}
+
+.custom-day.focused,
+.disabled-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: $blue;
+  color: $white;
+}
+
+.custom-day.faded {
+  background-color: $blue;
+}
+
+.custom-day,
+.disabled-day {
+  @include font-size($fz-12);
+  border: 1px solid $light-gray;
+  line-height: 25px;
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.disabled-day {
+  opacity: .5;
+}
+
+.ngb-dp-arrow {
+  .ngb-dp-navigation-chevron {
+    transform: rotate(0);
+    border: none;
+
+    &::after {
+      @include font-size($fz-18);
+      @extend %fontello;
+      content: '\e817';
+      display: block;
+      color: $blue;
+    }
+  }
+
+  &.right {
+    .ngb-dp-navigation-chevron {
+      transform: rotate(0);
+
+      &::after {
+        @include font-size($fz-18);
+        @extend %fontello;
+        content: '\e816';
+        display: block;
+        color: $blue;
+      }
+    }
+  }
+}
+
+ngb-datepicker-navigation {
+  position: absolute;
+  top: 4px;
+  width: 100%;
+}
+
+.date-group {
+  margin: 20px 0 15px;
+
+  &__btn {
+    &.active {
+      color: black;
+    }
+
+    @include font-size($fz-14);
+    border: 1px solid $blue;
+    color: $blue;
+
+    &:first-child {
+      @include border-left-radius(5px)
+    }
+
+    &:last-child {
+      @include border-right-radius(5px)
+    }
+  }
+}
+
+.when__title {
+  @extend %proxima-semibold;
+  @include font-size($fz-18);
+}
+
+@include media-breakpoint-down(lg) {
+  .date-group {
+    &__btn {
+      @include font-size($fz-14)
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .ngb-dp-months {
+    display: block !important;
+  }
+  .when__title {
+    position: absolute;
+    top: 12px
+  }
+}

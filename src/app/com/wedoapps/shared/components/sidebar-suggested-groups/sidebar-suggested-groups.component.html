@@ -1,0 +1,46 @@
+<div class="group__sidebar__container bg-white interested-section" *ngIf="suggestedGroups?.length">
+  <div class="d-flex justify-content-between align-items-start"><h3
+    class="title">{{"group.suggested_groups_title" | translate}}</h3>
+    <a class="bg-transparent border-0 btn-link text-decoration-none"
+       [routerLink]="'/search'|localize" [queryParams]="{type: 'group'}">
+      {{"view_all" | translate}}</a>
+  </div>
+  <section class="sugessted-group" *ngFor="let group of suggestedGroups | slice:0:2;let i = index">
+    <a [routerLink]="['group/'+group._id]|localize"
+       class="text-decoration-none overflow-hidden sugessted-group__image d-block">
+      <img [src]="group.poster.cropped.link" class="w-100 h-100" [alt]="group.name">
+    </a>
+    <div class="d-flex align-items-center justify-content-between sugessted-group__info">
+      <div class="overflow-hidden">
+          <a [routerLink]="['group/' + group._id]|localize" class="text-truncate text-decoration-none sugessted-group__info__title">
+            {{group.name}}
+          </a>
+
+        <p class="sugessted-group__info__type">
+          <span *ngIf="group.group_type === 'open';else close">{{"open" | translate}}</span>
+          <ng-template #close>
+            {{"close" | translate}}
+          </ng-template> Group
+        </p>
+        <ul class="list-unstyled sugessted-group__info__members m-0">
+          <li
+            class="d-inline-block sugessted-group__info__members__item">{{group.members_count}} {{"members" | translate}}</li>
+          <li
+            class="d-inline-block sugessted-group__info__members__item">{{group.events.length}} {{"event.events" | translate}}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!group.imJoined">
+        <button class="sugessted-group__btn text-capitalize" (click)="joinGroup(group._id,true,i)"
+                *ngIf="group.group_type === 'closed';else follow">
+          <i class="icon-plus"></i>{{"group.join" | translate}}
+        </button>
+        <ng-template #follow>
+          <button class="sugessted-group__btn text-capitalize" (click)="joinGroup(group._id,true,i)">
+            {{"event.follow" | translate}}
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </section>
+</div>

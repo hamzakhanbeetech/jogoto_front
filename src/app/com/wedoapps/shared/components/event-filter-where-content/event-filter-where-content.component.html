@@ -1,0 +1,4 @@
+<app-mat-autocomplete [saveState]="saveState" (autocomplete)="getAutocomplete($event)" [isDynamicSearch]="isDynamicSearch">
+</app-mat-autocomplete>
+<h3 class="where__title">{{'filter.choose_radius' | translate}}</h3>
+<app-mat-slider [isAddress]="isAddress" [saveState]="saveState" (radius)="getRadius($event)" [isDynamicSearch]="isDynamicSearch"></app-mat-slider>

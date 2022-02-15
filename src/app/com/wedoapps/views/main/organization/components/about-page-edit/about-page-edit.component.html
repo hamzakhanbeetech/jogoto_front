@@ -1,0 +1,821 @@
+<p class="text-right analitics">
+  {{ "user.data_analiysis" | translate }} <i class="icon-secury"></i>
+</p>
+
+<div class="edit-profile">
+  <div class="d-flex flex-wrap justify-content-between">
+    <div class="form-group edit-profile__input">
+      <label for="name">{{ "user.organization_name" | translate }}</label>
+      
+      <input
+        type="text"
+        class="form-control shadow-none"
+        readonly
+        [value]="organization?.name"
+        placeholder="Data Information Technology Center"
+        id="name"
+      />
+    </div>
+    <div class="form-group edit-profile__input">
+      <label>{{ "user.business_type" | translate }}</label>
+      <input
+        type="text"
+        class="form-control shadow-none business_type"
+        [readonly]="true"
+        [value]="organization?.professional_category"
+      />
+    </div>
+  </div>
+
+  <!--description section-->
+  <div class="form-group edit-profile__textarea w-100">
+    <div class="d-flex justify-content-between">
+      <label for="description">{{ "page.description" | translate }}</label>
+      <button
+        class="border-0 bg-transparent edit-profile__textarea__edit"
+        [ngClass]="{ 'd-none': !isEditDescr }"
+        (click)="isEditDescr = false"
+        type="button"
+      >
+        {{ "page.edit" | translate }}
+      </button>
+      <!--TODO activate if edit button pressed-->
+      <div [ngClass]="{ 'd-none': isEditDescr }">
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__save"
+          (click)="saveDescr()"
+          type="button"
+        >
+          {{ "save" | translate }}
+        </button>
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__cancel"
+          type="button"
+          (click)="resetDescription()"
+        >
+          {{ "page.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+    <textarea
+      class="form-control shadow-none w-100"
+      id="description"
+      name="description"
+      [readonly]="isEditDescr"
+      maxlength="500"
+      [value]="organization?.description || ''"
+      [formControl]="description"
+    >
+    </textarea>
+    <ul class="list-unstyled d-flex justify-content-end characters mb-0">
+      <li>{{ description.value.length }}</li>
+      <li>500</li>
+    </ul>
+  </div>
+
+  <!--categories section-->
+  <div class="form-group edit-profile__input w-100">
+    <div class="d-flex justify-content-between">
+      <p class="label">{{ "interests" | translate }}</p>
+
+      <div
+        ngbDropdown
+        class="btn-group d-none d-sm-block"
+        (openChange)="openChanged($event)"
+      >
+        <button
+          class="border-0 bg-transparent edit-profile__input__edit"
+          type="button"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ "page.edit" | translate }}
+        </button>
+        <div
+          ngbDropdownMenu
+          aria-labelledby="dropdownBasic1"
+          class="dropdown-menu categories__dropdown shadow border-0"
+        >
+          <app-event-filter-categories-content
+            [selectedCats]="organization?.categories"
+            [isUserPage]="true"
+            [isClosed]="{ isClosed: isClosed }"
+          ></app-event-filter-categories-content>
+          <div class="text-right w-100 dropdown-footer">
+            <button
+              type="button"
+              class="ok-btn text-white border-0 text-uppercase ml-auto w-auto"
+              ngbDropdownItem
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--categories for mobile view-->
+      <button
+        *ngIf="smallDisplay"
+        class="border-0 bg-transparent edit-profile__input__edit"
+        type="button"
+        (click)="openDialog('dropdownCats', title.dropdownCats)"
+      >
+        {{ "page.edit" | translate }}
+      </button>
+      <!--TODO activate if edit button pressed-->
+      <!--<div [ngClass]="{'d-none': true}">-->
+      <!--<button class="border-0 bg-transparent edit-profile__input__save"-->
+      <!--type="button">{{"save" | translate}}-->
+      <!--</button>-->
+      <!--<button class="border-0 bg-transparent edit-profile__input__cancel"-->
+      <!--type="button">{{"page.cancel" | translate}}-->
+      <!--</button>-->
+      <!--</div>-->
+    </div>
+    <p class="help-fined">{{ "page.category_desc" | translate }}</p>
+    <div
+      class="
+        categories__item
+        d-inline-flex
+        align-items-center
+        justify-content-center
+      "
+      *ngFor="let cat of organization?.categories"
+      [ngStyle]="{ 'border-color': cat.styleData.color }"
+    >
+      <i
+        [ngClass]="cat.styleData.icon"
+        [ngStyle]="{ color: cat.styleData.color }"
+      ></i>
+      {{ cat.name }}
+    </div>
+  </div>
+
+  <!--email and tel number block-->
+  <div>
+    <p class="title-block">{{ "page.contact_info" | translate }}</p>
+    <div class="d-flex flex-wrap justify-content-between">
+      <div class="form-group edit-profile__input">
+        <div>
+          <label
+            >{{ "page.primary_email" | translate }} <i class="icon-secury"></i
+          ></label>
+          <p class="text-truncate">{{ organization?.email }}</p>
+          <div
+            class="d-flex justify-content-between"
+            *ngIf="organization?.emails && organization?.emails.length === 2"
+          >
+            <p class="text-truncate m-0" *ngIf="!isEditSecondEmail">
+              {{ organization?.emails[1] }}
+            </p>
+            <button
+              class="border-0 bg-transparent edit-profile__textarea__edit"
+              *ngIf="!isEditSecondEmail"
+              (click)="isEditSecondEmail = !isEditSecondEmail"
+              type="button"
+            >
+              {{ "page.edit" | translate }}
+            </button>
+          </div>
+        </div>
+        <!--TODO add if there is only primary email or second email exist and edited-->
+        <div class="w-100">
+          <div class="d-flex justify-content-end">
+            <button
+              class="border-0 bg-transparent edit-profile__textarea__add"
+              (click)="isEditSecondEmail = !isEditSecondEmail"
+              *ngIf="
+                (!organization?.emails ||
+                  (organization?.emails &&
+                    organization?.emails.length !== 2)) &&
+                !isEditSecondEmail
+              "
+              type="button"
+            >
+              {{ "page.add" | translate }}
+            </button>
+            <!--TODO activate if edit button pressed-->
+            <div *ngIf="isEditSecondEmail">
+              <button
+                class="border-0 bg-transparent edit-profile__textarea__save"
+                (click)="updateEmails()"
+                type="button"
+              >
+                {{ "save" | translate }}
+              </button>
+              <button
+                class="border-0 bg-transparent edit-profile__textarea__cancel"
+                (click)="resetEmail()"
+                type="button"
+              >
+                {{ "page.cancel" | translate }}
+              </button>
+              <button
+                class="border-0 bg-transparent edit-profile__textarea__remove"
+                (click)="updateEmails('remove')"
+                type="button"
+              >
+                {{ "page.remove" | translate }}
+              </button>
+            </div>
+          </div>
+          <ng-container *ngIf="isEditSecondEmail">
+            <input
+              type="email"
+              class="form-control shadow-none"
+              [formControl]="secondEmail"
+              placeholder="my.profile@example.com "
+              id="email"
+            />
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="secondEmail.touched && secondEmail.hasError('required')"
+            >
+              {{ "contact.error.email_required" | translate }}
+            </p>
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="secondEmail.touched && secondEmail.hasError('pattern')"
+            >
+              {{ "login.email_err" | translate }}
+            </p>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="form-group edit-profile__input">
+        <label>{{ "page.phone_number" | translate }}</label>
+        
+        <ng-container [ngSwitch]="organization?.phones.length">
+          <ng-container *ngSwitchCase="0">
+            <div class="d-flex justify-content-between">
+              <button
+                class="
+                  border-0
+                  bg-transparent
+                  edit-profile__textarea__add
+                  ml-auto
+                "
+                (click)="addPhones(0)"
+                type="button"
+                >
+                <!-- [ngClass]="{ disabled: firstPhoneControl.hasError('pattern') }" -->
+                {{ "page.add" | translate }}
+              </button>
+            </div>
+            <div class="row mt-1">
+              
+              <app-phone-control [phoneControl]="firstPhoneControl"></app-phone-control>
+            </div>
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="firstPhoneControl.hasError('validatePhoneNumber')"
+            >
+              {{ "registration.invalid_phone_number" | translate }}
+            </p>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="1">
+            <div>
+              <div class="d-flex justify-content-between">
+                <p *ngIf="!editPhones[0]">{{ organization?.phones[0] }}</p>
+                <button
+                  class="border-0 bg-transparent edit-profile__textarea__edit"
+                  *ngIf="!editPhones[0]"
+                  (click)="phonesEdit(0)"
+                  type="button"
+                >
+                  {{ "page.edit" | translate }}
+                </button>
+                <div class="ml-auto" *ngIf="editPhones[0]">
+                  <button
+                    class="border-0 bg-transparent edit-profile__textarea__save"
+                    (click)="addPhones(0)"
+                    [ngClass]="{
+                      disabled: firstPhoneControl.hasError('pattern')
+                    }"
+                    type="button"
+                  >
+                    {{ "save" | translate }}
+                  </button>
+                  <button
+                    class="
+                      border-0
+                      bg-transparent
+                      edit-profile__textarea__cancel
+                    "
+                    (click)="resetPhones(0)"
+                    type="button"
+                  >
+                    {{ "page.cancel" | translate }}
+                  </button>
+                  <button
+                    class="
+                      border-0
+                      bg-transparent
+                      edit-profile__textarea__remove
+                    "
+                    (click)="removePhone(0)"
+                    type="button"
+                  >
+                    {{ "page.remove" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          
+            <app-phone-control *ngIf="editPhones[0]" [phoneControl]="firstPhoneControl"></app-phone-control>
+
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="firstPhoneControl.hasError('validatePhoneNumber')"
+            >
+              {{ "registration.invalid_phone_number" | translate }}
+            </p>
+
+            <div class="d-flex justify-content-between">
+              <button
+                class="
+                  border-0
+                  bg-transparent
+                  edit-profile__textarea__add
+                  ml-auto
+                "
+                (click)="addPhones(1)"
+                type="button"
+              >
+                {{ "page.add" | translate }}
+              </button>
+            </div>
+
+          
+            <app-phone-control [phoneControl]="lastPhoneControl"></app-phone-control>
+
+
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="lastPhoneControl.hasError('validatePhoneNumber')"
+            >
+              {{ "registration.invalid_phone_number" | translate }}
+            </p>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="2">
+            <ng-template
+              ngFor
+              let-phone
+              [ngForOf]="organization?.phones"
+              let-i="index"
+            >
+              <div>
+                <div class="d-flex mt-3 justify-content-between">
+                  <p *ngIf="!editPhones[i]">{{ phone }}</p>
+                  <button
+                    class="border-0 bg-transparent edit-profile__textarea__edit"
+                    *ngIf="!editPhones[i]"
+                    (click)="phonesEdit(i)"
+                    type="button"
+                  >
+                    {{ "page.edit" | translate }}
+                  </button>
+
+                  <!--TODO activate if add button pressed-->
+                  <div class="ml-auto" *ngIf="editPhones[i]">
+                    <button
+                      class="
+                        border-0
+                        bg-transparent
+                        edit-profile__textarea__save
+                      "
+                      (click)="addPhones(i)"
+                      [ngClass]="{
+                        disabled: lastPhoneControl.hasError('pattern')
+                      }"
+                      type="button"
+                    >
+                      {{ "save" | translate }}
+                    </button>
+                    <button
+                      class="
+                        border-0
+                        bg-transparent
+                        edit-profile__textarea__cancel
+                      "
+                      (click)="resetPhones(i)"
+                      type="button"
+                    >
+                      {{ "page.cancel" | translate }}
+                    </button>
+                    <button
+                      class="
+                        border-0
+                        bg-transparent
+                        edit-profile__textarea__remove
+                      "
+                      (click)="removePhone(i)"
+                      type="button"
+                    >
+                      {{ "page.remove" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+           
+              <app-phone-control  *ngIf="editPhones[i]" [phoneControl]="i === 0 ? firstPhoneControl : lastPhoneControl"></app-phone-control>
+
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="i === 0 && firstPhoneControl.hasError('validatePhoneNumber')"
+              >
+                {{ "registration.invalid_phone_number" | translate }}
+              </p>
+
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="i === 1 && lastPhoneControl.hasError('validatePhoneNumber')"
+              >
+                {{ "registration.invalid_phone_number" | translate }}
+              </p>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!--website url block-->
+  <div class="d-flex flex-wrap justify-content-between">
+    <div class="form-group edit-profile__input w-100">
+      <div class="w-100">
+        <div class="d-flex justify-content-between">
+          <label for="url">{{ "page.website_link" | translate }}</label>
+          <button
+            class="border-0 bg-transparent edit-profile__textarea__edit"
+            *ngIf="isEditWebsite"
+            (click)="isEditWebsite = !isEditWebsite"
+            type="button"
+          >
+            {{ "page.edit" | translate }}
+          </button>
+          <!--TODO activate if edit button pressed-->
+          <div *ngIf="!isEditWebsite">
+            <button
+              class="border-0 bg-transparent edit-profile__textarea__save"
+              [disabled]="website.invalid"
+              [ngClass]="{ disabled: website.invalid }"
+              (click)="saveWebsiteUrl()"
+              type="button"
+            >
+              {{ "save" | translate }}
+            </button>
+            <button
+              class="border-0 bg-transparent edit-profile__textarea__cancel"
+              (click)="resetWebsite()"
+              type="button"
+            >
+              {{ "page.cancel" | translate }}
+            </button>
+            <button
+              class="border-0 bg-transparent edit-profile__textarea__remove"
+              (click)="removeWebsiteUrl()"
+              type="button"
+            >
+              {{ "page.remove" | translate }}
+            </button>
+          </div>
+        </div>
+        <input
+          type="url"
+          class="form-control shadow-none"
+          [value]="organization?.website || ''"
+          [readonly]="isEditWebsite"
+          [formControl]="website"
+          placeholder="https://www.my.organization.com/"
+          id="url"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!--location block-->
+  <div class="form-group edit-profile__input w-100">
+    <div class="d-flex justify-content-between">
+      <label for="location">{{ "user.address_location" | translate }}</label>
+      <button
+        class="border-0 bg-transparent edit-profile__textarea__edit"
+        *ngIf="isEditLocation"
+        (click)="isEditLocation = !isEditLocation"
+        type="button"
+      >
+        {{ "page.edit" | translate }}
+      </button>
+      <!--TODO activate if edit button pressed-->
+      <div *ngIf="!isEditLocation">
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__save"
+          (click)="saveLocation()"
+          type="button"
+        >
+          {{ "save" | translate }}
+        </button>
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__cancel"
+          (click)="cancelLocation()"
+          type="button"
+        >
+          {{ "page.cancel" | translate }}
+        </button>
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__remove"
+          (click)="resetAddress()"
+          type="button"
+        >
+          {{ "page.remove" | translate }}
+        </button>
+      </div>
+    </div>
+    <input
+      type="text"
+      class="form-control shadow-none"
+      [formControl]="location"
+      [ngbTypeahead]="autocomplete"
+      (selectItem)="handleAddressChange($event)"
+      (input)="replaceEmptyFields($event)"
+      [readonly]="isEditLocation"
+      [value]="organization?.address.full_address"
+      id="location"
+    />
+    <p
+      class="m-0 position-absolute text-danger"
+      *ngIf="location.hasError('required')"
+    >
+      {{ "registration.address_is_required" | translate }}
+    </p>
+  </div>
+
+  <!--social links-->
+  <div class="form-group edit-profile__input w-100">
+    <div class="d-flex justify-content-between">
+      <p class="label">{{ "page.social_contacts" | translate }}</p>
+      <button
+        class="border-0 bg-transparent edit-profile__textarea__edit"
+        (click)="openSocialModal()"
+        type="button"
+      >
+        {{ "page.edit" | translate }}
+      </button>
+      <!--TODO activate if edit button pressed-->
+      <div [ngClass]="{ 'd-none': true }">
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__save"
+          type="button"
+        >
+          {{ "save" | translate }}
+        </button>
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__cancel"
+          type="button"
+        >
+          {{ "page.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <app-social-links
+      [socialLinks]="organization?.socialLinks"
+    ></app-social-links>
+  </div>
+
+  <!--open hours-->
+  <div class="form-group edit-profile__input w-100">
+    <div class="d-flex justify-content-between">
+      <p class="label">{{ "page.hours" | translate }}</p>
+      <button
+        class="border-0 bg-transparent edit-profile__textarea__edit"
+        *ngIf="isEditHours"
+        (click)="isEditHours = !isEditHours"
+        type="button"
+      >
+        {{ "page.edit" | translate }}
+      </button>
+      <!--TODO activate if edit button pressed-->
+      <div [ngClass]="{ 'd-none': isEditHours }">
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__save"
+          [disabled]="!hoursAreValid"
+          (click)="saveHours()"
+          type="button"
+        >
+          {{ "save" | translate }}
+        </button>
+        <button
+          class="border-0 bg-transparent edit-profile__textarea__cancel"
+          (click)="initHours()"
+          type="button"
+        >
+          {{ "page.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+    <p class="help-fined">{{ "page.instruction_text" | translate }}</p>
+    <mat-radio-group aria-label="Select an option">
+      <mat-radio-button
+        class="d-block"
+        [disabled]="isEditHours"
+        *ngFor="let hours of availableHours; let i = index"
+        value="{{ 'page.' + hours.name }}"
+        (change)="resetCheckedReason(i)"
+        [checked]="hours.checked"
+      >
+        {{ "page." + hours.name | translate }}
+      </mat-radio-button>
+    </mat-radio-group>
+    <ng-container
+      *ngIf="!availableHours[1].checked && !availableHours[2].checked"
+    >
+      <div
+        class="d-flex flex-wrap"
+        *ngFor="let item of businessHours; let i = index"
+      >
+        <app-checkbox
+          class="d-flex align-items-center"
+          [ngClass]="{ disabled: isEditHours }"
+          [(ngModel)]="item.checked"
+          (chackboxValue)="resetInitialTime($event, i)"
+          [filterName]="'page.' + item.dayName | translate"
+        ></app-checkbox>
+        <div>
+          <div class="d-flex flex-wrap align-items-center hours-mobile">
+            <div class="form-group edit-profile__hours">
+              <input
+                type="text"
+                class="form-control shadow-none"
+                maxlength="5"
+                #open
+                [readonly]="isEditHours"
+                [ngModel]="item.checked ? item.hours[0].start : null"
+                (ngModelChange)="convertToHours($event, i, open, 'start')"
+                [placeholder]="'page.open' | translate"
+              />
+
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="item.checked && !open.value.length"
+              >
+                {{ "registration.fill_the_field" | translate }}
+              </p>
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="
+                  open.value.length && item.checked && !reg.test(open.value)
+                "
+              >
+                {{ "registration.enter_valid_time" | translate }}
+              </p>
+
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="
+                  item.checked &&
+                  item.hours[0].start.length &&
+                  item.hours[0].end.length &&
+                  item.hours[0].start === item.hours[0].end
+                "
+              >
+                {{ "registration.times_same" | translate }}
+              </p>
+            </div>
+            <div class="form-group edit-profile__hours">
+              <input
+                type="text"
+                class="form-control shadow-none"
+                #end
+                maxlength="5"
+                [readonly]="isEditHours"
+                [ngModel]="item.checked ? item.hours[0].end : null"
+                (ngModelChange)="convertToHours($event, i, end, 'end')"
+                [placeholder]="'page.close' | translate"
+              />
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="item.checked && !end.value.length"
+              >
+                {{ "registration.fill_the_field" | translate }}
+              </p>
+              <p
+                class="m-0 position-absolute text-danger"
+                *ngIf="end.value.length && item.checked && !reg.test(end.value)"
+              >
+                {{ "registration.enter_valid_time" | translate }}
+              </p>
+            </div>
+            <button
+              class="border-0 bg-transparent edit-profile__hours__btn"
+              [hidden]="!item.checked"
+              (click)="
+                !isEditHours ? resetInitialTime({}, i, { item: item }) : null
+              "
+            >
+              <i class="icon-plus" *ngIf="!item.isPlus; else cross"></i>
+              <ng-template #cross>
+                <i class="icon-close"></i>
+              </ng-template>
+            </button>
+
+            <div class="d-flex w-100">
+              <ng-template [ngIf]="item.isPlus && item.checked">
+                <div class="form-group edit-profile__hours">
+                  <input
+                    type="text"
+                    class="form-control shadow-none"
+                    maxlength="5"
+                    #open
+                    [readonly]="isEditHours"
+                    [ngModel]="item.hours[1].start"
+                    (ngModelChange)="
+                      convertToHours($event, i, open, 'start', true)
+                    "
+                    [placeholder]="'page.open' | translate"
+                  />
+                  <p
+                    class="m-0 position-absolute text-danger"
+                    *ngIf="item.checked && !open.value.length"
+                  >
+                    {{ "registration.fill_the_field" | translate }}
+                  </p>
+                  <p
+                    class="m-0 position-absolute text-danger"
+                    *ngIf="
+                      open.value.length && item.checked && !reg.test(open.value)
+                    "
+                  >
+                    {{ "registration.enter_valid_time" | translate }}
+                  </p>
+
+                  <p
+                    class="m-0 position-absolute text-danger"
+                    *ngIf="
+                      item.checked &&
+                      item.hours[1].start.length &&
+                      item.hours[1].end.length &&
+                      item.hours[1].start === item.hours[1].end
+                    "
+                  >
+                    {{ "registration.times_same" | translate }}
+                  </p>
+                </div>
+                <div class="form-group edit-profile__hours">
+                  <input
+                    type="text"
+                    class="form-control shadow-none"
+                    maxlength="5"
+                    #end
+                    [readonly]="isEditHours"
+                    [ngModel]="item.hours[1].end"
+                    (ngModelChange)="
+                      convertToHours($event, i, end, 'end', true)
+                    "
+                    [placeholder]="'page.close' | translate"
+                  />
+                  <p
+                    class="m-0 position-absolute text-danger"
+                    *ngIf="item.checked && !end.value.length"
+                  >
+                    {{ "registration.fill_the_field" | translate }}
+                  </p>
+                  <p
+                    class="m-0 position-absolute text-danger"
+                    *ngIf="
+                      end.value.length && item.checked && !reg.test(end.value)
+                    "
+                  >
+                    {{ "registration.enter_valid_time" | translate }}
+                  </p>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <!--<div class="edit text-right" *ngIf="!true">-->
+  <!--<button class="edit__close"-->
+  <!--(click)="resetForm()"-->
+  <!--[disabled]="true">{{"user.cancel" | translate}}-->
+  <!--</button>-->
+  <!--&lt;!&ndash;TODO if the inputs are empty,or wait server response add "disabled" class&ndash;&gt;-->
+  <!--<button class="edit__save text-white text-uppercase border-0 d-inline-flex-->
+  <!--justify-content-center align-items-center"-->
+  <!--(click)="updateOrganizationInfo()"-->
+  <!--[ngClass]="{'disabled': true || organizationForm.invalid || isLoading}"-->
+  <!--[disabled]="true || organizationForm.invalid || isLoading">-->
+  <!--<span>{{'user.save' | translate}} </span>-->
+  <!--&lt;!&ndash;TODO if wait server response add class "d-block" ,else add class "d-none" &ndash;&gt;-->
+  <!--<span class="spinner-border" [ngClass]="isLoading ? 'd-block' : 'd-none'" role="status">-->
+  <!--<span class="sr-only">Loading...</span>-->
+  <!--</span>-->
+  <!--</button>-->
+  <!--</div>-->
+</div>

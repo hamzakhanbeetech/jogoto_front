@@ -1,0 +1,122 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.about {
+  @include border-radius(5px);
+  border: 1px solid $border-color;
+  padding: 20px 0;
+  color: $dark-gray;
+  .tab__title{
+    @extend %proxima-semibold;
+    @include font-size($fz-18);
+  }
+  &__header {
+    @include font-size($fz-18);
+    padding: 0 20px;
+  }
+  &__title {
+    @include font-size($fz-18);
+    @extend %proxima-semibold;
+    margin-top: 20px;
+  }
+  &__group {
+    @include members-list;
+    margin: 10px 0 20px;
+  }
+  &__section {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    padding: 20px;
+    &__title {
+      @include font-size($fz-16);
+      @extend %proxima-semibold;
+      margin: 0 0 10px;
+    }
+  }
+  &__footer {
+    padding: 20px 20px 0;
+    &__location {
+      color: $dark-gray;
+      @include hover-focus-active{
+        color: $dark-gray;
+      }
+    }
+    &__link {
+      color: $blue;
+      @include hover-focus-active {
+        color: $blue;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .about {
+    padding: 15px 0;
+    .tab__title{
+      @include font-size($fz-16);
+    }
+    &__header {
+      padding: 0 15px;
+    }
+    &__title {
+      @include font-size($fz-16);
+      margin-top: 20px;
+    }
+    &__group {
+      @include members-list;
+      margin: 10px 0 16px;
+    }
+    &__section {
+      padding: 15px;
+      &__title {
+        @include font-size($fz-14);
+      }
+      &__full__desc {
+        @include font-size($fz-14);
+      }
+    }
+    &__footer {
+      padding: 15px 15px 0;
+      @include font-size($fz-14);
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .about {
+    padding: 15px 0;
+    .tab__title{
+      @include font-size($fz-14);
+    }
+    &__header {
+      padding: 0 15px;
+    }
+    &__title {
+      @include font-size($fz-14);
+      margin-top: 20px;
+    }
+    &__group {
+      @include members-list;
+      margin: 10px 0 15px;
+    }
+    &__section {
+      padding: 12px 15px;
+      &__full__desc {
+        @include font-size($fz-12);
+      }
+    }
+    &__footer {
+      padding: 15px 15px 0;
+      @include font-size($fz-12);
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .about {
+    @include border-radius(0);
+    border-left: none;
+    border-right: none;
+  }
+}

@@ -1,0 +1,17 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.map-list {
+  app-event-row {
+    margin-bottom: 20px;
+
+    .event__image {
+      @include size(200px, 130px)
+    }
+  }
+
+  &__map {
+    top: 90px;
+    height: calc(100vh - 90px);
+  }
+}

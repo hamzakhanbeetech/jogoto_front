@@ -1,0 +1,32 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.event-column{
+  &__image{
+    @include border-top-radius(5px);
+    height: 240px;
+    img{
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .event-column{
+    &__image{
+      height: 230px;
+    }
+    .card-body{
+      padding: 20px 15px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event-column{
+    &__image{
+      height: 192px;
+    }
+  }
+}

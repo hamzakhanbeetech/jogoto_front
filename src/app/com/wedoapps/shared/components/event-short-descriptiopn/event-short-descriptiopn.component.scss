@@ -1,0 +1,91 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+@import '../../../../../../assets/scss/base/variables';
+
+.event-data {
+  color: $text-color;
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-20);
+    color: $event-title;
+    margin: 0 0 20px;
+    line-height: 1;
+    &:hover {
+      color: $event-title;
+    }
+  }
+  &__description {
+    @include font-size(inherit);
+    a {
+      @include hover-focus-active {
+        color: $darker-blue
+      }
+      color: $blue;
+      text-decoration: none;
+    }
+      max-height: 72px;
+      overflow: hidden;
+  }
+  &__date{
+    color: $dark-orange;
+    margin: 20px 0 10px;
+    >span{
+      @include font-size(inherit);
+      @extend %proxima-semibold;
+    }
+  }
+  address,&__place,&__date,div{
+    @include font-size(inherit);
+  }
+  &__place {
+    @include hover-focus-active {
+      columns: $darker-blue
+    }
+    @extend %proxima-semibold;
+    color: $blue;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .event-data {
+    @include font-size($fz-14);
+    &__title {
+      @include font-size($fz-18);
+      margin: 0 0 18px;
+    }
+
+    &__date {
+      color: $dark-orange;
+      margin: 18px 0 13px;
+    }
+    &__place {
+      @include hover-focus-active {
+        columns: $blue
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event-data {
+    @include font-size($fz-12);
+    &__title {
+      @include font-size($fz-16);
+      margin: 0 0 10px;
+    }
+    &__description {
+      max-height: 20px;
+      overflow: hidden;
+    }
+
+    &__date {
+      color: $dark-orange;
+      margin: 10px 0 13px;
+    }
+    &__place {
+      @include hover-focus-active {
+        columns: $blue
+      }
+    }
+  }
+}

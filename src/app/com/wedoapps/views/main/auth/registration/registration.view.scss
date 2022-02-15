@@ -1,0 +1,435 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.registration {
+  &__description {
+    span {
+      word-break: break-all;
+    }
+  }
+
+  &__title,
+  &__tab__title {
+    @include login-title
+  }
+
+  &__tab__title {
+    @include font-size($fz-20 - 1);
+    width: calc(100% - 50px);
+  }
+
+  &__back {
+    @include border-radius(5px);
+    @include font-size($fz-18);
+    color: $text-color;
+    margin-right: 20px;
+    @include hover-focus-active {
+      color: $blue;
+      outline: none;
+    }
+  }
+
+  &__type {
+    @extend %proxima-regular;
+    @include border-radius(5px);
+    @include size(calc(100% / 2), 50px);
+    background: $white;
+    border: 1.5px solid $blue;
+    color: $dark-gray;
+    cursor: pointer;
+    @include transition(.3s);
+    margin-bottom: 25px;
+    &__icon {
+      @include font-size($fz-30);
+      margin-right: 20px;
+    }
+
+    &:first-of-type {
+      @include border-right-radius(0);
+    }
+
+    &:last-of-type {
+      @include border-left-radius(0);
+    }
+
+    @include hover-focus-active {
+      background: $blue;
+      color: $white;
+      @include transition(.3s);
+    }
+  }
+
+  .radio-toolbar input[type="radio"]:checked + .registration__type {
+    background: $blue;
+    color: $white
+  }
+
+
+  &__alternative {
+    @include font-size($fz-16);
+    color: $blue;
+    margin:0 0 20px 0;
+
+    &:after,
+    &::before {
+      content: '';
+      width: 70px;
+      border-top: 1px solid $light-gray;
+    }
+
+    span {
+      margin: 0 20px;
+    }
+  }
+
+  &__input {
+    @include login-input-group;
+
+    .dropdown-menu {
+      width: 100%;
+      border: none;
+      overflow: hidden;
+      box-shadow: 0 0 10px $black-shadow;
+
+      .dropdown-item {
+        @include dropdown-list-hover;
+        @extend %proxima-regular;
+        @include font-size($fz-14);
+        width: 100%;
+        text-overflow: ellipsis;
+        position: relative;
+        overflow: hidden;
+        color: $dark-gray;
+
+        &.active,
+        &:active {
+          background: $white;
+          height: 100%;
+          @include dropdown-list-hover;
+          color: $dark-gray
+        }
+      }
+    }
+  }
+
+  &__forgot {
+    @extend %proxima-semibold-it;
+    @include hover-focus-active {
+      color: $blue;
+    }
+    color: $text-color;
+  }
+
+  &__btn {
+    @include login-btn;
+  }
+
+  .error {
+    @include font-size($fz-12);
+    color: $error;
+    top: 40px;
+    left: 10px;
+  }
+
+  &__radioBtn {
+    margin-bottom: 30px;
+
+    &__title {
+      color: $dark-gray;
+    }
+  }
+
+  &__singnup {
+    @include login-footer;
+  }
+
+  &__form__group,
+  &__radioBtn {
+    .registration__input,
+    mat-radio-button {
+      width: calc(100% / 2 - 5px);
+    }
+  }
+
+  &__calendar {
+    padding-bottom: 35px;
+  }
+}
+
+//DROPDOWN
+:host::ng-deep {
+  .dropdown-menu {
+    width: 100%;
+    overflow: hidden;
+
+    .dropdown-item {
+      position: relative;
+      @include dropdown-list-hover;
+
+      ngb-highlight {
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+      }
+    }
+  }
+
+  .dropdown-item.active,
+  .dropdown-item:active {
+    background-color: $white;
+    color: $blue;
+  }
+
+  .mat-form-field-flex {
+    @include border-radius(5px);
+    padding: 9px 15px;
+    border: 1px solid $light-gray;
+  }
+}
+
+:host::ng-deep {
+  .ui-calendar.ui-calendar-w-btn {
+    .ui-inputtext {
+      border: none !important;
+      width: calc(100% - 35px);
+      padding: 8px 20px;
+      background: $white !important;
+    }
+
+    .ui-datepicker-trigger.ui-button {
+      border: none !important;
+      background: none !important;
+      @include hover-focus-active {
+        outline: none !important;
+      }
+    }
+  }
+
+  .ui-datepicker .ui-datepicker-header .ui-datepicker-title select {
+    background: transparent;
+  }
+
+  .ui-datepicker:not(.ui-datepicker-inline) {
+    top: 36px !important;
+  }
+
+  .ui-button-icon-only .ui-button-icon-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ui-calendar {
+    @include login-input;
+    display: block;
+    padding: 0 !important;
+  }
+
+  .pi-calendar:before {
+    @include font-size($fz-10);
+    @extend %fontello;
+    content: '\e800';
+    color: $lighter-gray
+  }
+}
+
+::ng-deep {
+  @include redesign-am-input;
+
+  .cdk-overlay-connected-position-bounding-box {
+    position: relative;
+    padding: 0 15px;
+  }
+
+  .mat-select-panel-wrap {
+    flex-basis: auto;
+  }
+
+  .cdk-overlay-pane {
+    transform: translateX(-16px) translateY(28px) !important;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-suffix {
+    position: absolute;
+    right: 25px;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 40px;
+  }
+
+  .mat-input-element {
+    padding: 10px 20px;
+  }
+
+  .mat-form-field-infix {
+    @include login-input;
+    border: none;
+    padding: 0 !important;
+    min-width: 100% !important;
+
+    .mat-input-element.mat-form-field-autofill-control.cdk-text-field-autofill-monitored {
+      padding: 0;
+    }
+  }
+
+  .mat-select-arrow-wrapper {
+    @include size(16px);
+    display: block;
+    padding: 0;
+
+    .mat-select-arrow {
+      border: none !important;
+      height: inherit;
+
+      &::after {
+        @include font-size($fz-12);
+        @extend %fontello;
+        content: '\e800';
+        color: $lighter-gray;
+      }
+    }
+  }
+}
+
+//DROPDOWN END
+.social-icons {
+  &__items {
+    @include size(calc((100% / 2) - 10px), 40px);
+    @include font-size($fz-16);
+    @include border-radius(5px);
+    background: transparent;
+    border: 1px solid $light-gray;
+    color: $text-color;
+
+    img {
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .social-icons {
+    &__items {
+      @include size(calc((100% / 2) - 10px), 35px);
+      @include font-size($fz-14);
+
+      img {
+        height: 16px;
+      }
+    }
+  }
+  .registration {
+    @include font-size($fz-14);
+
+    &__alternative {
+      &:after,
+      &::before {
+        width: 60px;
+      }
+
+      span {
+        margin: 0 15px;
+      }
+    }
+
+    .error {
+      top: 38px;
+    }
+
+    &__forgot {
+      @include font-size($fz-14);
+    }
+
+    &__type {
+      @include size(calc(100% / 2), 40px);
+      @include font-size($fz-14);
+
+      &__icon {
+        @include font-size($fz-24);
+        line-height: 1;
+        margin-right: 15px;
+      }
+    }
+  }
+  .cdk-overlay-connected-position-bounding-box .cdk-overlay-pane {
+    width: 300px;
+  }
+  ::ng-deep {
+    body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+      padding: 7px 20px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .social-icons {
+    &__items {
+      @include size(calc((100% / 2) - 5px), 30px);
+      @include font-size($fz-12);
+
+      img {
+        height: 14px;
+      }
+    }
+  }
+  .registration {
+    @include font-size($fz-12);
+
+    &__alternative {
+      @include font-size(inherit);
+      margin: 15px 0;
+    }
+
+    .error {
+      @include font-size(10px);
+      top: 38px;
+    }
+
+    &__forgot,
+    &__singnup {
+      @include font-size($fz-12);
+    }
+
+    &__type {
+      @include size(calc(100% / 2), 34px);
+      @include font-size($fz-12);
+
+      &__icon {
+        @include font-size($fz-18);
+        margin-right: 10px;
+      }
+    }
+  }
+  :host::ng-deep {
+    .cdk-overlay-connected-position-bounding-box .cdk-overlay-pane {
+      width: 300px !important;
+    }
+  }
+  ::ng-deep {
+    body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+      @include font-size($fz-12);
+      padding: 7px 20px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  :host::ng-deep {
+    .cdk-overlay-connected-position-bounding-box .cdk-overlay-pane {
+      width: 100% !important;
+    }
+
+    .mat-select-panel {
+      min-width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+}

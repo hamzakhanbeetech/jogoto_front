@@ -1,0 +1,151 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.login {
+  &__title {
+    @include login-title
+  }
+
+  &__alternative {
+    @include font-size($fz-16);
+    color: $blue;
+    margin: 0 0 25px;
+
+    &:after, &::before {
+      content: '';
+      width: 70px;
+      border-top: 1px solid $light-gray;
+    }
+
+    span {
+      margin: 0 20px;
+    }
+  }
+
+  &__input {
+    @include login-input-group;
+  }
+
+  &__forgot {
+    @extend %proxima-semibold-it;
+    @include font-size($fz-16);
+    @include hover-focus-active {
+      color: $blue;
+    }
+    color: $text-color;
+  }
+
+  &__btn {
+    @include login-btn;
+  }
+
+  .error {
+    @include error;
+  }
+
+  &__checkbox {
+    margin-bottom: 30px;
+
+    app-checkbox {
+      .container-checkbox {
+        @include font-size($fz-16);
+        color: $text-color
+      }
+    }
+  }
+
+  &__singnup {
+    @include login-footer;
+  }
+}
+
+.social-icons {
+  &__items {
+    @include size(calc((100% / 2) - 10px), 40px);
+    @include font-size($fz-16);
+    @include border-radius(5px);
+    background: transparent;
+    border: 1px solid $light-gray;
+    color: $text-color;
+
+    img {
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .social-icons {
+    &__items {
+      @include size(calc((100% / 2) - 10px), 35px);
+      @include font-size($fz-14);
+
+      img {
+        height: 16px;
+      }
+    }
+  }
+
+  .login {
+    &__alternative {
+      @include font-size($fz-14);
+
+      &:after, &::before {
+        width: 60px;
+      }
+
+      span {
+        margin: 0 15px;
+      }
+    }
+
+    &__forgot {
+      @include font-size($fz-14);
+    }
+
+    &__checkbox {
+      margin-bottom: 30px;
+
+      app-checkbox {
+        .container-checkbox {
+          @include font-size($fz-14);
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .social-icons {
+    &__items {
+      @include size(calc((100% / 2) - 5px), 30px);
+      @include font-size($fz-12);
+
+      img {
+        height: 14px;
+      }
+    }
+  }
+
+  .login {
+    &__alternative {
+      @include font-size($fz-12);
+      margin: 15px 0;
+    }
+
+    &__forgot {
+      @include font-size($fz-12);
+    }
+
+    &__checkbox {
+      margin-bottom: 20px;
+
+      app-checkbox {
+        .container-checkbox {
+          @include font-size($fz-12);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<div id="floating-panel" class="bg-white  py-2 px-3 position-absolute rounded">
+    <app-checkbox [filterName]="'search.move_search'|translate"
+                  [value]="listenOnDrag"
+                  (chackboxValue)="searchCheckbox($event)"
+                  *ngIf="showCheckbox"
+    ></app-checkbox>
+    <span *ngIf="!showCheckbox" (click)="onClickSearch()">{{'search.search_area'|translate}}</span>
+</div>
+<div #gmap class="map-container">
+</div>
+
+
+
+

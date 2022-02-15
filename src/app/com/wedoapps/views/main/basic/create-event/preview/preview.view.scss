@@ -1,0 +1,282 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.event {
+  background: $gray;
+  padding-top: 20px;
+  padding-bottom: 100px;
+
+  &__left {
+    @include size(710px, auto);
+  }
+
+  &__container {
+    @include border-radius(5px);
+    padding-bottom: 20px;
+    background: $white;
+    box-shadow: 0 2px 1px $black-shadow-lighter;
+
+    &__image {
+      @include size(100%, 375px);
+      margin-bottom: 25px;
+
+      img {
+        max-width: 100%;
+        max-height: 375px;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      &__category {
+        @include category-btn;
+        color: $white;
+      }
+    }
+
+    &__names {
+      left: 15px;
+      bottom: 15px;
+    }
+
+    &__title {
+      @extend %proxima-semibold;
+      @include font-size($fz-20);
+      color: $event-title;
+      margin: 0 0 10px;
+    }
+
+    &__type {
+      color: $text-color;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    &__start-end {
+      margin-bottom: 15px;
+      color: $dark-orange;
+      span {
+        @include font-size(inherit);
+      }
+    }
+
+    &__creater-image {
+      @include user-image(45px, 40px, 32px);
+    }
+
+    &__creater-name {
+      color: $blue;
+      line-height: 1;
+    }
+
+    &__source-name {
+      color: $blue;
+      line-height: 1;
+      text-decoration: underline;
+    }
+
+    &__section {
+      border-top: solid $gray-border;
+      border-width: 1px 0;
+      margin-top: 20px;
+      padding: 20px 15px 0;
+
+      .event__container__creater-image {
+        margin-right: 5px;
+      }
+
+      &__more {
+        @include size(47px);
+        background: $more-gray;
+        color: $blue
+      }
+
+      &__invite {
+        @include gray-btn-icon;
+      }
+
+      &__filter {
+        @include filter-btn-gray;
+      }
+    }
+
+    &__edit {
+      @include gray-btn-icon
+    }
+
+    &__edit,
+    &__publish {
+      @include font-size($fz-18);
+      height: 46px;
+    }
+
+    &__publish {
+      @include login-btn;
+      border: 1px solid $blue;
+      margin-left: 20px;
+      padding: 8px 70px;
+      height: 46px;
+      @include hover {
+        border: 1px solid $darker-blue;
+      }
+    }
+  }
+}
+
+.description {
+  @include font-size($fz-14);
+  color: $dark-gray;
+
+  .opacity {
+    background: linear-gradient(0deg, rgba(52, 58, 64, .1) 20%, rgba(52, 58, 64, .7) 40%, $dark-gray 0%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    top: 50%;
+  }
+}
+
+.similar-events__block {
+  width: calc(100% / 2 - 10px);
+}
+
+.social-networks {
+  &__item {
+    margin-bottom: 15px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .event {
+    &__left {
+      @include size(100%, auto);
+    }
+
+    &__container {
+      &__image {
+        margin-bottom: 18px;
+      }
+
+      &__title {
+        @include font-size($fz-18);
+      }
+
+      &__type,
+      &__start-end {
+        @include font-size($fz-14);
+        margin-bottom: 15px;
+      }
+
+      &__creater-name,
+      &__source-name {
+        @include font-size($fz-14);
+      }
+
+      &__section {
+        margin-top: 15px;
+        padding: 15px 15px 0;
+
+        .event__container__creater-image {
+          margin-right: 5px;
+        }
+
+        &__more {
+          @include size(42px);
+        }
+
+        &__filter {
+          @include transition(.3s);
+          @include border-radius(5px);
+          @include font-size($fz-14);
+          color: $dark-gray;
+          background: $more-gray;
+          padding: 5px 20px;
+          max-width: 150px;
+          margin-right: 15px;
+        }
+      }
+
+      &__edit,
+      &__publish {
+        @include font-size($fz-14);
+        height: 40px;
+      }
+
+      &__publish {
+        padding: 8px 35px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event {
+    &__container {
+      &__title {
+        @include font-size($fz-16);
+      }
+
+      &__type,
+      &__start-end {
+        @include font-size($fz-12);
+        margin-bottom: 15px;
+      }
+
+      &__creater-name,
+      &__source-name {
+        @include font-size($fz-12);
+      }
+
+      &__section {
+        margin-top: 15px;
+        padding: 15px 15px 0;
+
+        .event__container__creater-image {
+          margin-right: 5px;
+        }
+
+        &__more {
+          @include size(34px);
+        }
+
+        &__invite {
+          height: 32px;
+        }
+      }
+    }
+  }
+  .description {
+    @include font-size($fz-12);
+  }
+  .similar-events__block {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .event {
+    padding: 0;
+
+    &__container {
+      @include border-radius(0);
+
+      &__section__invite {
+        margin-top: 10px;
+      }
+
+      &__image {
+        @include size(100%, 170px);
+      }
+
+      &__edit,
+      &__publish {
+        @include font-size($fz-12);
+        height: 34px;
+      }
+
+      &__publish {
+        padding: 2px 25px;
+      }
+    }
+  }
+}

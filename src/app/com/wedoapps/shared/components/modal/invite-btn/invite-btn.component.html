@@ -1,0 +1,28 @@
+<div class="invite-btn" (click)="onClickInviteButton()">
+  <div class="btn-group" dropdown [dropup]="!changePosition">
+    <div id="invite-users" dropdownToggle >
+      <button type="button" class="invite">
+        <i class="icon-mail"></i>
+        {{"event.invite" | translate}}
+      </button>
+    </div>
+    <ul  *dropdownMenu
+        class="dropdown-menu invite__dropdown border-0 shadow" role="menu"
+        aria-labelledby="button-basic">
+      <li *ngIf="showInviteButton" role="menuitem">
+        <button class="dropdown-item position-relative"
+                (click)="openInviteMembersModal()">{{"invite_members" | translate}}</button>
+      </li>
+      <li role="menuitem">
+        <button (click)="openInviteMembersByEmailModal()"
+                class="dropdown-item position-relative">{{"invite_via_email" | translate}}</button>
+      </li>
+      <li role="menuitem" *ngIf="showFileUpload">
+        <button (click)="openDialogFileUpload()"
+                class="dropdown-item position-relative">{{"create-group.import_members"
+          | translate}}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div ngbDropdown class="btn-group where dropdown w-100"
+     (openChange)="openChanged($event)"
+     (onHidden)="sendValuesOfWhere()">
+  <button #button class="btn__filter" id="dropdownWhere" ngbDropdownToggle type="button">
+    <i class="icon-pin-location"></i>{{'filter.where' | translate}}
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownWhere"  class="dropdown-menu  shadow border-0">
+    <app-event-filter-where-content (valuesOfWhere)="getValuesOfWhere($event)" [isClosed]="data"></app-event-filter-where-content>
+
+    <div class="text-left w-100 dropdown-footer">
+      <app-checkbox (chackboxValue)="setOnlineFilter()" [value]="isOnline"
+        class="check-all mb-0" [filterName]="'create-event.is_online' | translate">
+      </app-checkbox>
+      <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto" ngbDropdownItem (click)="isOk = true">Ok</button>
+    </div>
+  </div>
+</div>

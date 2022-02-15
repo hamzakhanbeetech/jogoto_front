@@ -1,0 +1,37 @@
+<form class="reset"  [formGroup]="forgotForm">
+  <h3 class="reset__title text-center">{{'forgot.forgot_title' | translate}}</h3>
+  <p class="reset__description text-center">
+    {{'forgot.forgot_desc' | translate}}
+  </p>
+  <div class="form-group reset__input  position-relative" [ngClass]="{'reset__input-error' : isFormValid('email')}">
+    <input type="email" class="form-control shadow-none" formControlName="email"
+      [placeholder]="'login.email' | translate" />
+    <p class="m-0 position-absolute" *ngIf="isFormValid('email')">This is an email address error message</p>
+  </div>
+  <div class="form-group mb-0 position-relative">
+    <button type="button"  class="reset__btn text-white text-uppercase
+       w-100 border-0 d-flex justify-content-center align-items-center " [disabled]="forgotForm.invalid" [ngClass]="{'disabled': forgotForm.invalid}"
+      (click)="forgotPassword()">
+      <span>{{'forgot.reset-password' | translate}} </span>
+      <span class="spinner-border" role="status" *ngIf="loading">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </button>
+<!--    <button type="button" class="reset__btn text-white text-uppercase-->
+<!--       w-100 border-0 d-flex justify-content-center align-items-center"-->
+<!--      (click)="onClickResendCode()" *ngIf="success" [ngClass]="{'disabled': forgotForm.invalid}">-->
+<!--      <span>{{'check.resend' | translate}} </span>-->
+<!--      <span class="spinner-border" role="status" *ngIf="loading">-->
+<!--        <span class="sr-only">Loading...</span>-->
+<!--      </span>-->
+<!--    </button>-->
+    <p class="error position-absolute" *ngIf="serverError">{{serverError}}</p>
+  </div>
+  <div class="reset__singnup">
+    <p class="mb-0 text-center">
+      {{"forgot.return" | translate}}
+      <a [routerLink]="'/auth/login'|localize" class="reset__singnup__link text-decoration-none">{{"login.login" | translate}}</a>
+    </p>
+  </div>
+</form>
+<app-allert-message></app-allert-message>

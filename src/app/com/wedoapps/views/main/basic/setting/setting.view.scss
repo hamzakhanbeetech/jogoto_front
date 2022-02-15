@@ -1,0 +1,675 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+:host {
+  @include tabs;
+}
+
+table {
+  tr {
+    td, th {
+      padding: 23px 0 16px;
+    }
+
+    td:first-child,
+    th:first-child {
+      max-width: 300px;
+    }
+  }
+
+  .settings__description {
+    @include font-size($fz-18);
+  }
+
+  .mt-13 {
+    margin-top: 15px;
+  }
+
+  ::ng-deep {
+    app-checkbox .container-checkbox {
+      padding-left: 20px !important;
+    }
+  }
+}
+
+::ng-deep {
+  .pi{
+    &:not(::before),
+    :not(::after){
+      @extend %proxima-regular;
+    }
+  }
+  .settings-tab ul .nav-item:nth-child(3){
+    margin-right: 0 !important;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 10px !important;
+  }
+
+  body {
+    .ui-dropdown {
+      @include size(330px, 40px);
+      @include border-radius(5px);
+      border: 1px solid $lighter-gray;
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      @include hover-focus-active {
+        border: 1px solid $lighter-gray !important;
+      }
+
+      .pi-chevron-down::before {
+        @extend %fontello;
+        content: '\e800';
+      }
+
+      &:not(.ui-state-disabled).ui-state-focus {
+        border-color: $lighter-gray;
+      }
+    }
+
+    .ui-dropdown-panel {
+      border: none;
+      padding: 15px 0;
+    }
+
+    .ui-dropdown-label {
+      @include font-size($fz-16);
+    }
+  }
+
+  .ui-dropdown-item {
+    @include font-size($fz-16);
+    @include hover-focus-active {
+      background: transparent !important;
+    }
+    @include dropdown-list-hover;
+    position: relative;
+
+    &.ui-state-highlight {
+      color: $blue !important;
+      background: transparent !important;
+
+      &::before {
+        height: 100%;
+      }
+    }
+  }
+}
+
+
+.settings {
+  line-height: 1;
+
+  &__title {
+    @include font-size($fz-24);
+    border-bottom: 1px solid $blue;
+    padding: 34px 0 20px;
+    margin-bottom: 15px;
+  }
+
+  &__form {
+    width: 500px;
+  }
+
+  &__group {
+    padding-bottom: 40px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__input {
+    @include login-input;
+  }
+
+  &__btn {
+    @include login-btn;
+    width: 350px;
+    padding: 0 10px;
+  }
+
+  &__sub-title {
+    @include font-size($fz-18);
+    @extend %proxima-semibold;
+    color: $dark-gray;
+    margin: 15px 0 9px;
+
+    &.title {
+      @include font-size($fz-20);
+    }
+  }
+
+  &__description {
+    @include font-size($fz-16);
+    margin-bottom: 10px;
+    color: $text-color;
+
+    &__link {
+      color: $blue;
+      text-decoration: underline;
+    }
+  }
+
+  mat-radio-button {
+    margin-bottom: 15px;
+
+    ::ng-deep {
+      .mat-radio-label-content {
+        color: $dark-gray
+      }
+    }
+  }
+
+  &__close {
+    padding: 14px 20px 34px;
+
+    &__title {
+      color: $dark-gray;
+      margin-bottom: 20px;
+    }
+
+    &__text {
+      @include border-radius(5px);
+      @include placeholder {
+        color: $lighter-gray;
+      }
+      resize: none;
+      height: 100px;
+      border: 1px solid $light-gray;
+      padding: 20px;
+    }
+
+    &__help {
+      color: $dark-gray;
+      margin-bottom: 16px;
+      padding-left: 28px;
+
+      a {
+        color: $blue;
+        text-decoration: none !important;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .tab-content {
+      width: calc(100% - 355px);
+    }
+
+    .nav-tabs {
+      flex-direction: column;
+      border-bottom: none;
+      border-right: 1px solid $border-color;
+      margin-right: 40px;
+      width: 315px;
+      margin-top: 15px;
+
+      .nav-link {
+        margin-bottom: 10px;
+        padding: 5px 0 5px 19px;
+        position: relative;
+        text-transform: none;
+
+        &.active {
+          &::before {
+            height: 100%;
+          }
+        }
+
+        &::before {
+          background: $blue;
+          @include size(2px, 0);
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        @include hover {
+          &::before {
+            @include size(2px, 100%);
+          }
+          i {
+            &::before {
+              background: $blue;
+              color: inherit;
+            }
+          }
+        }
+      }
+    }
+
+    app-checkbox {
+      margin-bottom: 20px;
+
+      .container-checkbox {
+        min-height: 20px;
+        display: flex;
+        align-items: center;
+
+        .checkmark {
+          &::after {
+            top: -3px
+          }
+        }
+      }
+    }
+  }
+}
+
+.notification {
+  margin-bottom: 33px;
+
+  &__item {
+    border-bottom: 1px solid $border-color;
+    padding: 16px 20px;
+  }
+}
+
+.social-preferences {
+  border-top: 1px solid $border-color;
+  margin-bottom: 40px;
+  .title {
+    margin-top: 33px;
+  }
+
+  .icon {
+    @include font-size($fz-20);
+    color: $blue;
+    margin-right: 20px;
+  }
+
+  ::ng-deep {
+    .mat-slide-toggle {
+      height: auto;
+
+      &-label {
+        @extend %proxima-regular;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        border-bottom: 1px solid $border-color;
+        padding: 17px 0;
+        margin: 0;
+        color: $text-color;
+      }
+    }
+  }
+}
+.setting-events {
+  app-event-column {
+    width: calc((100% - 50px) / 2);
+
+    //&:nth-child(3n+2) {
+      margin: 0 10px 20px;
+    //}
+  }
+}
+
+app-group-column {
+  @include border-radius(5px);
+  width: calc(100% / 2 - 10px);
+  margin-bottom: 25px;
+
+  &:nth-child(2n + 1) {
+    margin-right: 20px;
+  }
+}
+//medias
+@include media-breakpoint-down(lg) {
+  table {
+    tr {
+      td, th {
+        padding: 18px 0 16px;
+      }
+
+      td:first-child,
+      th:first-child {
+        max-width: 250px;
+      }
+    }
+
+    .settings__description {
+      @include font-size($fz-16);
+    }
+  }
+  .settings {
+    &__title {
+      @include font-size($fz-18);
+      padding: 34px 0 16px;
+      margin-bottom: 10px;
+    }
+
+    &__form {
+      width: 467px;
+    }
+
+    &__group {
+      padding-bottom: 37px;
+    }
+
+    &__btn {
+      width: 250px;
+    }
+
+    &__sub-title {
+      @include font-size($fz-16);
+      margin: 15px 0 7px;
+
+      &.title {
+        @include font-size($fz-18);
+      }
+    }
+
+    &__description {
+      @include font-size($fz-14);
+    }
+
+    mat-radio-button {
+      ::ng-deep {
+        .mat-radio-label-content {
+          @include font-size($fz-14)
+        }
+      }
+    }
+
+    &__close {
+      &__title {
+        @include font-size($fz-14);
+        margin-bottom: 16px;
+      }
+
+      &__text {
+        @include font-size($fz-14);
+      }
+
+      &__help {
+        @include font-size($fz-14);
+      }
+    }
+
+    ::ng-deep {
+      .tab-content {
+        width: calc(100% - 240px);
+      }
+
+      .nav-tabs {
+        margin-right: 20px;
+        width: 220px;
+        margin-top: 15px;
+      }
+    }
+  }
+  ::ng-deep {
+    .ui-dropdown {
+      @include size(300px, 36px);
+      @include border-radius(5px);
+
+      .pi-chevron-down::before {
+        @include font-size($fz-14)
+      }
+    }
+
+    .ui-dropdown-label {
+      @include font-size($fz-14);
+    }
+
+    .ui-dropdown-item {
+      @include font-size($fz-14);
+    }
+  }
+  .social-preferences {
+    ::ng-deep {
+      .mat-slide-toggle {
+        &-label {
+          @include font-size($fz-14);
+          padding: 15px 0;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  table {
+    tr {
+      td:first-child,
+      th:first-child {
+        max-width: 220px;
+      }
+    }
+
+    .settings {
+      &__description, &__sub-title {
+        @include font-size($fz-14);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .container-checkbox {
+    @include font-size($fz-12);
+  }
+  table {
+    tr {
+      td:first-child,
+      th:first-child {
+        max-width: 220px;
+      }
+    }
+
+    .settings {
+      &__description, &__sub-title {
+        @include font-size($fz-12);
+      }
+    }
+  }
+  .settings {
+    &__title {
+      @include font-size($fz-16);
+      padding: 22px 0 10px;
+    }
+
+    &__form {
+      width: 100%;
+    }
+
+    &__btn {
+      width: 250px;
+      padding: 0 10px;
+    }
+
+    &__sub-title {
+      @include font-size($fz-14);
+
+      &.title {
+        @include font-size($fz-14);
+      }
+    }
+
+    &__description {
+      @include font-size($fz-12);
+    }
+
+    mat-radio-button {
+      ::ng-deep {
+        .mat-radio-label-content {
+          @include font-size($fz-12)
+        }
+      }
+    }
+
+    &__close {
+      &__title {
+        @include font-size($fz-12);
+        margin-bottom: 16px;
+      }
+
+      &__text {
+        @include font-size($fz-12);
+      }
+
+      &__help {
+        @include font-size($fz-12);
+      }
+    }
+
+    ::ng-deep {
+      .tab-content {
+        width: 100%;
+      }
+
+      .nav-tabs {
+        margin-right: 0;
+        width: 100%;
+        margin-top: 0;
+        border-right: none;
+      }
+    }
+  }
+  .languages {
+    padding: 0 !important;
+    margin-bottom: 20px;
+  }
+  ::ng-deep {
+    body {
+      .ui-dropdown {
+        @include size(100%, 30px);
+        @include border-radius(5px);
+        max-width: 160px;
+
+        .pi-chevron-down::before {
+          @include font-size($fz-12)
+        }
+      }
+
+      .ui-dropdown-label {
+        @include font-size($fz-12);
+      }
+    }
+
+    .ui-dropdown-item {
+      @include font-size($fz-12);
+    }
+  }
+  .social-preferences {
+    ::ng-deep {
+      .mat-slide-toggle {
+        &-label {
+          @include font-size($fz-12);
+          padding: 15px 0;
+        }
+      }
+    }
+  }
+  app-group-column {
+    width: 100%;
+
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+  }
+
+  .setting-events {
+    app-event-column {
+      width: 100%;
+      margin: 0 0 20px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .settings__group {
+    div {
+      width: 100%;
+
+      .settings__btn {
+        width: inherit;
+      }
+    }
+  }
+
+  table {
+    tr {
+      td:first-child,
+      th:first-child {
+        max-width: 100px;
+      }
+    }
+  }
+
+  app-group-column {
+    width: 100%;
+
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+  }
+}
+
+.container-checkbox {
+  @include font-size($fz-14);
+  padding-left: 20px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  input {
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked {
+      ~ .checkmark {
+        border: 1px solid $blue;
+
+        &::after {
+          display: block;
+        }
+      }
+    }
+  }
+
+  @include hover-focus-active {
+    input ~ .checkmark {
+      border: 1px solid $blue;
+    }
+  }
+
+  input:disabled ~ .checkmark {
+    border: 1px solid $text-color !important;
+
+    &::after {
+      color: $text-color !important;
+    }
+  }
+
+  .checkmark {
+    @include border-radius(3px);
+    @include size(20px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $white;
+    border: 1px solid $light-gray;
+
+    &::after {
+      @extend %fontello;
+      @include font-size($fz-18);
+      content: "\e810";
+      left: 3px;
+      top: -2px;
+      color: $blue;
+      position: absolute;
+      display: none;
+    }
+  }
+}

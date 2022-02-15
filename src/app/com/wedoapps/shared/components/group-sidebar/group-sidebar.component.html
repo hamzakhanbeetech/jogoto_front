@@ -1,0 +1,114 @@
+<section class="group__sidebar h-100 d-none d-xl-block">
+  <section class="group__sidebar__container bg-white interested-section">
+    <p class="group__sidebar__container__title text-break">{{groupData?.name}}</p>
+    <p class="group__sidebar__container__type" [ngClass]="{'border-0 m-0 p-0':previewPage}">
+      <span *ngIf="groupData?.group_type==='open';else closeGroup">{{"create-group.open_group" | translate}}</span>
+      <ng-template #closeGroup>
+        <span>{{"create-group.close_group" | translate}}</span>
+      </ng-template>
+    </p>
+    <div class="justify-content-between" [ngClass]="{'d-none':previewPage,'d-flex':!previewPage}">
+      <div *ngIf="!groupData?.creator.imCreator" class="flex-grow-1">
+        <button type="button" *ngIf="groupData.group_type === 'closed';else follow"
+                (click)="joinGroup(groupData._id)"
+                [disabled]="loading || groupData.imJoined"
+                class="group__sidebar__container__join text-white border-0 d-flex align-items-center justify-content-center">
+          <span><i class="icon-plus"></i></span>
+          <span *ngIf="!groupData.imJoined">{{ 'group.join_btn'| translate}}</span>
+          <span *ngIf="groupData.imJoined && !groupData.state">{{'group.pending_btn' | translate}}</span>
+          <span *ngIf="groupData.state">{{'group.leave' | translate}}</span>
+        </button>
+        <ng-template #follow>
+          <button (click)="followGroup(groupData._id)"
+                  class="group__sidebar__container__join text-white border-0  d-flex align-items-center justify-content-center"
+                  [disabled]="loading" type="button">
+            <span *ngIf="groupData.imJoined" class="mr-0">{{ 'event.unfollow'| translate}}</span>
+            <span *ngIf="!groupData.imJoined" class="mr-0">{{'event.follow' | translate}}</span>
+          </button>
+        </ng-template>
+      </div>
+      <div class="invite-btn text-right">
+        <div class="btn-group" dropdown>
+          <div id="invite-users" dropdownToggle class=" col-12 col-sm-auto p-0 text-right">
+            <button type="button" class="group__sidebar__container__invite" *ngIf="groupData?.imJoined && groupData?.state && !groupData?.archive">
+              <i class="icon-mail"></i>
+              {{"event.invite" | translate}}
+            </button>
+          </div>
+          <ul id="invite-users" *dropdownMenu class="dropdown-menu group__sidebar__container__dropdown border-0 shadow"
+              role="menu" aria-labelledby="button-basic">
+            <li role="menuitem">
+              <button class="dropdown-item position-relative" type="button"
+                      (click)="openInviteMembersModal()">{{"invite_members" | translate}}</button>
+            </li>
+            <li role="menuitem">
+              <button
+                type="button"
+                (click)="openInviteMembersByEmailModal()"
+                class="dropdown-item position-relative">{{"invite_via_email" | translate}}</button>
+            </li>
+            <li role="menuitem">
+              <button type="button"
+                      (click)="openDialogFileUpload()"
+                      class="dropdown-item position-relative">{{"create-group.import_members" | translate}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="group__sidebar__container bg-white  interested-section" *ngIf="!isMembersTab && checkGroupState">
+    <div class="d-flex justify-content-between align-items-start"><h3
+      class="title">{{"group.admins_moderators" | translate}} {{groupData?.adminsAndModeratorsCount}}</h3>
+      <button type="button" class="bg-transparent border-0 btn-link text-decoration-none"
+              (click)="selectUserTabPanel()">
+        {{"view_all" | translate}}</button>
+    </div>
+    <div *ngFor="let admin of moderatorsAdminsArray,let i=index">
+      <div class="d-flex group__sidebar__container__inviter" *ngIf="i<3">
+        <a routerLink="{{(admin.register_type == 'individual'?'/user/':'/organization/') + admin._id}}"
+           [attr.href]="previewPage ? null : '#'"
+           class="d-block rounded-circle overflow-hidden group__sidebar__container__user-image float-left text-decoration-none">
+          <img [src]="admin?.poster?.min" class="w-100 h-100" [alt]="admin?.name + ' ' + admin?.surname">
+        </a>
+        <div class="d-flex flex-column justify-content-center">
+          <a class="group__sidebar__container__user-name mb-0 text-decoration-none"
+             [attr.href]="previewPage ? null : '#'"
+             [routerLink]="((admin.register_type == 'individual'?'user/':'/organization/') + admin._id)|localize">{{admin.name}} {{admin.surname}}</a>
+          <p class="group__sidebar__container__user-role mb-0">
+            <span *ngIf="admin.im_creator">{{"creator_admin" | translate}}</span>
+            <span *ngIf="admin.admin">{{"admin" | translate}}</span>
+            <span *ngIf="admin.moderator">{{"moderator" | translate}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-start users-list" *ngIf="usersArray?.length">
+      <h3
+        class="title text-capitalize">{{"members" | translate}} {{membersCount}}</h3>
+      <button type="button" class="bg-transparent border-0 btn-link text-decoration-none"
+              (click)="selectUserTabPanel()">
+        {{"view_all" | translate}} </button>
+    </div>
+    <div class="d-flex" *ngIf="usersArray?.length">
+      <div *ngFor="let user of usersArray| slice:0:5">
+        <div class="d-flex group__sidebar__container__inviter mb-0">
+          <a routerLink="{{(user.register_type == 'individual'?'/user/':'/organization/') + user._id}}"
+             [attr.href]="previewPage ? null : '#'"
+             class="d-block rounded-circle overflow-hidden group__sidebar__container__user-image float-left text-decoration-none">
+            <img [src]="user?.poster?.min" class="w-100 h-100" [alt]="user?.name + ' ' + user?.surname">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section *ngIf="!previewPage && isMembersTab">
+    <app-sidebar-suggested-groups class="d-block" [groupId]="groupData._id"
+                                  [isAuthorized]="isAuthorized"></app-sidebar-suggested-groups>
+  </section>
+  <!--<a href="" class="promote-group text-white text-decoration-none-->
+<!--d-flex align-items-center justify-content-center" *ngIf="checkGroupState">-->
+    <!--<i class="icon-promotion"></i>-->
+    <!--{{"promote_group" | translate}}-->
+  <!--</a>-->
+</section>

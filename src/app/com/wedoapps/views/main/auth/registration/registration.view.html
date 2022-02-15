@@ -1,0 +1,280 @@
+<form class="registration" [formGroup]="registrationForm" autocomplete="off">
+  <section class="w-100" *ngIf="!userRegistration && !companyRegistration && !resendPassword">
+    <h3 class="registration__title text-center">{{'registration.title' | translate}}</h3>
+
+    <div class="radio-toolbar d-flex justify-content-between">
+      <input type="radio" id="user" name="radios" value="user" class="d-none" (click)="setradio($event)"
+             [checked]="activeRadioButtonName == 'user'"/>
+      <label for="user" class="registration__type d-flex align-items-center justify-content-center"> <i
+          class="icon-user registration__type__icon"></i>
+        {{'registration.individual' | translate}}</label>
+
+      <input type="radio" id="company" value="company" class="d-none" name="radios" (click)="setradio($event)"
+        [checked]="activeRadioButtonName == 'company'">
+      <label for="company" class="registration__type d-flex align-items-center justify-content-center">
+        <i class="icon-business registration__type__icon"></i>
+        {{'registration.professional' | translate}}</label>
+    </div>
+    <app-social-login class="d-flex"
+            [activeRadioButtonName]="activeRadioButtonName"
+            [latLon]="latLon"
+    ></app-social-login>
+    <p class="registration__alternative d-flex align-items-center justify-content-center">
+      <span>{{'or' | translate}}</span>
+    </p>
+    <div class="form-group mb-0 position-relative">
+      <button type="button"
+        class="registration__btn text-white text-uppercase w-100 border-0 d-flex justify-content-centerregistration__btn text-white text-uppercase w-100 border-0 d-flex justify-content-center align-items-center"
+        (click)="openCloseRegistrationType()">
+        <span>{{'registration.email' | translate}} </span></button>
+    </div>
+    <div class="registration__singnup">
+      <p class="mb-0 text-center">{{'registration.hav_ account' | translate}}
+        <a [routerLink]="'/auth/login'|localize"
+          class="registration__singnup__link text-decoration-none">{{'login.login' | translate}} </a>
+      </p>
+    </div>
+  </section>
+  <section *ngIf="userRegistration" formGroupName="user">
+    <div>
+      <button type="button" class="bg-transparent border-0 registration__back" (click)="openCloseRegistrationType()">
+        <i class="icon-arrow-left"></i>
+      </button>
+      <h3 class="registration__tab__title d-inline-block">{{'registration.user_title' | translate}}</h3>
+    </div>
+    <!--TODO add 'login__input-error' class-->
+    <div class="form-group registration__input  position-relative"
+         [ngClass]="{'registration__input-error' : checkInputsRightOrNot('user','email')}">
+      <input type="email" name="email" formControlName="email" class="form-control shadow-none"
+             [placeholder]="'login.email' | translate"/>
+      <p class="mt-1 position-absolute"
+         *ngIf="checkInputsRightOrNot('user','email')  && registrationForm.get('user.email').hasError('required')">
+        {{'registration.email_required' | translate}}
+      </p>
+      <p class="mt-1 position-absolute" *ngIf=" checkInputsRightOrNot('user','email') && registrationForm.get('user.email').hasError('pattern')">
+        {{'registration.invalid_email' | translate}}
+      </p>
+    </div>
+    <div class="d-flex justify-content-between registration__form__group">
+      <div class="form-group registration__input position-relative"
+        [ngClass]="{'registration__input-error' : (checkInputsRightOrNot('user','firstName'))}">
+        <input type="text" name="firstName" class="form-control shadow-none" formControlName="firstName"
+               [placeholder]="'registration.f_name' | translate"/>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('user','firstName') && (registrationForm.get('user.firstName').hasError('required')|| registrationForm.get('user.firstName').hasError('minlength'))">
+          {{'registration.invalid_first_name' | translate}}
+        </p>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('user','firstName') && registrationForm.get('user.firstName').hasError('maxlength')">
+          {{"registration.names_length" | translate}}
+        </p>
+      </div>
+      <div class="form-group registration__input position-relative"
+        [ngClass]="{'registration__input-error' : (checkInputsRightOrNot('user','lastName') || registrationForm.get('user').hasError('longName'))}">
+        <input type="text" name="lastName" class="form-control shadow-none" formControlName="lastName"
+               [placeholder]="'registration.l_name' | translate"/>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('user','lastName') && (registrationForm.get('user.lastName').hasError('required') || registrationForm.get('user.lastName').hasError('minlength'))">
+          {{'registration.invalid_last_name' | translate}}
+        </p>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('user','lastName') && registrationForm.get('user.lastName').hasError('maxlength')">
+          {{"registration.names_length" | translate}}
+        </p>
+      </div>
+    </div>
+    <div>
+      <p-calendar class="d-block registration__calendar"
+                  dateFormat="dd/mm/yy"
+                  [locale]="calendarSettings"
+                  [defaultDate]="defDate"
+                  [readonlyInput]="true"
+                  [monthNavigator]="true" [yearNavigator]="true"
+                  (onSelect)="daySelected($event)"
+                  (onMonthChange)="monthSelected($event)"
+                  (onYearChange)="monthSelected($event)"
+                  [showIcon]="true" [yearRange]="dateRange" (yearSelected)="chosenYearHandler($event)"
+                  (monthSelected)="chosenMonthHandler($event)" [placeholder]="'registration.dateOfBirth' | translate "
+                  formControlName="date"></p-calendar>
+    </div>
+    <div class="registration__radioBtn">
+      <mat-radio-group class="d-flex justify-content-between" aria-label="Select an option" formControlName="gender">
+        <mat-radio-button value="M">{{"registration.male" | translate}}</mat-radio-button>
+        <mat-radio-button value="F">{{"registration.female" | translate}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="d-flex justify-content-between registration__form__group">
+      <div class="form-group registration__input position-relative"
+        [ngClass]="{'registration__input-error' : checkInputsRightOrNot('user','password')}">
+        <input type="password" class="form-control shadow-none" formControlName="password"
+               [placeholder]="'registration.password' | translate"/>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('user','password')">
+          {{'registration.invalid_pass' | translate}}
+        </p>
+
+      </div>
+      <div class="form-group registration__input position-relative"
+        [ngClass]="{'registration__input-error' : registrationForm.get('user').hasError('mismatchedPasswords')}">
+        <input type="password" class="form-control shadow-none" formControlName="repeatPassword"
+               [placeholder]="'registration.re_password' | translate"/>
+        <p class="mt-1 position-absolute" *ngIf="registrationForm.get('user').hasError('mismatchedPasswords')">
+          {{'registration.pass_dont_match' | translate}}
+        </p>
+      </div>
+    </div>
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+    <div class="position-relative">
+      <button class="registration__btn text-white text-uppercase w-100 border-0 d-flex
+            justify-content-center align-items-center" [ngClass]="{'disabled' : registrationForm.get('user').invalid}"
+        (click)="signUpForIndividualUser()" type="button">
+        <span>{{'registration.sign_up' | translate}} </span>
+        <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+        <span class="spinner-border d-none" role="status" [ngClass]="{'d-block': loading,'d-none': !loading }">
+          <span class="sr-only">Loading...</span>
+        </span></button>
+      <div *ngIf="backendValidationError" class="error position-absolute">
+        <p class="mb-0">{{backendValidationError}}</p>
+      </div>
+    </div>
+
+    <div class="registration__singnup">
+      <p class="mb-0 text-center">{{'registration.reg_footer' | translate}}
+        <a [routerLink]="'/term-of-use'|localize" class="registration__singnup__link text-decoration-none">
+          {{'terms_use' | translate}} </a> {{"and" | translate}}
+        <a [routerLink]="'/privancy-policy'|localize" class="registration__singnup__link text-decoration-none">{{"privacy_policy" | translate}}</a>
+      </p>
+    </div>
+  </section>
+
+  <section *ngIf="companyRegistration" formGroupName="company">
+    <div class="d-flex align-items-start">
+      <button class="bg-transparent border-0 registration__back" type="button" (click)="openCloseRegistrationType()">
+        <i class="icon-arrow-left"></i>
+      </button>
+      <h3 class="registration__tab__title d-inline-block text-center">
+        {{'registration.organization_title' | translate}}
+      </h3>
+    </div>
+    <div class="registration__radioBtn">
+      <p class="registration__radioBtn__title">{{'registration.business_type' | translate}}</p>
+      <mat-radio-group class="d-flex justify-content-between" aria-label="Select an option"
+        formControlName="businessType">
+        <mat-radio-button value="public" [checked]="registrationForm.get('company.businessType').value == 'public'">
+          {{"registration.public" | translate}}</mat-radio-button>
+        <mat-radio-button value="business" [checked]="registrationForm.get('company.businessType').value == 'business'">
+          {{"registration.business" | translate}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="registration__dropdowns d-flex justify-content-between">
+      <mat-form-field class="w-100 position-relative">
+        <mat-label>{{"registration.organization_type" | translate}}</mat-label>
+        <mat-select formControlName="townHall">
+          <mat-option [value]="item" *ngFor='let item of businessTypes'>
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!--TODO add 'login__input-error' class-->
+    <div class="d-flex flex-column">
+      <div class="form-group registration__input position-relative order-2"
+           [ngClass]="{'registration__input-error' : checkInputsRightOrNot('company','nameOfOrganization')}">
+        <input type="text" name="name" class="form-control shadow-none"
+               formControlName="nameOfOrganization"
+               [placeholder]="'registration.organization_name' | translate"/>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('company','nameOfOrganization') && registrationForm.get('company.nameOfOrganization').hasError('required')">
+          {{"registration.organization_name_invalid" | translate}}
+        </p>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('company','nameOfOrganization') && registrationForm.get('company.nameOfOrganization').hasError('maxlength')">
+          {{"registration.names_length" | translate}}
+        </p>
+      </div>
+      <div class="d-flex justify-content-between registration__form__group order-1">
+        <div class="form-group registration__input position-relative order-2"
+             [ngClass]="{'registration__input-error' : checkInputsRightOrNot('company','city')}">
+          <input id="typeahead-format" type="text" class="form-control shadow-none"
+                 [placeholder]="'registration.city' | translate" [ngbTypeahead]="autocomplete"
+                 (selectItem)="handleAddressChange($event)" formControlName="city"/>
+          <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('company','city')">
+            {{"registration.city_invalid" | translate}}
+          </p>
+        </div>
+        <div class="form-group registration__input position-relative order-1"
+             [ngClass]="{'registration__input-error' : checkInputsRightOrNot('company','email')}">
+          <input type="email" name="email" class="form-control shadow-none" formControlName="email" autocomplete="off"
+                 [placeholder]="'login.email' | translate"/>
+          <p class="mt-1 position-absolute"
+             *ngIf="checkInputsRightOrNot('company','email')
+             && registrationForm.get('company.email').hasError('required')">
+            {{'registration.email_required' | translate}}
+          </p>
+          <p class="mt-1 position-absolute"
+             *ngIf=" checkInputsRightOrNot('company','email')
+             && registrationForm.get('company.email').hasError('pattern')">
+            {{'registration.invalid_email' | translate}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between registration__form__group">
+      <div class="form-group registration__input position-relative"
+           [ngClass]="{'registration__input-error' : checkInputsRightOrNot('company','password') }">
+        <input type="password" name="password" class="form-control shadow-none" autocomplete="off"
+               formControlName="password"
+               [placeholder]="'registration.password' | translate"/>
+        <p class="mt-1 position-absolute" *ngIf="checkInputsRightOrNot('company','password')">
+          {{"registration.invalid_pass" | translate}}
+        </p>
+      </div>
+      <div class="form-group registration__input position-relative"
+        [ngClass]="{'registration__input-error' : registrationForm.get('company').hasError('mismatchedPasswords')}">
+        <input type="password" class="form-control shadow-none" formControlName="repeatPassword"
+               [placeholder]="'registration.re_password' | translate"/>
+        <p class="mt-1 position-absolute"
+           *ngIf="registrationForm.get('company').hasError('mismatchedPasswords')">
+          {{"registration.pass_dont_match" | translate}}
+        </p>
+      </div>
+    </div>
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+    <div class="position-relative">
+      <button class="registration__btn text-white text-uppercase w-100 border-0 d-flex
+    justify-content-center align-items-center" [ngClass]="{'disabled' : registrationForm.get('company').invalid}"
+        (click)="signUpForProfessionalUser()" type="submit">
+        <span>{{'registration.sign_up' | translate}} </span>
+        <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+        <span class="spinner-border d-none" role="status">
+          <span class="sr-only ">Loading...</span>
+        </span></button>
+      <div *ngIf="backendValidationError" class="error position-absolute">
+        <p class="mb-0">{{backendValidationError}}</p>
+      </div>
+    </div>
+
+
+    <div class="registration__singnup">
+      <p class="mb-0 text-center">{{'registration.reg_footer' | translate}}
+        <a [routerLink]="'/term-of-use'|localize" class="registration__singnup__link text-decoration-none">
+          {{'terms_use' | translate}} </a> {{"and" | translate}}
+        <a [routerLink]="'/privancy-policy'|localize" class="registration__singnup__link text-decoration-none">{{"privacy_policy" | translate}}</a>
+      </p>
+    </div>
+  </section>
+  <section *ngIf="resendPassword">
+    <h3 class="registration__title text-center">{{'login.login_title' | translate}}</h3>
+    <p class="registration__description text-center">
+      {{'registration.verify_email' | translate}}
+      <span>{{saveEmailAddress}} </span><br />
+   {{'registration.check_in_junks' | translate}}
+    </p>
+    <div class="form-group mb-0 position-relative">
+      <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+      <button class="registration__btn text-white text-uppercase w-100 border-0
+       d-flex justify-content-center align-items-center" [routerLink]="'/auth/login'|localize" type="button">
+        <span>{{'login.login' | translate}} </span>
+        <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+        <span class="spinner-border" role="status" *ngIf="loading">
+          <span class="sr-only">Loading...</span>
+        </span>
+      </button>
+
+    </div>
+  </section>
+  <app-allert-message></app-allert-message>
+</form>

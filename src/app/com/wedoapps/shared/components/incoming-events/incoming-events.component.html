@@ -1,0 +1,26 @@
+<section class="container p-sm-0" *ngIf="!hideIncomingEvents && isAuthorized">
+    <app-block-title-see-more class="w-100"
+                              *ngIf="incomingEvents?.length>0 && !loading"
+                              [title]="'event.incoming_events' | translate"
+                              [link]="'/search'"
+                              [queryParams]="{'type':'event','lat':lat,'lon':lon, 'autocomplete': place, 'distance':50, 'start_date':defaultDates.start_date, 'end_date':defaultDates.end_date}"
+    >
+    </app-block-title-see-more>
+</section>
+<section class="container row-container p-0"
+         *ngIf="!hideIncomingEvents && isAuthorized">
+  <div class="row position-relative main-section w-100 m-0">
+    <app-loading
+      class="main-section__loading pt-5 d-flex justify-content-center position-absolute w-100 h-100 bg-white"
+      *ngIf="loading"></app-loading>
+    <app-event-row class="w-100" (changeIncomingEvent)="changeIncomingEvent($event)"
+                   [ngClass]="{'opacity':removeIncomingEvent}" [incomingEvent]="incomingEvent"
+                   [rowSettings]="{
+                              showClose:true,
+                              showUserIcons:false,
+                              showDescription:false
+                             }" *ngIf="!loading">
+    </app-event-row>
+  </div>
+  <hr class="incoming-events-divider">
+</section>

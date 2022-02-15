@@ -1,0 +1,70 @@
+@import '../../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+@include block_header;
+
+
+.block-header__title {
+  @include font-size($fz-18)
+}
+.follower {
+  width: 90px;
+  &:not(:nth-child(n + 7)) {
+    margin-right: 22px;
+  }
+  &__name {
+    @include font-size($fz-16);
+    color: $dark-gray;
+    @include hover-focus-active {
+      color: $dark-gray;
+    }
+  }
+  &__image {
+    @include user-image(70px, 70px, 40px);
+    margin: 0 0 13px 0;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .block-header__title {
+    @include font-size($fz-16)
+  }
+  .follower {
+    width: 80px;
+    &__name {
+      @include font-size($fz-14);
+    }
+  }
+}
+@include media-breakpoint-down(sm){
+  .block-header__title {
+    @include font-size($fz-12)
+  }
+  .follower {
+    width: 65px;
+    &:not(:nth-child(n + 7)) {
+      margin-right: 10px;
+    }
+    &__image {
+      margin-bottom: 10px;
+    }
+    &__name {
+      @include font-size($fz-12);
+    }
+  }
+}
+
+@include media-breakpoint-down(xs){
+  .follower {
+    margin-bottom: 16px;
+    margin-right: 10px;
+    &:nth-child(n + 7) {
+      margin-right: 10px;
+    }
+    &__image {
+      margin-bottom: 10px;
+    }
+    &__name {
+      @include font-size($fz-12);
+    }
+  }
+}

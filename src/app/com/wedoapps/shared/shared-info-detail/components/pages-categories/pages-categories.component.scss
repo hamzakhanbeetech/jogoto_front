@@ -1,0 +1,45 @@
+@import '../../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+.dropdown-footer {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.pages {
+  @include pages-moderators;
+}
+
+@include category-icon;
+::ng-deep {
+  .dropup .dropdown-toggle::after {
+    display: none;
+  }
+}
+
+app-event-filter-categories-content {
+  width: 760px;
+  padding: 20px;
+}
+
+
+.title {
+  @include font-size($fz-18);
+  @extend %proxima-semibold;
+  color: $dark-gray
+}
+
+@include media-breakpoint-down(lg) {
+  .title {
+    @include font-size($fz-16);
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  app-event-filter-categories-content {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .title {
+    @include font-size($fz-14);
+  }
+}

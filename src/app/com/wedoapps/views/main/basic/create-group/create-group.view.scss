@@ -1,0 +1,140 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+@include characters;
+:host::ng-deep{
+  .dropdown-menu {
+    width: 100%;
+    border: none;
+    overflow: hidden;
+    box-shadow: 0 0 10px $black-shadow;
+    .dropdown-item {
+      @include dropdown-list-hover;
+      @extend %proxima-regular;
+      @include font-size($fz-14);
+      width: 100%;
+      text-overflow: ellipsis;
+      position: relative;
+      overflow: hidden;
+      color: $dark-gray;
+      &.active, &:active {
+        background: $white;
+        height: 100%;
+        @include dropdown-list-hover;
+        color: $dark-gray
+      }
+    }
+  }
+}
+.create {
+  @include border-radius(5px);
+  padding: 17px 15px;
+  margin: 20px auto;
+  &__container {
+    width: 710px;
+    color: $dark-gray;
+    @include create-title-desc;
+    @include create-form-group;
+    &.description {
+      margin: 44px 0;
+      .form-group.textarea-container {
+        textarea.form-control {
+          height: 130px;
+          resize: none;
+        }
+      }
+    }
+    &__user {
+      @include added-delet-users
+    }
+    .create {
+      @include login-btn;
+      @include font-size($fz-18);
+      padding: 12px 98px;
+      height: auto;
+      margin: 50px 0 0;
+    }
+  }
+}
+
+:host::ng-deep {
+  app-crop-image {
+    margin-top: 25px;
+  }
+  app-create-location {
+    margin-bottom: 43px;
+  }
+  app-upload-file {
+    margin-top: 43px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .create {
+    &__container {
+      &.description {
+        margin: 37px 0;
+        .form-group.textarea-container {
+          textarea.form-control {
+            height: 100px;
+          }
+        }
+      }
+      .create{
+        @include size(210px,40px);
+        margin: 35px 0 0;
+        padding: 0;
+      }
+    }
+  }
+  app-crop-image {
+    margin-top: 17px;
+  }
+  app-create-location {
+    margin-bottom: 37px;
+  }
+  app-upload-file {
+    margin-top: 37px;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .create {
+    &__container {
+      width: 100%;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .create {
+    &__container {
+      width: 100%;
+      &.description {
+        margin: 33px 0;
+        .form-group.textarea-container {
+          textarea.form-control {
+            height: 100px;
+          }
+        }
+      }
+      .create {
+        padding: 0 55px;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  app-create-location {
+    margin-bottom: 32px;
+  }
+  app-upload-file {
+    margin-top: 32px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .create__container {
+    width: 100%;
+  }
+}

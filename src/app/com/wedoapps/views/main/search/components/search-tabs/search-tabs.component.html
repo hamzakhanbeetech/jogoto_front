@@ -1,0 +1,34 @@
+<section class=" position-relative tabs-section">
+  <tabset class="row" #tabs>
+    <tab id="column-tab" (deselect)="tabChanged(false)">
+      <section class="show-map-lis d-lg-flex">
+        <mat-slide-toggle *ngIf="events.length" (change)="onChangePopularity($event)">{{'search.by_popularity'|translate}}</mat-slide-toggle>
+        <mat-slide-toggle class="ml-auto  d-lg-block d-none" (change)="onChangeColumn($event)">{{'search.show_map'|translate}}</mat-slide-toggle>
+      </section>
+        <section
+              class="d-flex flex-wrap column-section"
+              *ngIf="!hideEventColumn;else mapRow">
+            <div class="text-center w-100" *ngIf="loading">
+                <app-loading class="d-flex justify-content-center pt-5"></app-loading>
+            </div>
+              <app-no-search-result *ngIf="(events === undefined || events.length == 0) && !loading" [noSearchResult]="{icon: 'icon-search-calendar'}">
+              </app-no-search-result>
+          <ng-container *ngIf="!loading">
+            <app-event-column *ngFor="let event of events" [eventItem]="event" [isShowUserIcons]="false"
+                              [searchDate]="{end: searchDate.end, start: searchDate.start, isMultiDate:event.dates.length > 1}"
+                              [isShowDescription]="false" [userIsLoggedIn]="isAuthorized"></app-event-column>
+            <div class="text-center w-100" *ngIf="isScroll">
+              <app-loading class="d-flex justify-content-center"></app-loading>
+            </div>
+          </ng-container>
+            </section>
+
+            <ng-template #mapRow>
+              <app-map-and-events [isGridMap]="isGridMap" [searchDate]="{end: searchDate.end, start: searchDate.start}" [loading]="isScroll" class="d-block w-100" [events]="events"></app-map-and-events>
+            </ng-template>
+          </tab>
+          <tab id="map-tab"  (deselect)="tabChanged(true)">
+            <app-map *ngIf="staticTab.tabs[1].active" class="d-block w-100 min-vh-100"></app-map>
+          </tab>
+        </tabset>
+      </section>

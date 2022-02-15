@@ -1,0 +1,35 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.no-events {
+  @include border-radius(5px);
+  border: 1px solid $border-color;
+  @include font-size($fz-18);
+  color: $dark-gray;
+  padding: 84px 20px;
+  i {
+    @include font-size($fz-26);
+    color: $blue;
+    margin-right: 20px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .no-events {
+    @include font-size($fz-16);
+    i {
+      @include font-size($fz-24);
+    }
+  }
+}
+
+@include media-breakpoint-down(xs){
+  .no-events {
+    @include font-size($fz-12);
+    padding: 60px 20px;
+    i {
+      display: block;
+      margin-right: 0;
+    }
+  }
+}

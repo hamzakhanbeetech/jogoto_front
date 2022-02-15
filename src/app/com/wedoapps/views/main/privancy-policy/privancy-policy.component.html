@@ -1,0 +1,200 @@
+<main>
+  <section class="container-fluid term-container">
+    <h1 class="text-white text-center container term-container__title">{{"privacy.title" | translate}}</h1>
+  </section>
+  <section class="container-fluid">
+    <div class="container p-sm-0">
+      <div class="d-flex justify-content-end align-items-center term">
+        <a [href]="pdfFile" class="bg-transparent border-0 term__download" download>
+          <i class="icon-download-arrow"></i>
+        </a>
+        <p class="term__version mb-0">{{"term-of-use.last_updated" | translate}}</p>
+      </div>
+    </div>
+  </section>
+  <section class="container p-sm-0">
+    <h3 class="terms-title">{{"term-of-use.table_contents" | translate}}</h3>
+    <ol class="terms-menu list-unstyled pl-0">
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="privcayNotice"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">1. {{"privacy.privcay_notice" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="consent"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">2.1. {{"privacy.consent" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="disclosure"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">2.2. {{"privacy.disclosure" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="retentionPeriod"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">2.3. {{"privacy.retention_period" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="dataSubject"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">2.4. {{"privacy.data_subject" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="complaints"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">2.5 {{"privacy.complaints" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="privacyPolicy"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">2.6. {{"privacy.privacy_policy" | translate}}</a>
+      </li>
+      <li class="terms-menu__item"><a [routerLink]="'/privancy-policy/'|localize" fragment="onlinePrivacy"
+                                      class="terms-menu__item__link text-decoration-none text-uppercase">3. {{"privacy.online_privacy" | translate}}</a>
+      </li>
+    </ol>
+    <ol class="terms-description list-unstyled p-0">
+      <li id="privcayNotice">
+        <h4 class="terms-title text-uppercase">1. {{"privacy.privcay_notice" | translate}}</h4>
+        <h5 class="terms-subtitle text-uppercase">1.1. {{"privacy.about_us" | translate}}</h5>
+        <p>{{"privacy.platform_connecting" | translate}}
+          <a href="mailTo:contact@jogoto.com">contact@jogoto.com</a></p>
+        <p>{{"privacy.personal_data" | translate}}</p>
+        <p class="mb-0">{{"privacy.type" | translate}}</p>
+        <ol class="list-unstyled py-0 types">
+          <li>
+            1. {{"privacy.actions" | translate}}
+            <ul class="accept-list m-20 list-unstyled">
+              <li class="position-relative">{{"privacy.information_and_content" | translate}}</li>
+              <li class="position-relative">{{"privacy.networks_and_connections" | translate}}</li>
+              <li class="position-relative">{{"privacy.your_usage" | translate}}</li>
+              <li class="position-relative">{{"privacy.actions_others" | translate}}</li>
+            </ul>
+          </li>
+          <li>
+            2. {{"privacy.device_information" | translate}}
+            <p class="pl-0">{{"privacy.collects_information" | translate}}</p>
+            <p class="pl-0">{{"privacy.information" | translate}}</p>
+            <ul class="accept-list m-20 list-unstyled">
+              <li class="position-relative">{{"privacy.device_attributes" | translate}}</li>
+              <li class="position-relative">{{"privacy.device_operations" | translate}}</li>
+              <li class="position-relative">{{"privacy.identifiers" | translate}}</li>
+            </ul>
+            <ul class="deep-accept-list m-20 list-unstyled">
+              <li class="position-relative">{{"privacy.device_settings" | translate}}</li>
+              <li class="position-relative ml-3">{{"privacy.access_your_location" | translate}}</li>
+              <li class="position-relative ml-3">{{"privacy.camera_jogoto" | translate}}</li>
+              <li class="position-relative ml-3">{{"privacy.calendar_jogoto" | translate}}</li>
+              <li class="position-relative ml-3">{{"privacy.photo_library" | translate}}</li>
+            </ul>
+            <ul class="accept-list m-20 list-unstyled">
+              <li class="position-relative">{{"privacy.network_connections" | translate}}</li>
+              <li class="position-relative">{{"privacy.cookie_data" | translate}}</li>
+            </ul>
+
+            <p class="pl-0">{{"privacy.personal_data_collect" | translate}}</p>
+            <ul class="accept-list m-20 list-unstyled">
+              <li class="position-relative">{{"privacy.personalize_improve" | translate}}</li>
+              <li class="position-relative">{{"privacy.provide_measurement" | translate}}</li>
+              <li class="position-relative">{{"privacy.communicate" | translate}}</li>
+              <li class="position-relative">{{"privacy.relevant_information" | translate}}</li>
+              <li class="position-relative">{{"privacy.create_or_improve" | translate}}</li>
+            </ul>
+            <p class="pl-0">{{"privacy.legal_basis" | translate}}</p>
+            <ul class="accept-list m-20 list-unstyled">
+              <li class="position-relative">{{"privacy.fulfil" | translate}}</li>
+              <li class="position-relative">{{"privacy.consistent" | translate}}</li>
+              <li class="position-relative">{{"privacy.comply" | translate}}</li>
+              <li class="position-relative">{{"privacy.legitimate_interests" | translate}}</li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+      <li id="consent">
+        <h5 class="terms-title text-uppercase">2.1. {{"privacy.consent" | translate}}</h5>
+        <p>{{"privacy.accepting_procedure" | translate}}</p>
+        <p>{{"privacy.consent_required" | translate}}</p>
+        <p>{{"privacy.exercise" | translate}}
+          <a href="" class="text-decoration-none">{{"privacy.changing_settings" | translate}}</a>
+        </p>
+      </li>
+      <li id="disclosure">
+        <h3
+          class="terms-title text-uppercase">2.2. {{"privacy.disclosure" | translate}}</h3>
+        <p>{{"privacy.affiliates" | translate}}</p>
+      </li>
+      <li id="retentionPeriod">
+        <h3
+          class="terms-title text-uppercase">2.3. {{"privacy.retention_period" | translate}}</h3>
+        <p>{{"privacy.company" | translate}}</p>
+      </li>
+      <li id="dataSubject">
+        <h3
+          class="terms-title text-uppercase">2.4. {{"privacy.data_subject" | translate}}</h3>
+        <p>{{"privacy.at_any_time" | translate}}</p>
+        <ul class="accept-list list-unstyled">
+          <li class="position-relative">{{"privacy.right_access" | translate}}</li>
+          <li class="position-relative">{{"privacy.right_correction" | translate}}</li>
+          <li class="position-relative">{{"privacy.right_delete" | translate}}</li>
+          <li class="position-relative">{{"privacy.right_limitation_processing" | translate}}</li>
+          <li class="position-relative">{{"privacy.portability_right" | translate}}</li>
+          <li class="position-relative">{{"privacy.right_objection" | translate}}</li>
+          <li class="position-relative">{{"privacy.right_oppose" | translate}}</li>
+          <li class="position-relative">{{"privacy.right_judicial" | translate}}
+            <a [routerLink]="'/privancy-policy/'|localize" fragment="complaints">{{"privacy.below" | translate}}</a></li>
+        </ul>
+      </li>
+      <li id="complaints">
+        <h3
+          class="terms-title text-uppercase">2.5. {{"privacy.complaints" | translate}}</h3>
+        <p>{{"privacy.case" | translate}} (<a [routerLink]="'/privancy-policy/'|localize"
+                                              fragment="disclosure">{{"privacy.third_party" | translate}}</a> )
+          {{"privacy.relating_procedure" | translate}}
+        </p>
+      </li>
+      <li id="privacyPolicy">
+        <h3
+          class="terms-title text-uppercase">2.6. {{"privacy.privacy_policy" | translate}}</h3>
+        <p>{{"privacy.learn_more" | translate}} (<a [routerLink]="'/privancy-policy/'|localize"
+                                                    fragment="privcayNotice">{{"privacy.see_section" | translate}}</a> )
+        </p>
+      </li>
+      <li id="onlinePrivacy"><h3 class="terms-title text-uppercase">3. {{"privacy.online_privacy" | translate}}</h3>
+        <p class="mb-0">
+          <span>{{"privacy.personal_data_title" | translate}}</span>
+        </p>
+        <p [innerHTML]="'privacy.eu_general' | translate"></p>
+        <p class="mb-0">
+          <span>{{"privacy.use_information" | translate}}</span>
+        </p>
+        <p>{{"privacy.privacy_policy_tells" | translate}}</p>
+        <p class="mb-0">
+          <span>{{"privacy.company_need" | translate}}</span>
+        </p>
+        <p [innerHTML]="'privacy.order_provide' | translate"></p>
+        <p class="mb-0">
+          <span>{{"privacy.share_data" | translate}}</span>
+        </p>
+        <p>{{"privacy.transmit" | translate}}</p>
+        <p class="mb-0">
+          <span>{{"privacy.company_use" | translate}}</span>
+        </p>
+        <p>{{"privacy.company_process" | translate}}</p>
+        <p class="mb-0">
+          <span>{{"privacy.circumstances" | translate}}</span>
+        </p>
+        <p>{{"privacy.our_goal" | translate}}</p>
+        <p class="mb-0">
+          <span>{{"privacy.data_subject_personal" | translate}}</span>
+        </p>
+        <p>{{"privacy.company_request" | translate}}</p>
+      </li>
+      <li>
+        <ul class="accept-list list-unstyled">
+          <li class="position-relative">{{"privacy.identity_contact" | translate}}</li>
+          <li class="position-relative">{{"privacy.contact_details" | translate}}</li>
+          <li class="position-relative">{{"privacy.legitimate" | translate}}</li>
+          <li class="position-relative">{{"privacy.processing_based" | translate}}</li>
+          <li class="position-relative">{{"privacy.categories" | translate}}</li>
+          <li class="position-relative">{{"privacy.recipient" | translate}}</li>
+          <li class="position-relative">{{"privacy.intend" | translate}}</li>
+          <li class="position-relative">{{"privacy.storage" | translate}}</li>
+          <li class="position-relative">{{"privacy.rights_information" | translate}}</li>
+          <li class="position-relative">{{"privacy.withdraw_about" | translate}}</li>
+          <li class="position-relative">{{"privacy.referral_procedure" | translate}}</li>
+          <li class="position-relative">{{"privacy.providing_personal" | translate}}</li>
+          <li class="position-relative">{{"privacy.source_personal" | translate}}</li>
+          <li class="position-relative">{{"privacy.details_information" | translate}}</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+</main>
+<app-onboarding-footer></app-onboarding-footer>

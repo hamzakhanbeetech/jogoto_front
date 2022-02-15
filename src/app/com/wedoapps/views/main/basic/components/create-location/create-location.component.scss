@@ -1,0 +1,39 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+@include create-form-group;
+.location {
+  @include create-title-desc
+}
+
+:host::ng-deep {
+  app-mat-autocomplete {
+    height: 50px;
+    .location .input-container input {
+      height: 100%;
+      line-height: 1;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  :host::ng-deep {
+    app-mat-autocomplete {
+      height: 36px;
+      .location .input-container input {
+        padding: 10px 30px 10px 15px !important;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  :host::ng-deep {
+    app-mat-autocomplete {
+      height: 34px;
+      .location .input-container input {
+        padding: 10px 27px 10px 15px !important;
+      }
+    }
+  }
+}

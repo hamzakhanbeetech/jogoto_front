@@ -1,0 +1,12 @@
+<ng-template #calendarDropdown></ng-template>
+<full-calendar
+        #calendar
+        (eventClick)="openDialog($event)"
+        defaultView="dayGridMonth"
+        [firstDay]="1"
+        [plugins]="calendarPlugins"
+        [weekends]="true"
+        [events]="events"
+        [locales]="locals"
+        [locale]="local"
+></full-calendar>

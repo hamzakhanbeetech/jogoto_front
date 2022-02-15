@@ -1,0 +1,128 @@
+<main class="container-fluid group" *ngIf="eventData">
+    <section class="container">
+        <div class="row d-flex">
+            <section class="group__left">
+                <figure class="mb-0 w-100 group__image overflow-hidden">
+                    <img [src]="previewGroupData?.poster.cropped.link" class="img-fluid w-100 h-100" [alt]="previewGroupData?.name">
+                </figure>
+                <section class="group__sidebar__container bg-white interested-section d-xl-none">
+                    <p class="group__sidebar__container__title text-break">{{previewGroupData.name}}</p>
+                    <p class="group__sidebar__container__type border-0">
+            <span
+                    *ngIf="previewGroupData?.group_type==='open';else closeGroup">{{"create-group.open_group" | translate}}</span>
+                        <ng-template #closeGroup>
+                            <span>{{"create-group.close_group" | translate}}</span>
+                        </ng-template>
+                    </p>
+                  <!--<div-->
+                    <!--class="group__sidebar__container__join p-0 text-white border-0 col  d-flex align-items-center justify-content-center">-->
+                    <!--<i class="icon-promotion"></i>-->
+                    <!--<span class="mr-0"> {{"promote_group" | translate}}</span>-->
+                  <!--</div>-->
+                </section>
+
+                <div class="tab-section position-relative">
+                    <tabset #staticTabs>
+                        <tab [heading]="'group.event_list' | translate" id="tab1" class="tab">
+                            <section class="d-flex justify-content-between align-items-center tab__header">
+                                <h3 class="tab__title my-0">
+                  <span
+                          *ngIf="previewGroupData.events.length>1">{{"event.events" | translate}} {{previewGroupData.events.length}}</span>
+                                    <span
+                                            *ngIf="previewGroupData.events.length===1">{{"event.event" | translate}} {{previewGroupData.events.length}}</span>
+                                    <span *ngIf="previewGroupData.events.length===0">{{"no_events" | translate}}</span>
+                                </h3>
+                                <div class="create-event-btn d-inline-flex align-items-center
+              text-white text-decoration-none">
+                                    <span><i class="icon-plus"></i></span>{{"header.create.create_event" | translate}}
+                                </div>
+                            </section>
+             <app-no-event class="d-block w-100" [noResult]="noResult"></app-no-event>
+                        </tab>
+                        <tab [heading]="'calendar' | translate">
+                            <section class="d-flex justify-content-between align-items-center tab__header">
+                                <h3 class="text-capitalize tab__title my-0">
+                  <span
+                          *ngIf="previewGroupData.events.length>1">{{"event.events" | translate}} {{previewGroupData.events.length}}</span>
+                                    <span
+                                            *ngIf="previewGroupData.events.length===1">{{"event.event" | translate}} {{previewGroupData.events.length}}</span>
+                                    <span *ngIf="previewGroupData.events.length===0">{{"no_events" | translate}}</span>
+                                </h3>
+                                <div class="create-event-btn d-inline-flex align-items-center text-white text-decoration-none">
+                                    <span><i class="icon-plus"></i></span>{{"header.create.create_event" | translate}}
+                                </div>
+                            </section>
+                            <app-calendar-module [tab]="{tab:staticTabs.tabs[1]?.active}"></app-calendar-module>
+                        </tab>
+                        <tab [heading]="'members' | translate | titlecase">
+                            <section class="bg-white users-section">
+                                <section
+                                        class="d-flex justify-content-between align-items-center flex-wrap tab__header px-0">
+                                    <h3
+                                            class="text-capitalize tab__title my-0">{{"members" | translate}}
+                                        {{previewGroupData.members_count}}</h3>
+                                    <div class="form-group position-relative search mb-0">
+                                        <input type="search" [placeholder]="'search_members' | translate"
+                                               class="form-control search__input shadow-none bg-white" readonly>
+                                        <div class="bg-transparent border-0 position-absolute search__btn"><i
+                                                class="icon-search"></i>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section>
+                                    <h3
+                                            class="text-capitalize tab__title my-0">{{"group.admins_moderators" |
+                                        translate}} {{previewGroupData.adminsAndModeratorsCount}}</h3>
+                                    <ul class="list-unstyled users">
+                                        <li *ngFor="let admin of threeAdmins">
+                                            <app-users-list class="d-block" [user]="admin"></app-users-list>
+                                        </li>
+                                    </ul>
+                                    <div class="text-center" *ngIf="moderatorsAdminsArray.length>3">
+                                        <button type="button" class="border-0 bg-transparent see-more" (click)="showMoreLessAdmins()">
+                                            <span *ngIf="arr.length;else less">{{"group.see_more_admins" | translate}}</span>
+                                            <ng-template #less>
+                                                <span>{{"group.see_less_admins" | translate}}</span>
+                                            </ng-template>
+                                        </button>
+                                    </div>
+                                </section>
+                                <section *ngIf="previewGroupData.standart_users_count">
+                                    <h3
+                                            class="text-capitalize tab__title my-0">{{"group.others" | translate}}
+                                        {{previewGroupData?.standart_users_count}}</h3>
+                                    <ul class="list-unstyled users">
+                                        <li *ngFor="let user of moreLessUsersArray">
+                                            <app-users-list class="d-block" [user]="user"></app-users-list>
+                                        </li>
+                                    </ul>
+                                    <div class="text-center" *ngIf="usersArray.length>6">
+                                        <button type="button" class="border-0 bg-transparent see-more" (click)="showMoreLessUsers()">
+                                            <span *ngIf="arrUsers.length;else less">{{"group.see_more_users" | translate}}</span>
+                                            <ng-template #less>
+                                                <span>{{"group.see_less_users" | translate}}</span>
+                                            </ng-template>
+                                        </button>
+                                    </div>
+                                </section>
+                            </section>
+                        </tab>
+                        <tab [heading]="'about' | translate">
+                            <app-about-group [groupData]="previewGroupData"></app-about-group>
+                        </tab>
+                    </tabset>
+                </div>
+                <div class="text-right bg-white users-section d-flex justify-content-end">
+                    <button type="button" class="group__edit text-capitalize text-decoration-none" (click)="navigateCreatePage()">
+                        <i class="icon-edit"></i>
+                        {{"login.edit" | translate}}
+                    </button>
+                    <button type="button" (click)="publishGroup(id)"
+                       class="group__publish text-white text-decoration-none  mb-0">{{"login.publish" | translate}}</button>
+                </div>
+            </section>
+            <app-group-sidebar [groupData]="previewGroupData" [moderatorsAdminsArray]="moderatorsAdminsArray"
+                               [usersArray]="usersArray" (selectUserTab)="selectTab($event)"></app-group-sidebar>
+        </div>
+    </section>
+</main>

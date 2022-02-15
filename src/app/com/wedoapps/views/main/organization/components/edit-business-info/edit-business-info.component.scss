@@ -1,0 +1,169 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+@include block_header;
+.block-header {
+  border-color: $border-color;
+  padding-top: 33px;
+  &__title {
+    @include font-size($fz-18)
+  }
+}
+//edit page
+
+.analitics {
+  @include font-size($fz-16);
+  color: $text-color;
+  margin: 23px 0 34px;
+}
+
+.icon-secury {
+  color: $blue
+}
+
+
+.edit-profile {
+  &__input{
+    width: calc(100% / 2 - 15px);
+    margin-bottom: 40px;
+    line-height: 1;
+    input{
+      @include login-input;
+    }
+
+    label{
+      @extend %proxima-semibold;
+      @include font-size($fz-16);
+      color: $dark-gray;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    ::ng-deep {
+      .ui-calendar {
+        width: 100%;
+        background: $white;
+        input {
+          @include login-input;
+          padding: 9px 40px 9px 20px;
+          width: inherit;
+          @include hover {
+            border: 1px solid $border-color !important;
+          }
+        }
+        .ui-button:enabled:focus {
+          box-shadow: none;
+        }
+        .ui-datepicker-trigger {
+          background: transparent;
+          border: none;
+          color: $border-color;
+          position: absolute;
+          right: 6px;
+          @include hover-focus-active {
+            outline: none;
+          }
+        }
+        .pi-calendar:before {
+          @extend %fontello;
+          content: '\e800';
+        }
+      }
+    }
+  }
+
+}
+.carensy {
+  ::ng-deep {
+    .ui-dropdown {
+      @include size(100px, 100%);
+      min-width: 100px;
+      border: none;
+      background: transparent;
+      .ui-dropdown-label, .ui-dropdown-trigger {
+        height: 100%;
+        background: transparent;
+        .ui-dropdown-trigger-icon {
+          top: 50%;
+          left: 50%;
+          margin-top: 0;
+          position: absolute;
+          transform: translateY(-50%);
+          display: flex;
+        }
+      }
+      .ui-dropdown-label {
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ui-dropdown-item {
+        @extend %proxima-regular;
+        @include font-size($fz-14);
+        position: relative;
+        color: $dark-gray;
+        @include dropdown-list-hover;
+        @include hover-focus-active {
+          background: transparent !important;
+        }
+        &.ui-state-highlight {
+          background: transparent !important;
+          color: $blue;
+          @include dropdown-list-hover;
+          &::before {
+            height: 100%
+          }
+        }
+      }
+      .pi-chevron-down:before {
+        @extend %fontello;
+        @include font-size($fz-14);
+        content: '\e800';
+      }
+    }
+  }
+}
+
+#averageBudget {
+  padding-left: 120px;
+}
+@include media-breakpoint-down(lg) {
+  .analitics{
+    @include font-size($fz-14);
+  }
+  .edit-profile {
+    &__input{
+      margin-bottom: 33px;
+   label{
+        @include font-size($fz-14)
+      }
+    }
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+  .analitics {
+    @include font-size($fz-12);
+    margin: 16px 0 23px;
+  }
+
+  .edit-profile {
+    &__input {
+      margin-bottom: 33px;
+      label, &__title, .label {
+        @include font-size($fz-12);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .edit-profile {
+    &__input {
+      width: 100%;
+    }
+  }
+}
+
+//end

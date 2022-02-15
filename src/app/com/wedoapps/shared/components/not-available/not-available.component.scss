@@ -1,0 +1,9 @@
+@import '../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+@include notFoundPage;
+@include characters;
+.not-found {
+  background: url("../../../../../../assets/images/home/home-main.jpg") no-repeat center;
+}
+

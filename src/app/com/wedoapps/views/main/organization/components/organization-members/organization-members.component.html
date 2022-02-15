@@ -1,0 +1,77 @@
+<section class="bg-white users-section">
+  <section class="d-flex justify-content-between align-items-center flex-wrap px-0 tab__header">
+    <h3 class="text-capitalize tab__title my-0">{{"members" | translate}}
+      {{followers && followers.length }}</h3>
+    <div class="form-group position-relative search mb-0">
+      <button class="bg-transparent border-0 position-absolute search__btn"><i class="icon-search"></i>
+      </button>
+      <input type="text" [placeholder]="'search_members' | translate"
+             class="form-control search__input shadow-none" [formControl]="search"
+             (input)="searchModerators($event.target.value)">
+      <button class="border-0 bg-transparent reset-inputs position-absolute" *ngIf="search.value.length"
+              (click)="resetSearch()">
+        <i class="icon-close"></i>
+      </button>
+    </div>
+  </section>
+  <section *ngIf="searchResult.length">
+    <ul class="list-unstyled users">
+      <li *ngFor="let user of searchResult">
+        <app-organization-users-list
+          (addModerator)="addModerator($event)"
+          (removeModerator)="removeModeratorFromList($event)"
+          [user]="user"
+          [isModerator]="false"
+          [isCurrentUser]="userId == user?._id"
+          class="d-block">
+        </app-organization-users-list>
+      </li>
+    </ul>
+    <div class="text-center">
+      <app-loading *ngIf="showLoading"></app-loading>
+    </div>
+  </section>
+  <app-no-event *ngIf="searchResult && !searchResult.length && search.value.length" [noResult]="noResult"></app-no-event>
+  <app-no-event *ngIf="followers && !followers.length && !moderators.length && !search.value.length;else followersList" [noResult]="noFollowers"></app-no-event>
+<ng-template #followersList>
+  <section *ngIf="!searchResult.length && !search.value.length">
+    <h3 class="text-capitalize tab__title my-0">{{"user.moderators" | translate}} {{ moderators && moderators?.length}}</h3>
+    <ul class="list-unstyled users">
+      <li *ngFor="let moderator of moderators?.slice(0, showItemsCount); let i = index">
+        <app-organization-users-list class="d-block"
+                                     (addModerator)="addModerator($event, i)"
+                                     (removeModerator)="removeModerator($event)"
+                                     [isCurrentUserPageOwner]="userId == id"
+                                     [isCurrentUser]="userId == moderator?._id"
+                                     [user]="moderator"
+                                     [isModerator]="true">
+        </app-organization-users-list>
+      </li>
+    </ul>
+    <div class="text-center" *ngIf="moderators?.length > 2">
+      <button class="border-0 bg-transparent see-more" (click)="showMore()">
+        <span>{{(!isMore ? "page.see_all_moderators" : "page.see_less_moderators") | translate}}</span>
+      </button>
+    </div>
+  </section>
+  <section *ngIf="!searchResult.length && !search.value.length">
+    <h3 class="text-capitalize tab__title my-0">{{"group.others" | translate}}
+      {{followers?.length}}</h3>
+    <ul class="list-unstyled users">
+      <li *ngFor="let user of followers; let i = index">
+        <app-organization-users-list
+          (addModerator)="addModerator($event, i)"
+          (removeModerator)="removeModerator($event)"
+          [isCurrentUserPageOwner]="userId == id"
+          [isModerator]="false"
+          [isCurrentUser]="userId == user?._id"
+          [user]="user" class="d-block">
+        </app-organization-users-list>
+      </li>
+    </ul>
+    <div class="text-center">
+      <app-loading *ngIf="showLoading"></app-loading>
+    </div>
+  </section>
+</ng-template>
+</section>

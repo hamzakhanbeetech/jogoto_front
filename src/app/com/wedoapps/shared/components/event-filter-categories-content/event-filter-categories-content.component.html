@@ -1,0 +1,21 @@
+<form [formGroup]="categoriesForm" *ngIf="checkAll">
+  <app-checkbox *ngIf="!isInCreateEventPage && !checkAllFalse" class="check-all d-block" [value]="isCheckAllCategories"
+                (chackboxValue)="onClickCheckAll($event)"
+                [filterName]="'check_all' | translate">
+  </app-checkbox>
+  <div class="d-flex flex-wrap categories__dropdown">
+    <div class="overflow-hidden position-relative d-inline-block"
+         *ngFor="let category of categoriesForm.get('items').controls;let i = index;">
+      <!--TODO if category chacked add border-color  category.color-->
+      <label class="checklabel categories__btn d-flex align-items-center position-relative"
+             [for]="categoriesList[i].name"
+             (mouseover)='onMouseOver(i)' (mouseleave)='onMouseLeave()'
+             [style.borderColor]="!category.value && i!==hover ?  'transparent':categoriesList[i].styleData.color">
+        <input class="checkbox position-absolute" type="checkbox" [id]="categoriesList[i].name"
+               [formControl]="category">
+        <i [ngClass]="categoriesList[i].styleData.icon" [ngStyle]="{'color': categoriesList[i].styleData.color}"></i>
+        {{categoriesList[i].name}}
+      </label>
+    </div>
+  </div>
+</form>

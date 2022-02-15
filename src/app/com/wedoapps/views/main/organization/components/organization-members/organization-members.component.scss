@@ -1,0 +1,85 @@
+@import '../../../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.users-section {
+  margin: 20px 0;
+  .users {
+    margin-bottom: 17px;
+  }
+}
+
+
+.tab {
+  &__header {
+    margin-bottom: 20px;
+  }
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-18);
+    color: $dark-gray;
+  }
+}
+
+.search {
+  &__input {
+    @include login-input;
+    padding: 13px 45px;
+    width: 400px;
+  }
+  &__btn {
+    color: $blue;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px
+  }
+}
+
+.see-more {
+  margin-bottom: 25px;
+}
+
+@include media-breakpoint-down(lg) {
+  .tab {
+    &__header {
+      margin-bottom: 20px;
+    }
+    &__title {
+      @include font-size($fz-16);
+    }
+  }
+  .search {
+    &__input {
+      width: 300px;
+      padding: 12px 45px;
+    }
+  }
+  .see-more {
+    @include font-size($fz-14);
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .tab {
+    &__header {
+      padding: 0 15px;
+      margin-bottom: 10px;
+    }
+    &__title {
+      @include font-size($fz-14);
+    }
+  }
+  .see-more {
+    @include font-size($fz-12);
+    margin-bottom: 12px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .search {
+    width: 100%;
+    margin-top: 10px;
+    &__input {
+      width: inherit;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.icons {
+  li {
+    a {
+      @include social-icons;
+    }
+  }
+}

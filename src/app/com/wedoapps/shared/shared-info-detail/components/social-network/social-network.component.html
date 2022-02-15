@@ -1,0 +1,49 @@
+<div class="social-block">
+  <h3 class="social-block__title">{{"user.social_networks" | translate}}</h3>
+  <p class="social-block__description">{{"user.connect_social" | translate}}</p>
+  <ul class="list-unstyled">
+    <li class="social-block__item d-flex justify-content-between">
+      <figure class="d-flex m-0">
+        <img src="./assets/images/icons/facebook.svg" class="social-block__item__image" alt="facebook">
+        <figcaption>Facebook</figcaption>
+      </figure>
+
+      <button type="button"
+        (click)="submitFacebookLogin(fbConnected)"
+        class="bg-transparent border-0 social-block__item__btn active">
+          <span *ngIf="!fbConnected">{{"user.connect" | translate}}</span>
+       <span *ngIf="fbConnected">{{"user.disconnect"| translate}}</span>
+      </button>
+    </li>
+    <li class="social-block__item d-flex justify-content-between">
+      <figure class="d-flex m-0">
+        <img src="./assets/images/icons/google.svg" class="social-block__item__image" alt="google">
+        <figcaption>Google</figcaption>
+      </figure>
+      <button [hidden]="checkGoogle"
+              type="button"
+              id="googleConnect"
+              class="bg-transparent border-0 social-block__item__btn active">
+        {{"user.connect" | translate}}
+      </button>
+        <button *ngIf="checkGoogle"
+                (click)="disconnectGoogle()"
+                type="button"
+                class="bg-transparent border-0 social-block__item__btn active">
+            {{ "user.disconnect" | translate}}
+        </button>
+    </li>
+    <li class="social-block__item d-flex justify-content-between">
+      <figure class="d-flex m-0">
+        <img src="./assets/images/icons/apple.svg" class="social-block__item__image" alt="apple">
+        <figcaption>Apple</figcaption>
+      </figure>
+      <button type="button"
+              (click)="submitAppleConnect(appleConnected)"
+              class="bg-transparent border-0 social-block__item__btn active">
+        <span *ngIf="!appleConnected">{{"user.connect" | translate}}</span>
+        <span *ngIf="appleConnected">{{"user.disconnect"| translate}}</span>
+      </button>
+    </li>
+  </ul>
+</div>

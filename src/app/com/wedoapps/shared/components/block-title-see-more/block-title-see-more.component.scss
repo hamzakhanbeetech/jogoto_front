@@ -1,0 +1,6 @@
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "../../../../../../assets/scss/base/mixins";
+@include block_header;
+.text-orange {
+  color: #ff6602 !important;
+}

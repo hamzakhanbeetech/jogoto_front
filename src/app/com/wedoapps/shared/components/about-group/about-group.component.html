@@ -1,0 +1,42 @@
+<section class="about bg-white">
+  <div class="about__header"><h3 class="tab__title">{{"group.about" | translate}}</h3>
+    <p class="about__title mb-0">{{groupData.name}}</p>
+    <ul class="list-unstyled about__group d-flex">
+      <li class="about__group__item">
+        <span *ngIf="groupData.group_type === 'open';else close">{{"open" | translate}}</span>
+        <ng-template #close>
+          {{"close" | translate}}
+        </ng-template>
+      </li>
+      <li class="about__group__item">{{groupData.members_count}}
+        <span *ngIf="groupData.members_count==1;else moreMembers">{{"member" | translate}}</span>
+        <ng-template #moreMembers>
+          <span>{{"members" | translate}}</span>
+        </ng-template>
+      </li>
+      <li class="about__group__item text-lowercase">
+        <span *ngIf="!groupData.events_count; else eventsCount">{{"no_events" | translate}}</span>
+        <ng-template #eventsCount>
+          {{groupData.events_count}} {{"statistic.events" | translate}}
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+  <div class="about__section" *ngIf="checkGroupState">
+    <h3 class="about__section__title">
+      {{"description" | translate}}
+    </h3>
+    <p class="about__section__full__desc text-break" [innerHTML]="description">
+    </p>
+  </div>
+  <div class="about__footer" *ngIf="checkGroupState">
+    <div>
+      <h3 class="about__section__title">{{"location" | translate}}</h3>
+      <a [href]="mapUrl" target="_blank"
+         class="about__footer__location text-decoration-none">   {{groupData.address.full}}</a>
+    </div>
+    <div class="text-right"><a [href]="mapUrl" target="_blank"
+                               class="about__footer__link text-decoration-none">{{"view_in_map" | translate}}</a>
+    </div>
+  </div>
+</section>

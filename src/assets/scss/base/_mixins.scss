@@ -1,0 +1,1680 @@
+@import 'variables';
+
+@mixin font-size($fs) {
+  font-size: $fs,;
+}
+
+@mixin size($width,$height:$width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin dropdown-list-hover {
+  &::before {
+    background: $blue;
+    @include size(2px, 0);
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  @include hover-focus-active {
+    color: $blue;
+    background: $white;
+    &::before {
+      @include size(2px, 100%);
+    }
+    i {
+      &::before {
+        background: $blue;
+        color: inherit;
+      }
+    }
+  }
+}
+
+@mixin filter-btn {
+  @include size(175px, 40px);
+  @include border-radius(5px);
+  @include transition(.3s);
+  background: $white;
+  color: $dark-gray;
+  border: none;
+  i {
+    color: $blue;
+    margin-right: 5px;
+  }
+  &::after {
+    display: none;
+  }
+  @include hover {
+    background: $blue;
+    color: $white;
+    i {
+      color: inherit;
+    }
+  }
+  &[aria-expanded="true"] {
+    background: $blue;
+    color: $white;
+
+    i {
+      color: inherit;
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+    @include size(155px, 36px);
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-12);
+    @include size(110px, 30px);
+    @include hover-focus-active {
+      background: $white;
+      color: $dark-gray;
+      i {
+        color: $blue;
+      }
+    }
+  }
+  @include media-breakpoint-down(xs) {
+    @include size(calc(100% / 2 - 8px), 30px);
+    margin-top: 15px;
+    border: 1px solid $light-gray;
+  }
+}
+
+@mixin filter-title {
+  @extend %proxima-semibold;
+  @include font-size($fz-18);
+  color: $dark-gray;
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-16);
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-14);
+  }
+}
+
+@mixin blue-btn() {
+  @include border-radius(5px);
+  @include hover {
+    background: $darker-blue;
+  }
+  padding: 14px 20px;
+  background: $blue;
+}
+
+@mixin placeholder() {
+  &::-webkit-input-placeholder {
+    @content
+  }
+  &:-moz-placeholder {
+    @content
+  }
+  &::-moz-placeholder {
+    @content
+  }
+  &:-ms-input-placeholder {
+    @content
+  }
+}
+
+@mixin login-input {
+  @include placeholder {
+    color: $light-gray
+  }
+  @include hover-focus-active {
+    border-color: $light-gray;
+  }
+  @include border-radius(5px);
+  border: 1px solid $light-gray;
+  padding: 14px 20px;
+  color: $dark-gray;
+  @include font-size($fz-16);
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+    padding: 10px 15px;
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-12);
+  }
+}
+
+@mixin login-btn {
+  @include blue-btn;
+  @include font-size($fz-16);
+  margin-bottom: 40px;
+  height: 40px;
+  padding: 0 20px;
+  line-height: 26px;
+  .spinner-border {
+    @include size(25px);
+    border: 2px solid $white;
+    border-right-color: transparent;
+    margin-left: 12px;
+  }
+  &.disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    pointer-events: none;
+    user-select: none;
+    @include hover-focus-active {
+      background: $blue;
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-12);
+    height: 35px;
+    line-height: 1;
+  }
+}
+
+@mixin login-footer {
+  color: $text-color;
+  border-top: 1px solid $light-gray;
+  padding-top: 13px;
+  @include font-size($fz-16);
+  &__link {
+    @include font-size($fz-14);
+    color: $dark-orange;
+    @include hover-focus-active {
+      color: $darker-orange
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-14);
+  }
+}
+
+@mixin login-title {
+  @include font-size($fz-30);
+  font-style: normal;
+  color: $dark-gray;
+  margin: 0 0 20px;
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-24);
+    margin: 0 0 25px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-20);
+    margin: 0 0 20px;
+  }
+
+}
+
+@mixin login-input-group {
+  margin-bottom: 5px;
+  padding-bottom: 35px;
+
+  input {
+    @include login-input;
+  }
+
+  &-error {
+    input {
+      border: 1px solid $error
+    }
+
+    p {
+      font-size: $fz-12;
+      color: $error;
+      top: 40px;
+      left: 10px;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 30px;
+    &-error {
+      p {
+        top: 35px;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    &-error {
+      p {
+        font-style: $fz-10;
+      }
+    }
+  }
+}
+
+@mixin bookmark-active-hover() {
+  @include transition(.3s);
+  .icon-bookmark:before {
+    content: '\e812';
+  }
+}
+
+@mixin header-menu {
+  .menu {
+    @include font-size($fz-14);
+    height: 70px;
+    line-height: 1;
+    box-shadow: 0 2px 6px $black-shadow-lighter;
+
+    &__logo {
+      width: 130px;
+
+      &__beta {
+        @include font-size($fz-12);
+        color: $dark-gray;
+        bottom: -4px;
+        right: 0;
+      }
+    }
+
+    &__open {
+      margin-right: 20px;
+      padding: 26px 20px;
+      width: 75px;
+
+      i {
+        @include font-size($fz-20);
+      }
+
+      .dropdown-menu {
+        @include border-radius(5px);
+      }
+      &.show.open {
+        background: $blue-transparent;
+        color: $dark-gray;
+      }
+      @include hover {
+        background: $blue-transparent;
+        color: $dark-gray;
+      }
+    }
+
+    &__item {
+      @include font-size($fz-14);
+      color: $dark-gray;
+      padding: 0 20px;
+      background: transparent;
+    span{
+      @include font-size(inherit);
+    }
+      i {
+        @include font-size($fz-25);
+
+        &::before {
+          color: $dark-gray;
+        }
+      }
+
+      i {
+        margin-bottom: 5px;
+      }
+
+      @include hover {
+        background: $blue-transparent;
+        color: $dark-gray;
+      }
+
+      &[aria-expanded="true"] {
+        background: $blue-transparent;
+      }
+    }
+
+    &__profile {
+      color: $dark-gray;
+
+      &__image {
+        @include size(25px);
+        border: 1px solid $dark-gray;
+        margin-bottom: 5px;
+      }
+    }
+
+    &__dropdown {
+      @include border-radius(5px);
+      border: none;
+      padding: 15px 0;
+      top: 65px !important;
+
+      .caret {
+        &::after {
+          margin: 0;
+        }
+      }
+
+      .dropdown-item {
+        @include font-size($fz-16);
+        @include dropdown-list-hover();
+        color: $dark-gray;
+        padding: 5px 20px;
+        cursor: pointer;
+
+        i {
+          margin-right: 20px;
+
+          &:before {
+            background: transparent !important;
+          }
+        }
+      }
+
+      &__footer {
+        background: $sidebar-footser;
+        padding: 17px 20px 10px;
+
+        ul {
+          margin-bottom: 15px;
+        }
+
+        &-item {
+          @include font-size($fz-12);
+          @include hover-focus-active {
+            color: $darker-blue
+          }
+          color: $dark-gray;
+          margin-right: 24px;
+        }
+
+        .copyright {
+          @include font-size($fz-12);
+          color: $lighter-gray;
+        }
+      }
+    }
+
+    &__create {
+      &__event {
+        @include font-size($fz-14);
+        @include border-radius(5px);
+        @include hover-focus-active {
+          background: $darker-orange;
+        }
+        padding: 14px 20px;
+        background: $dark-orange;
+        margin-left: 25px;
+        >span{
+          @include font-size(inherit);
+        }
+      }
+    }
+
+    &__create-promote {
+      @include blue-btn;
+      margin-left: 20px;
+    }
+
+    &__create__event, &__create-promote {
+      padding: 12px 20px;
+      box-shadow: 0 3px 10px 3px $black-shadow-lighter;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .menu {
+      &__logo {
+        width: 128px;
+      }
+
+      &__create-promote, &__create {
+        @include font-size($fz-20);
+        padding: 10px 10px;
+      }
+
+      &__create__event {
+        padding: 10px 10px;
+      }
+
+      &__dropdown {
+        .dropdown-item {
+          @include font-size($fz-14);
+
+          i {
+            @include font-size($fz-18);
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+  }
+  @include media-breakpoint-down(md) {
+    .menu {
+      &__item {
+        margin: 0 10px;
+        font-size: 12px;
+        padding: 0 10px;
+      }
+
+      &__create-promote {
+        margin-left: 0;
+      }
+
+      &__create__event {
+        margin-left: 15px;
+      }
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    .menu {
+      &__logo {
+        width: 120px;
+      }
+
+      &__open {
+        padding: 26px 10px;
+        width: 55px;
+      }
+
+      &__item {
+        padding: 0 10px;
+
+        i {
+          margin-bottom: 0;
+        }
+      }
+
+      &__dropdown {
+        &-user {
+          left: auto !important;
+          right: 0 !important;
+        }
+
+        .dropdown-item {
+          @include font-size($fz-14);
+
+          i {
+            @include font-size($fz-18);
+            margin-right: 15px;
+          }
+        }
+
+        .addition-items {
+          border-top: 1px solid $light-gray;
+          border-bottom: 1px solid $light-gray;
+          padding: 5px 0;
+          margin: 5px 0;
+        }
+      }
+
+      &__create {
+        .dropdown-menu {
+          top: 45px !important;
+        }
+      }
+
+      &__create-promote, &__create {
+        @include font-size($fz-20);
+        padding: 10px 10px;
+      }
+
+      &__create__event {
+        margin-left: 20px;
+        padding: 10px 10px;
+      }
+
+      &__create-promote {
+        margin-left: 10px;
+      }
+
+      &__create-promote, &__create__event {
+        @include size(30px);
+        padding: 0;
+
+        i {
+          @include font-size($fz-14)
+        }
+      }
+
+      &__profile__image {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(xs) {
+    .menu {
+      &__logo {
+        height: 32px;
+        width: auto;
+
+        img {
+          height: 32px;
+        }
+
+        &__beta {
+          @include font-size($fz-10);
+          top: 0;
+          right: -23px;
+        }
+      }
+
+      &__open {
+        position: static;
+        margin-right: 20px;
+        padding: 26px 10px;
+        width: 60px;
+        @include hover {
+          background: transparent;
+        }
+      }
+
+      &__dropdown {
+        &-mobile {
+          @include border-radius(0 !important);
+          width: 100%;
+          left: 0 !important;
+          right: 0 !important;
+          top: 70px !important;
+          border: none;
+        }
+
+        &__footer {
+          margin-top: 50px;
+        }
+      }
+
+      &__item {
+        padding: 0;
+        margin: 0 0 0 10px;
+      }
+
+      &__create-promote, &__create__event {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+@mixin search-filter {
+  @include border-radius(5px);
+  width: 800px;
+  background: $white-transparent;
+  padding: 20px;
+  &__input {
+    @extend %roboto-regular;
+    @include placeholder {
+      color: $lighter-gray
+    }
+    @include font-size($fz-16);
+    @include border-radius(5px);
+    border: none;
+    padding: 6px 45px 6px 12px;
+  }
+  &__btn {
+    @include font-size($fz-16);
+      i{
+        @include font-size(inherit);
+      }
+    @include hover-focus-active {
+      background: $darker-blue;
+    }
+    @include border-radius(5px);
+    background: $blue;
+    margin-left: 20px;
+    padding: 0 20px;
+  }
+  &__btn-group {
+    margin-top: 20px;
+    ::ng-deep {
+      .btn__filter, .categories__btn__filter {
+        width: 100% !important;
+      }
+    }
+  }
+  .filter-btn {
+    @include filter-btn;
+    width: calc(100% / 3 - 10px) !important;
+  }
+  @include media-breakpoint-down(lg) {
+    width: 710px;
+    &__input {
+      @include font-size($fz-14);
+      padding: 6px 30px 6px 12px;
+    }
+    &__btn {
+      @include font-size($fz-14);
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+    max-width: 510px;
+    &__input {
+      @include font-size($fz-12);
+      border: 1px solid $light-gray;
+    }
+    &__btn {
+      @include font-size($fz-12);
+      margin-left: 15px;
+    }
+  }
+  @include media-breakpoint-down(xs) {
+    box-shadow: 0 5px 6px $black-shadow;
+    position: absolute;
+    top: 100%;
+    transform: translateY(-50%);
+
+    &__input {
+      border: 1px solid $light-gray;
+    }
+  }
+}
+
+@mixin category-btn {
+  @include font-size($fz-14);
+  @include border-radius(5px);
+  padding: 6px 20px;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid $dark-gray;
+  margin-right: 15px;
+  span{
+    @include font-size(inherit);
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-12);
+    padding: 6px 15px;
+    margin-right: 10px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-10);
+  }
+}
+
+@mixin members-list {
+  margin: 15px 0;
+  &__item {
+    color: $text-color;
+
+    &:not(:last-child) {
+      &::after {
+        content: "|";
+        margin: 0 5px;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      @include font-size($fz-14);
+    }
+    @include media-breakpoint-down(sm) {
+      @include font-size($fz-12);
+    }
+  }
+}
+
+@mixin redesign-am-input {
+  .mat-form-field-infix {
+    @include border-radius(5px);
+    border: 1px solid $light-gray;
+    padding: 13px 20px;
+  }
+  .mat-form-field-underline {
+    display: none !important;
+  }
+  input:focus ~ .mat-form-field-label {
+    display: none !important;
+  }
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+
+  .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label,
+  .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: none;
+    display: none;
+  }
+
+  .mat-form-field-label-wrapper {
+    top: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mat-form-field-label {
+    transform: translateY(-50%) !important;
+    top: 50% !important;
+    left: 20px !important;
+    color: $light-gray !important;
+  }
+}
+
+@mixin gray-btn-icon {
+  @extend %proxima-regular;
+  @include border-radius(5px);
+  @include hover-focus-active {
+    @include bookmark-active-hover;
+  }
+  line-height: 1;
+  background: $gray;
+  border: 1px solid $border-color;
+  padding: 10px 20px;
+  i {
+    color: $blue;
+    margin-right: 10px;
+  }
+  &.active {
+    @include bookmark-active-hover;
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-12);
+  }
+}
+
+@mixin event-date {
+  color: $text-color;
+
+  li {
+    margin-bottom: 15px;
+  }
+  .active {
+    color: $dark-orange
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+    li {
+      margin-bottom: 13px;
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-12);
+    li {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@mixin error {
+  @include font-size($fz-12);
+  color: $error;
+  top: 40px;
+  left: 10px;
+  @include media-breakpoint-down(lg) {
+    top: 38px;
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size(10px);
+    top: 38px;
+  }
+}
+
+@mixin modals-header {
+  :host {
+    .cdk-overlay-pane {
+      transform: translateX(0) translateY(0) !important;
+      margin-left: 0;
+    }
+  }
+  .mat-dialog-container {
+    width: 445px;
+    padding: 0;
+    max-height: 600px;
+  }
+  .header {
+    border-bottom: 1px solid $gray-border;
+    padding: 15px;
+    margin-bottom: 15px;
+
+    &__title {
+      @include font-size($fz-16);
+      @extend %proxima-semibold;
+      color: $dark-gray;
+      line-height: 1;
+    }
+
+    &__close {
+      color: $blue;
+      line-height: 1;
+    }
+  }
+
+  .mat-dialog-content {
+    padding: 0;
+    margin: 0;
+    min-height: calc(600px - 195px);
+    max-height: calc(600px - 195px);
+    @media all and (min-width: 568px) and (max-height: 600px) {
+      min-height: calc(100vh - 195px);
+      max-height: calc(100vh - 195px);
+    }
+    @include media-breakpoint-down (xs) {
+      min-height: calc(100vh - 195px);
+      max-height: calc(100vh - 195px);
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    .cdk-overlay-container {
+      z-index: 5000;
+    }
+    .header {
+      &__title, &__close {
+        @include font-size($fz-14);
+      }
+    }
+  }
+  @include media-breakpoint-down (xs) {
+    .mat-typography.mat-dialog-content {
+      margin: 0;
+      padding: 25px 15px;
+    }
+    .cdk-global-overlay-wrapper .cdk-overlay-pane {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100%
+    }
+    .mat-dialog-container {
+      @include border-radius(0);
+      @include size(100%);
+      padding: 0;
+      max-height: 100%;
+    }
+    .header {
+      border: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      height: 50px;
+      padding-bottom: 0;
+      margin-bottom: 25px;
+    }
+  }
+}
+
+@mixin object-fit {
+  object-fit: cover;
+  object-position: center;
+}
+
+@mixin user-image($size,$size-lg,$size-sm) {
+  @include size($size);
+  min-width: $size;
+  min-height: $size;
+  border: 1px solid $blue;
+  margin-right: 15px;
+
+  img {
+    @include object-fit;
+  }
+  @include media-breakpoint-down(lg) {
+    @include size($size-lg);
+    min-width: $size-lg;
+    min-height: $size-lg;
+  }
+  @include media-breakpoint-down(sm) {
+    @include size($size-sm);
+    min-width: $size-sm;
+    min-height: $size-sm;
+    margin-right: 10px;
+  }
+}
+
+@mixin filter-btn-gray {
+  @include transition(.3s);
+  @include border-radius(5px);
+  @include font-size($fz-14);
+  @extend %proxima-regular;
+  color: $dark-gray;
+  background: $more-gray;
+  padding: 5px 20px;
+  max-width: 150px;
+  margin-right: 15px;
+  @include hover-focus-active {
+    background: $hover-gray;
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-12 !important);
+    padding: 5px 17px;
+  }
+}
+
+@mixin users-list-modal {
+  &__search {
+    color: $blue;
+    top: 50%;
+    transform: translate(10px, -50%);
+  }
+
+  &__user {
+    margin-bottom: 15px;
+
+    &__image {
+      @include user-image(45px, 40px, 32px);
+    }
+
+    &__title {
+      color: $text-color;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      @include hover-focus-active {
+        color: $text-color;
+      }
+    }
+  }
+
+  &__see-more {
+    @include login-btn;
+    background: $sidebar-footser;
+    border: 1px solid $border-color;
+    color: $dark-gray;
+    @include hover {
+      background: $sidebar-footser !important;
+    }
+
+    .spinner-border {
+      border: 2px solid $dark-gray;
+      border-right-color: transparent;
+    }
+  }
+
+  &__error {
+    @include error;
+  }
+  @include media-breakpoint-down(lg) {
+    &__user__title {
+      @include font-size($fz-14)
+    }
+    &__see-more {
+      padding: 5px;
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    &__user__title {
+      @include font-size($fz-12)
+    }
+  }
+}
+
+@mixin app-group {
+  @include border-radius(5px);
+  width: calc((100% - 60px) / 4);
+  margin-bottom: 20px;
+  white-space: nowrap;
+
+  &:nth-child(2n+2) {
+    margin: 0 20px 20px;
+  }
+
+  &:nth-child(4n+4) {
+    margin: 0 0 20px 20px;
+  }
+  @include media-breakpoint-down(lg) {
+    width: calc((100% - 20px) / 2);
+    margin-bottom: 20px;
+
+    &:nth-child(2n+2) {
+      margin: 0 0 20px 20px;
+    }
+
+    &:nth-child(4n+4) {
+      margin: 0 0 20px 20px;
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    width: calc((100%));
+
+    &:nth-child(3n+2) {
+      margin: 0 0 20px 0;
+    }
+
+    &:nth-child(4n+4) {
+      margin: 0 0 20px 0;
+    }
+  }
+}
+
+@mixin create-title-desc {
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-16);
+    margin-bottom: 9px;
+    line-height: 1;
+  }
+
+  &__desc {
+    color: $text-color;
+    .text-danger {
+      @include font-size(inherit);
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    &__title {
+      @include font-size($fz-16);
+      margin-bottom: 11px;
+    }
+
+    &__desc {
+      @include font-size($fz-14);
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    &__title {
+      @include font-size($fz-14);
+      margin-bottom: 11px;
+    }
+    &__desc {
+      @include font-size($fz-12);
+    }
+  }
+}
+
+@mixin create-form-group {
+  .form-group {
+    margin-bottom: 0;
+
+    .form-control {
+      @include login-input;
+      height: 50px;
+    }
+
+    label {
+      line-height: 1;
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    .form-group {
+      .form-control {
+        height: 36px;
+      }
+
+      label {
+        @include font-size($fz-14);
+      }
+    }
+    @include media-breakpoint-down(sm) {
+      .form-group {
+        .form-control {
+          height: 34px;
+        }
+
+        label {
+          @include font-size($fz-12);
+        }
+      }
+    }
+  }
+}
+
+@mixin characters {
+  .characters {
+    margin-bottom: 40px;
+
+    li:not(:last-of-type) {
+      &::after {
+        content: '/';
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .characters {
+      margin-bottom: 36px;
+
+      li {
+        @include font-size($fz-14);
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .characters {
+      margin-bottom: 36px;
+
+      li {
+        @include font-size($fz-12);
+      }
+    }
+  }
+
+}
+
+@mixin left-sections {
+  &__left {
+    @include size(710px, auto);
+  }
+  @include media-breakpoint-down(lg) {
+    &__left {
+      @include size(100%, auto);
+    }
+  }
+}
+
+@mixin group-sidebar {
+  &__dropdown {
+    left: auto !important;
+    right: 0 !important;
+    z-index: 2000;
+
+    .dropdown-item {
+      @include font-size($fz-14);
+      @include dropdown-list-hover;
+    }
+  }
+  &__invite {
+    @include gray-btn-icon;
+    @include size(auto, 40px);
+    margin: 0;
+    padding: 0 20px;
+  }
+  &__join {
+    @include blue-btn;
+    @include size(auto, 40px);
+    padding: 0 20px;
+    margin-right: 20px;
+    width: calc(100% - 20px);
+
+    span {
+      margin-right: 10px;
+    }
+  }
+  &__title {
+    @include font-size($fz-20);
+    @extend %proxima-semibold;
+    color: $dark-gray;
+    margin-bottom: 15px;
+  }
+  &__type {
+    color: $text-color;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $border-color;
+  }
+  @include media-breakpoint-down(sm) {
+    &__dropdown {
+      @include font-size($fz-12);
+    }
+  }
+}
+
+@mixin block_header {
+  .block-header {
+    padding: 25px 0 10px;
+    border-bottom: 1px solid $blue;
+    margin-bottom: 20px;
+
+    &__title {
+      @extend %proxima-regular;
+      @include font-size($fz-24);
+      color: $event-title;
+    }
+
+    &__link {
+      @include hover-focus-active {
+        color: $darker-blue
+      }
+      color: $blue;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .block-header {
+      padding: 23px 0 8px;
+      margin-bottom: 10px;
+
+      &__title {
+        @include font-size($fz-18);
+      }
+
+      &__link {
+        @include font-size($fz-14);
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .block-header {
+      padding: 23px 0 8px;
+      margin-bottom: 10px;
+
+      &__title {
+        @include font-size($fz-14);
+      }
+
+      &__link {
+        @include font-size($fz-12);
+      }
+    }
+  }
+
+}
+
+@mixin added-delet-users {
+  @include border-radius(5px);
+  background: $sidebar-footser;
+  color: $dark-gray;
+  padding: 13px 15px;
+  line-height: 1;
+  margin-top: 10px;
+  margin-right: 15px;
+  button {
+    @include font-size($fz-12);
+    color: $blue;
+    margin-left: 10px;
+  }
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-14);
+    button {
+      @include font-size($fz-10);
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-12);
+  }
+  @include media-breakpoint-down(xs) {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+@mixin pages-moderators {
+  margin: 16px 0;
+  width: inherit;
+  max-height: 140px;
+  &__item {
+    padding: 12px 0;
+    border-top: 1px solid $border-color;
+    line-height: 1;
+
+    &__image {
+      @include user-image(45px, 45px, 45px);
+    }
+
+    &__name {
+      @include font-size($fz-16);
+      color: $dark-gray;
+      margin: 0;
+      @include hover-focus-active {
+        color: $dark-gray;
+      }
+    }
+
+    &__company {
+      @include font-size($fz-14);
+      color: $text-color;
+      margin: 7px 0 0;
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    &__item {
+      &__name {
+        @include font-size($fz-14);
+      }
+
+      &__company {
+        @include font-size($fz-12);
+      }
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    margin: 6px 0 20px;
+    width: inherit;
+    max-height: 130px;
+    &__item {
+      padding: 10px 0;
+
+      &__name {
+        @include font-size($fz-12);
+      }
+
+      &__role, &__company {
+        @include font-size($fz-10);
+      }
+    }
+  }
+}
+
+@mixin tabs {
+  ::ng-deep {
+    .nav-tabs {
+      @extend %proxima-regular;
+      background: $white;
+      margin-bottom: 20px;
+
+      .nav-item {
+        @include font-size($fz-16);
+        margin: 0 40px 0 0;
+
+        a {
+          @include border-radius(0);
+          color: $dark-gray;
+          border: none;
+          padding: 0;
+        }
+
+        &.active, &:hover {
+          a {
+            border: none;
+            color: $blue
+          }
+        }
+      }
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    ::ng-deep {
+      .nav-tabs {
+        margin-bottom: 15px;
+
+        .nav-item {
+          @include font-size($fz-14);
+        }
+      }
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    ::ng-deep {
+      .nav-tabs {
+        margin-bottom: 10px;
+
+        .nav-item {
+          @include font-size($fz-12);
+          margin-right: 18px;
+        }
+      }
+    }
+  }
+}
+
+@mixin crop-buttons {
+  @include font-size($fz-20);
+  min-width: 70px;
+  border: 1px solid $white;
+  background: $black-upload;
+  &:first-of-type {
+    @include border-top-left-radius(5px);
+    @include border-bottom-left-radius(5px)
+  }
+  &:last-of-type {
+    @include border-bottom-right-radius(5px);
+    @include border-top-right-radius(5px)
+  }
+  .cropper-input {
+    left: 0;
+    overflow: hidden;
+    top: 0;
+    opacity: 0;
+    text-indent: -999px;
+    cursor: pointer;
+    font-size: 0;
+  }
+}
+
+@mixin social-icons {
+  @include gray-btn-icon;
+  @include size(40px);
+  padding: 0;
+  margin-left: 15px;
+  @include media-breakpoint-down(lg) {
+    @include size(36px);
+    padding: 0;
+    margin-left: 15px;
+  }
+  @include media-breakpoint-down(sm) {
+    @include size(28px);
+    padding: 0;
+    margin-left: 15px;
+  }
+}
+
+@mixin category-icon {
+  .categories {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+
+    i {
+      @include font-size($fz-20);
+      color: $blue;
+    }
+
+    &__item {
+      @include border-radius(5px);
+      @include font-size($fz-14);
+      background: $gray;
+      color: $event-title;
+      padding: 5px 20px;
+      line-height: 1;
+      border: 1px solid;
+      margin: 0 20px 20px 0;
+      height: 44px;
+
+      i {
+        @include font-size($fz-30);
+        margin-right: 15px;
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-bottom: 10px;
+      i {
+        @include font-size($fz-14);
+        line-height: 1.2;
+      }
+      &__item {
+        @include font-size($fz-12);
+        padding: 5px 18px;
+        margin: 0 10px 10px 0;
+        height: 36px;
+
+        i {
+          @include font-size($fz-24);
+        }
+      }
+    }
+  }
+}
+
+//not foud pages
+@mixin notFoundPage {
+
+  .not-found {
+    min-height: calc(100vh - 135px);
+    background-size: cover !important;
+
+    &__section {
+      background: $black-transparent;
+      padding: 30px;
+
+      &__title {
+        @extend %roboto-regular;
+        @include font-size($fz-80);
+        margin: 0 0 40px;
+      }
+
+      &__sub-title {
+        @extend %display-bold;
+        @include font-size($fz-40);
+        margin-bottom: 30px;
+      }
+
+      &__description {
+        @extend %proxima-regular;
+        @include font-size($fz-20);
+      }
+    }
+
+    .characters {
+      li::after {
+        margin: 0 10px;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      min-height: calc(100vh - 120px);
+      &__section {
+        &__title {
+          @include font-size($fz-60);
+          margin: 0 0 30px;
+        }
+
+        &__sub-title {
+          @include font-size($fz-30);
+          margin-bottom: 25px;
+        }
+
+        &__description {
+          @include font-size($fz-16);
+        }
+      }
+    }
+    @include media-breakpoint-down(sm) {
+      min-height: calc(100vh - 115px);
+      &__section {
+        padding: 30px;
+
+        &__title {
+          @include font-size($fz-40);
+          margin: 0 0 23px;
+        }
+
+        &__sub-title {
+          @include font-size($fz-24);
+          margin-bottom: 18px;
+        }
+
+        &__description {
+          @include font-size($fz-14);
+        }
+      }
+    }
+  }
+}
+
+@mixin about-page-title {
+  @extend %display-bold;
+  @include font-size($fz-60);
+  @include media-breakpoint-down(lg) {
+    @include font-size($fz-40);
+  }
+  @include media-breakpoint-down(sm) {
+    @include font-size($fz-20);
+  }
+}
+
+@mixin about-pages {
+  &__hero {
+    @include size(100%, 380px);
+    background-size: cover !important;
+
+    &__title {
+      @include about-page-title;
+    }
+  }
+  &__block {
+    border-top: 1px solid $border-color;
+    padding-top: 40px;
+
+    &__item {
+      @include border-radius(5px);
+      box-shadow: 0 0 10px $border-color;
+      background: $gray;
+
+      &:not(:last-of-type) {
+        margin-right: 26px;
+      }
+
+      &__image {
+        @include size(100%, 160px);
+
+        img {
+          @include object-fit;
+        }
+      }
+
+      &__info {
+        padding: 28px 20px 20px;
+
+        &__title {
+          @extend %proxima-semibold;
+          @include font-size($fz-20);
+          color: $blue;
+          margin: 0 0 20px;
+          padding: 0;
+        }
+
+        &__desc {
+          @include font-size($fz-18);
+          color: $dark-gray;
+          margin-bottom: 20px;
+          padding: 0;
+        }
+      }
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    &__hero {
+      @include size(100%, 238px);
+    }
+    &__block {
+      &__item {
+        width: calc(100%) !important;
+        padding: 20px;
+
+        &:not(:last-of-type) {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+
+        &__image {
+          @include size(275px !important, 120px !important);
+          @include border-radius(5px);
+          margin-right: 20px;
+        }
+
+        &__info {
+          padding: 0;
+
+          &__title {
+            @include font-size($fz-16);
+            margin: 0 0 14px;
+          }
+
+          &__desc {
+            @include font-size($fz-14);
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+
+  }
+  @include media-breakpoint-down(sm) {
+    &__hero {
+      @include size(100%, 120px);
+    }
+    &__block {
+      &__item {
+        padding: 0;
+
+        &:not(:last-of-type) {
+          margin-bottom: 15px;
+        }
+
+        &__image {
+          @include size(100% !important, 120px !important);
+          @include border-radius(0)
+        }
+
+        &__info {
+          padding: 12px 10px 22px;
+
+          &__title {
+            @include font-size($fz-14);
+          }
+
+          &__desc {
+            @include font-size($fz-12);
+          }
+        }
+      }
+    }
+  }
+}

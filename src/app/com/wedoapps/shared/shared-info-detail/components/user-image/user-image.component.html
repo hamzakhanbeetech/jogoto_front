@@ -1,0 +1,38 @@
+<figure class="profile-page__image overflow-hidden position-relative">
+  <img [src]="userData?.cropped?.link" class="w-100 h-100" (load)="imageLoaded()" [alt]="userName"/>
+  <app-loading class="d-flex align-items-center justify-content-center position-absolute w-100 h-100" *ngIf="imageLoading"></app-loading>
+  <figcaption class="upload-btn-wrapper position-absolute overflow-hidden d-inline-block" *ngIf="!isFollowerPage">
+    <button type="button" class="btn" (click)="openUploadImageModal()" *ngIf="!imageLoading"><i class="icon-camera-fill"></i> {{"create-event.upload_photo" | translate}}</button>
+    <!--<input (change)="uploadProfilePhoto($event)" type="file"-->
+           <!--accept=".jpg, .png, .jpeg, .gif|image/*"-->
+           <!--class="position-absolute w-100 h-100" name="myfile"/>-->
+  </figcaption>
+</figure>
+<div class="d-flex" *ngIf="isFollowerPage">
+  <button type="button" class="profile-page__follow text-white d-block w-75 border-0"
+          [ngClass]="{'disabled':isLoading}"
+          [disabled]="isLoading"
+          (click)="toggleFollow(id)">
+    {{(isFollow ? "user.unfollow" : "user.follow") | translate}}
+    <span class="spinner-border" role="status" *ngIf="isLoading">
+        <span class="sr-only">Loading...</span>
+  </span>
+  </button>
+  <div class="btn-group ml-3 profile-page__user-dropdown" dropdown>
+    <button id="member" dropdownToggle type="button"
+            class="profile-page__settings dropdown-toggle" aria-controls="dropdown-basic">
+      <i class="icon-more"></i>
+    </button>
+    <ul id="member" *dropdownMenu class="dropdown-menu profile-page__settings__dropdown border-0 shadow"
+        role="menu" aria-labelledby="button-basic">
+      <li role="menuitem">
+        <button class="dropdown-item position-relative"
+                (click)="openBlockEventModal()">{{"event.block" | translate}}</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<app-allert-message></app-allert-message>
+

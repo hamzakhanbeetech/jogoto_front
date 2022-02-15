@@ -1,0 +1,166 @@
+<section class="event__sidebar h-100">
+  <section class="event__sidebar__container bg-white d-none d-xl-block"
+           *ngIf="(eventData.visibility != 'private' || eventData.organizer?._id !== userId)  && !isPreview && incomingDate && !archive">
+    <p class="col event__sidebar__container__title"
+       *ngIf="eventData.organizer?._id != userId">{{'event.are_you_interested' | translate}}</p>
+    <div class="col d-flex justify-content-between" *ngIf="eventData.organizer?._id != userId">
+      <button type="button" class="event__sidebar__container__interested" [ngClass]="{'active': isInterested}"
+              (click)="onClickInterestedButton()">
+        <i class="icon-bookmark"></i>{{"event.interested" | translate}}
+      </button>
+      <button type="button" class="event__sidebar__container__interested" (click)="openGiveFeedbackModal()">
+        {{"event.not_interested" | translate}}
+      </button>
+    </div>
+    <div class="col-12 d-flex event__sidebar__container__inviter" *ngIf="eventData.me_invited_user._id">
+      <a
+        [routerLink]="[hostLink]|localize"
+        class="d-block rounded-circle overflow-hidden event__sidebar__container__inviter-image float-left text-decoration-none">
+        <img [src]="eventData.me_invited_user.image" class="w-100 h-100" [alt]="eventData.me_invited_user.name + ' ' + eventData.me_invited_user.surname">
+      </a>
+      <div class="d-flex align-items-center">
+        <a class="event__sidebar__container__inviter-name mb-0 text-decoration-none"
+           [routerLink]="[hostLink]|localize">{{eventData.me_invited_user.name}} {{eventData.me_invited_user.surname}}</a>
+        <p class="event__sidebar__container__invited-by mb-0"> {{"event.invited_you" | translate}}</p>
+      </div>
+    </div>
+    <div class="col d-flex event__sidebar__container__share align-items-center"
+         *ngIf="!isPreview && incomingDate && eventData.visibility!== 'private'">
+      <p class="event__sidebar__container__title mb-0">{{'event.share_social' | translate}}</p>
+      <div class="flex-shrink-0">
+        <a [href]="fbShare+windowLocation" target="_blank"
+           class="event__sidebar__container__share__btn d-inline-flex align-items-center justify-content-center">
+          <i class="icon-facebook mr-0"></i>
+        </a>
+        <a [href]="inShare+windowLocation"
+           target="_blank"
+           class="event__sidebar__container__share__btn d-flex d-inline-flex align-items-center justify-content-center">
+          <i class="icon-linkedin mr-0"></i>
+        </a>
+        <a [href]="twShare+windowLocation"
+           target="_blank"
+           class="event__sidebar__container__share__btn d-flex d-inline-flex align-items-center justify-content-center">
+          <i class="icon-twitter mr-0"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="event__sidebar__container bg-white"
+           *ngIf="!isPreview && !archive && eventData.im_joined && !sendingInfo.display && eventData.organizer?._id != userId && !incomingDate">
+    <p class="col event__sidebar__container__title">{{'event.remove_interested_list' | translate}}</p>
+    <div class="col d-flex justify-content-between">
+      <button type="button" class="event__sidebar__container__interested m-0" (click)="openGiveFeedbackModal()">
+        {{"event.not_interested" | translate}}
+      </button>
+    </div>
+  </section>
+
+  <section class="event__sidebar__container bg-white d-flex flex-wrap d-xl-none"
+           *ngIf="!isPreview && incomingDate && eventData.visibility!== 'private' && !archive">
+    <div class="col-12 col-sm-6" *ngIf="eventData.organizer?._id != userId">
+      <p class="event__sidebar__container__title">{{'event.are_you_interested' | translate}}</p>
+      <button type="button" class="event__sidebar__container__interested mb-0" [ngClass]="{'active': isInterested}"
+              (click)="onClickInterestedButton()">
+        <i class="icon-bookmark"></i>{{"event.interested" | translate}}
+      </button>
+      <button type="button" class="event__sidebar__container__interested mb-0" (click)="openGiveFeedbackModal()">
+        {{"event.not_interested" | translate}}
+      </button>
+    </div>
+    <div class="col-12 col-sm-6 event__sidebar__container__share col "
+         [ngClass]="{'text-sm-right':eventData.organizer?._id != userId}" *ngIf="!isPreview && incomingDate && eventData.visibility!== 'private'">
+      <p class="event__sidebar__container__title">{{'event.share_social' | translate}}</p>
+
+      <div>
+        <a [href]="fbShare+windowLocation" target="_blank"
+           class="event__sidebar__container__share__btn d-inline-flex align-items-center justify-content-center ml-0">
+          <i class="icon-facebook mr-0"></i>
+        </a>
+        <a [href]="inShare+windowLocation"
+           class="event__sidebar__container__share__btn d-flex d-inline-flex align-items-center justify-content-center">
+          <i class="icon-linkedin mr-0"></i>
+        </a>
+        <a [href]="twShare+windowLocation"
+           target="_blank"
+           class="event__sidebar__container__share__btn d-flex d-inline-flex align-items-center justify-content-center">
+          <i class="icon-twitter mr-0"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="event__sidebar__container bg-white" *ngIf="!archive">
+    <section class="col-12 d-flex event__sidebar__container__inviter d-xl-none"
+             *ngIf="eventData.me_invited_user._id && !isPreview">
+      <a
+        [routerLink]="[eventData.me_invited_user.register_type === 'individual' ? 'user/' + eventData.me_invited_user._id : '/organization/' + eventData.me_invited_user._id]|localize"
+        class="d-block rounded-circle overflow-hidden event__sidebar__container__inviter-image float-left text-decoration-none">
+        <img [src]="eventData.me_invited_user.image" class="w-100 h-100" [alt]="eventData.me_invited_user.name + ' ' + eventData.me_invited_user.surname">
+      </a>
+      <div class="d-flex align-items-center">
+        <a itemprop="url" class="event__sidebar__container__inviter-name mb-0 text-decoration-none"
+           [routerLink]="">{{eventData.me_invited_user.name}} {{eventData.me_invited_user.surname}}</a>
+        <p class="event__sidebar__container__invited-by mb-0"> {{"event.invited_you" | translate}}</p>
+      </div>
+    </section>
+    <p class="event__sidebar__container__title col-12">{{'event.date_time' | translate}}</p>
+    <div *ngIf="newDates.length>0;else depricatedEventDates">
+      <ul class="list-unstyled col-12 date-time overflow-auto">
+        <li class="d-flex justify-content-between" *ngFor="let dateTime of newDates,let i= index"
+            [ngClass]="i===0?'active':''">
+            <meta itemprop="startDate" content="{{dateTime.start}}"/>
+          <span>{{dateTime.start |  date:' EEE, d MMM':undefined:locale|titlecase}}</span>
+          <span *ngIf="!eventData.startTimeHidden">{{dateTime.start |  date:'HH:mm'}}</span>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #depricatedEventDates>
+      <ul class="list-unstyled col-12 date-time overflow-auto">
+        <li class="d-flex justify-content-between" *ngFor="let dateTime of depricatedDates,let i= index">
+          <meta itemprop="startDate" content="{{dateTime.start}}"/>
+          <span>{{dateTime.start |  date:'EEE, d MMM':undefined:locale|titlecase}}</span>
+          <span *ngIf="!eventData.startTimeHidden">{{dateTime.start |  date:'HH:mm'}}</span>
+        </li>
+      </ul>
+    </ng-template>
+
+    <div class="col-12 add-to-calendar"
+         *ngIf="eventData.organizer?._id != userId && sortedDate.length>0 && !isPreview && passedDates.length != sortedDate.length">
+      <button mat-button (click)="openAddToCalendarModal()" type="button" class="border-0 bg-transparent see-more"
+              type="button">
+        {{"event.add_to_calendar" | translate}}
+      </button>
+
+    </div>
+  </section>
+
+
+  <section *ngIf="eventData.isOnline" class="event__sidebar__container bg-white pb-0 overflow-hidden" itemprop="web address">
+    <p class="event__sidebar__container__title col-12">{{'event.web_address' | translate}}</p>
+    <a [href]="eventData.webAddress"
+    class=" d-block col-12"
+    target="_blank">
+    <span itemprop="web_address" >{{eventData.webAddress}}</span>
+ </a>
+    
+  </section>
+  <section *ngIf="!eventData.isOnline" class="event__sidebar__container bg-white pb-0 overflow-hidden" itemprop="location">
+    <p class="event__sidebar__container__title col-12">{{'event.location' | translate}}</p>
+    <figure class="mb-0">
+      <figcaption>
+        <a [href]="'https://www.google.com/maps/search/?api=1&query=' + latLng"
+           class="event__sidebar__container__location text-decoration-none d-block col-12"
+           target="_blank">
+           <span itemprop="address" itemtype="http://schema.org/PostalAddress">{{eventData.location.address.address}}</span>
+        </a>
+      </figcaption>
+      <app-map-image class="d-none d-xl-block w-100" [latLng]="latLng"
+                     [category]="eventData.category[0]?.styleData.icon"></app-map-image>
+    </figure>
+  </section>
+  <!--<a href="" *ngIf="!isPreview"-->
+  <!--class="promote-event text-white text-decoration-none d-xl-flex d-none  align-items-center justify-content-center">-->
+  <!--<i class="icon-promotion"></i> {{'event.promote_this_event' | translate}}-->
+  <!--</a>-->
+</section>

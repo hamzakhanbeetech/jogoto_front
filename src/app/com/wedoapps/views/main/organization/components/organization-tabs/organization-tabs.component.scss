@@ -1,0 +1,670 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+@include block_header;
+@include category-icon;
+
+.tab-section {
+  margin-top: 43px;
+  margin-bottom: 0;
+
+  ::ng-deep {
+    .nav-tabs {
+      @extend %proxima-regular;
+      background: $white;
+      border-bottom: 1px solid $border-color;
+
+      .nav-item {
+        @include font-size($fz-16);
+        margin: 0 40px 0 0;
+        padding: 0 0 13px;
+        position: relative;
+
+        a {
+          @include font-size(inherit);
+          @include border-radius(0);
+          color: $dark-gray;
+          //text-transform: capitalize;
+          border: none;
+          padding: 0;
+          span{
+            @include font-size(inherit);
+          }
+        }
+
+        &.active, &:hover {
+          &::after {
+            content: '';
+            border-bottom: 1px solid $blue;
+            display: block;
+            position: absolute;
+            bottom: -1px;
+            width: 100%;
+          }
+
+          a {
+            border: none;
+            color: $blue
+          }
+        }
+      }
+    }
+
+    .block-header__title {
+      @include font-size($fz-18);
+    }
+  }
+
+  .created-events {
+    margin-top: 20px;
+  }
+}
+
+
+.statistics-block {
+  @include border-radius(5px);
+  @include size(calc((100% / 3) - 13px), auto);
+  margin-bottom: 20px;
+  background: $sidebar-footser;
+
+  &__items {
+    padding: 23px 43px;
+
+    &__item {
+      color: $text-color;
+      line-height: 1;
+      span{
+        @include font-size(inherit)
+      }
+      @include hover-focus-active {
+        color: $text-color
+      }
+    }
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &__icon {
+    @include size(100%, 100px);
+    @include font-size($fz-30);
+    padding: 20px 15px;
+   div {
+      @include font-size(inherit);
+      i {
+        @include font-size(inherit);
+      }
+    }
+    &__text {
+      @include font-size($fz-16);
+      margin-top: 13px;
+    }
+  }
+
+  &.blue {
+    .statistics-block__icon {
+      background: $blue;
+    }
+  }
+
+  &.orange {
+    .statistics-block__icon {
+      background: $dark-orange;
+    }
+  }
+}
+
+.average {
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 32px;
+  margin: 30px 0 42px;
+
+  li {
+    @extend %proxima-semibold;
+    width: calc(100% / 4);
+    padding: 0 28px;
+
+    &:not(:last-of-type) {
+      border-right: 1px solid $border-color;
+    }
+  }
+
+  &__desc {
+    @include font-size($fz-16);
+    color: $text-color;
+  }
+
+  &__number {
+    @include font-size($fz-26);
+    color: $dark-gray;
+    margin-top: 16px;
+  }
+}
+
+.block-header {
+  border-color: $border-color;
+  padding-top: 33px;
+
+  &__title {
+    @include font-size($fz-18)
+  }
+}
+
+.ng-autocomplete {
+  width: 632px;
+
+  ::ng-deep {
+    .autocomplete-container {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .input-container {
+      input {
+        @include login-input
+      }
+    }
+
+    .suggestions-container {
+      @include border-radius(5px);
+
+      ul li {
+        @include hover-focus-active {
+          background: transparent;
+        }
+
+        a {
+          @extend %proxima-regular;
+          @include font-size($fz-14);
+          position: relative;
+          line-height: 1;
+          padding: 10px 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          white-space: nowrap;
+          color: $dark-gray;
+          @include dropdown-list-hover;
+        }
+      }
+    }
+  }
+}
+
+.moderator__user {
+  @include added-delet-users
+}
+
+.add {
+  @include login-btn;
+  margin-top: 30px;
+}
+
+.statistics-organization {
+  @include border-radius(5px);
+  @include size(calc((100% / 2) - 22px), 125px);
+  background: $sidebar-footser;
+  margin-top: 33px;
+
+  &__items {
+    padding: 20px 30px;
+
+    &__item {
+      color: $text-color;
+      line-height: 1;
+      @include hover-focus-active {
+        color: $text-color
+      }
+    }
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &__icon {
+    @include size(125px);
+    @include font-size($fz-60);
+    padding: 20px 15px;
+    div {
+      @include font-size(inherit);
+      i {
+        @include font-size(inherit);
+      }
+    }
+    &__text {
+      @include font-size($fz-16);
+      margin-top: 16px;
+    }
+  }
+
+  &.blue {
+    .statistics-organization__icon {
+      background: $blue;
+    }
+  }
+
+  &.orange {
+    .statistics-organization__icon {
+      background: $dark-orange;
+    }
+  }
+}
+
+
+@include media-breakpoint-down(lg) {
+  .tab-section {
+    margin-top: 33px;
+
+    .created-events {
+      margin-top: 15px;
+    }
+  }
+  .block-header {
+    &__title {
+      @include font-size($fz-16)
+    }
+  }
+  .statistics-organization {
+    @include size(calc((100% / 2) - 22px), 90px);
+
+    &__items {
+      padding: 12px 40px 12px 20px;
+
+      &__item {
+        @include font-size($fz-14);
+      }
+
+      li {
+        &:not(:last-child) {
+          margin-bottom: 13px;
+        }
+      }
+    }
+
+    &__icon {
+      @include size(185px, inherit);
+      @include font-size($fz-36);
+    }
+  }
+  .statistics-block {
+    &__items {
+      padding: 22px 25px;
+
+      &__item {
+        @include font-size($fz-14);
+      }
+
+      li {
+        &:not(:last-child) {
+          margin-bottom: 13px;
+        }
+      }
+    }
+
+    &__icon {
+      @include font-size($fz-36);
+    }
+  }
+  .average {
+    padding-bottom: 20px;
+    margin: 32px 0;
+
+    li {
+      padding: 0 28px;
+    }
+
+    &__desc {
+      @include font-size($fz-14);
+    }
+
+    &__number {
+      @include font-size($fz-20);
+      margin-top: 14px;
+    }
+  }
+  .moderators__item {
+    &__name, &__clear {
+      @include font-size($fz-14);
+
+    }
+  }
+  .see-more {
+    @include font-size($fz-14);
+  }
+  .add-moderator {
+    &__title {
+      @include font-size($fz-16);
+      margin: 33px 0 10px;
+    }
+
+    &__desc {
+      @include font-size($fz-14);
+    }
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+  .statistics-organization {
+    @include size(calc((100% / 2) - 11px), 85px);
+
+    &__items {
+      padding: 16px 20px 16px 20px;
+
+      &__item {
+        @include font-size($fz-12);
+      }
+
+      li {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    &__icon {
+      @include size(135px, inherit);
+      @include font-size($fz-30 - 2px);
+
+      &__text {
+        @include font-size($fz-12)
+      }
+    }
+  }
+  .tab-section {
+    ::ng-deep {
+      .nav-tabs {
+        .nav-item {
+          @include font-size($fz-14);
+        }
+      }
+    }
+
+    .created-events {
+      margin-top: 10px;
+    }
+  }
+  .block-header {
+    padding: 17px 0 12px;
+
+    &__title {
+      @include font-size($fz-12);
+    }
+  }
+
+  .statistics-block {
+    @include size(100%, 85px);
+
+    &__items {
+      padding: 16px 20px 16px 20px;
+
+      &__item {
+        @include font-size($fz-12);
+      }
+
+      li {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    &__icon {
+      @include size(135px, inherit);
+      @include font-size($fz-30 - 2px);
+
+      &__text {
+        @include font-size($fz-12)
+      }
+    }
+  }
+  .average {
+    li {
+      padding: 0 25px;
+    }
+
+    &__desc {
+      @include font-size($fz-12);
+    }
+
+    &__number {
+      @include font-size($fz-18);
+      margin-top: 14px;
+    }
+  }
+  .moderators__item {
+    padding: 10px 0;
+
+    &__name, &__clear {
+      @include font-size($fz-12);
+
+    }
+  }
+  .see-more {
+    @include font-size($fz-12);
+  }
+  .add-moderator {
+    &__title {
+      @include font-size($fz-14);
+      margin: 23px 0 10px;
+    }
+
+    &__desc {
+      @include font-size($fz-12);
+    }
+  }
+  ::ng-deep {
+    .suggestions-container ul li a {
+      @include font-size($fz-12)
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .statistics-block, .statistics-organization {
+    @include size(100%, 85px);
+
+    &:first-of-type {
+      margin-bottom: 15px;
+    }
+  }
+  .statistics-organization {
+    &.orange {
+      margin-top: 0;
+    }
+  }
+  .average {
+    li {
+      width: calc(100% / 2);
+
+      &:nth-child(2) {
+        border-right: none;
+      }
+
+      &:nth-child(-n+2) {
+        margin-bottom: 20px;
+      }
+    }
+
+    &__desc {
+      min-height: 25px;
+    }
+  }
+}
+
+//animation for incoming event block
+.opacity {
+  animation: opacity-animation .5s ease-in-out, opacity-animation-two .5s .5s ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes opacity-animation {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes opacity-animation-two {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.main-section {
+  min-height: 200px;
+
+  &__loading {
+    z-index: 1;
+  }
+}
+
+//animation end for incoming event block
+.events-near {
+  app-event-column {
+    width: calc((100% - 50px) / 3);
+    margin-bottom: 20px;
+
+    &:nth-child(3n+2) {
+      margin: 0 24.5px 20px;
+    }
+  }
+
+  app-group-column {
+    @include app-group;
+
+    &:nth-child(5) {
+      display: none;
+    }
+
+    &.joined {
+      animation: fifth-child .5s ease-in-out;
+      animation-iteration-count: 1;
+    }
+
+    &.joined ~ &:nth-child(5) {
+      animation: addition-child .5s ease-in-out;
+      animation-iteration-count: 1;
+    }
+  }
+}
+
+@keyframes fifth-child {
+  0% {
+    opacity: 1;
+    width: calc((100% - 60px) / 4);
+  }
+
+  100% {
+    opacity: 0;
+    width: 1px;
+    margin: 0 0 20px;
+  }
+}
+
+@keyframes addition-child {
+  0% {
+    display: block;
+  }
+  1% {
+    opacity: 0;
+    width: 1px;
+    margin: 0 0 20px;
+  }
+
+  100% {
+    opacity: 1;
+    width: calc((100% - 60px) / 4);
+    margin: 0 0 20px 20px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .events-near {
+    app-event-column {
+      width: calc((100% - 35px) / 2);
+
+      &:nth-child(3n+2) {
+        margin: 0 0 20px;
+      }
+
+      &:nth-child(2n+1) {
+        margin: 0 35px 20px 0;
+      }
+    }
+  }
+  @keyframes addition-child {
+    0% {
+      display: block;
+    }
+    1% {
+      opacity: 0;
+      width: 1px;
+      margin: 0 0 20px;
+    }
+
+    100% {
+      opacity: 1;
+      width: calc((100% - 35px) / 2);
+      margin: 0 0 20px 20px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .events-near {
+    app-event-column {
+      width: calc((100%));
+
+      &:nth-child(3n+2) {
+        margin: 0 0 20px;
+      }
+
+      &:nth-child(2n+1) {
+        margin: 0 0 20px 0;
+      }
+
+    }
+
+    app-group-column {
+      &.joined {
+        animation: fifth-child .01s ease-in-out;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .row-container {
+    width: calc(100%);
+    max-width: calc(100% + 30px) !important;
+  }
+  .tab-section {
+    margin-top: 43px;
+    margin-bottom: 0;
+
+    ::ng-deep {
+      .nav-tabs {
+        .nav-item {
+          margin: 10px 20px 0 0 ;
+          padding: 0 0 10px 0;
+        }
+      }
+    }
+  }
+}
+

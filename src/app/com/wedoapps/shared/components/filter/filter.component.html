@@ -1,0 +1,12 @@
+ <div ngbDropdown class="btn-group filter" (openChange)="openChanged($event)">
+    <button class="filter__btn" id="dropdownFilter" type="button"
+            ngbDropdownToggle>
+      <i class="icon-filter"></i>{{'create-event.filter' | translate}}
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownFilter" class="shadow border-0">
+      <app-event-filter-content [isClosed]="data"></app-event-filter-content>
+      <div class="text-right w-100 dropdown-footer">
+        <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto" (click)="isOk = true" ngbDropdownItem>Ok</button>
+      </div>
+    </div>
+  </div>

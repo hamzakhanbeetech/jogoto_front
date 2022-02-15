@@ -1,0 +1,31 @@
+<header class="d-flex mb-0 justify-content-between align-items-center header col-12">
+  <h3 class="mb-0 header__title" mat-dialog-title>{{"notification.title" | translate}}</h3>
+  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+<div mat-dialog-content class="notification-modal">
+  <div class="registration__radioBtn col-12">
+    <form [formGroup] = "notificationForm">
+    <mat-radio-group class="w-100" formControlName = "notificationSetting">
+      <mat-radio-button value="all" >
+        <h3 class="notification-modal__title"> {{"notification.all_notifications" | translate}}</h3>
+        <p class="notification-modal__desc">{{ (!isGroup?"notification.all_notifications_desc":"notification.all_group_desc_notifications") | translate}}</p>
+      </mat-radio-button>
+      <mat-radio-button value="update" *ngIf="!isGroup">
+        <h3 class="notification-modal__title">{{"notification.creator_updates" | translate}}</h3>
+        <p class="notification-modal__desc">{{"notification.creator_updates_desc" | translate}}</p>
+      </mat-radio-button>
+      <mat-radio-button value="off">
+        <h3 class="notification-modal__title">{{"notification.off" | translate}}</h3>
+        <p class="notification-modal__desc">{{(isGroup?"notification.group_off_desc":"notification.off_desc") | translate}}</p>
+      </mat-radio-button>
+    </mat-radio-group>
+  </form>
+  </div>
+  <div class="col-12 text-right">
+    <button type="button" class="notification-modal__btn text-white border-0" (click) = "clickToSaveButton()">
+      {{"save" | translate}}
+    </button>
+  </div>
+</div>

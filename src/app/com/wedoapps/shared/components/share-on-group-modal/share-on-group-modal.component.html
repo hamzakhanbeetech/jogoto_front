@@ -1,0 +1,120 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+  <h3 class="mb-0 header__title" mat-dialog-title> {{"group.share_to_group" | translate}}</h3>
+  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close" type="button">
+    <i class="icon-close"></i>
+  </button>
+</header>
+<div mat-dialog-content class="share-group-modal">
+  <form action="" class="col-12" [formGroup]="searchGroupForm">
+    <div class="form-group position-relative">
+      <button class="bg-transparent border-0 position-absolute share-group-modal__search "><i class="icon-search"></i>
+      </button>
+      <input type="text" class="form-control shadow-none" [placeholder]="'group.enter_group_placeholder' | translate"
+             formControlName="groupName" (input)="search()" #searchText>
+      <button class="border-0 bg-transparent position-absolute  reset-inputs"
+              type="reset"
+              *ngIf="resetBtn"
+              (click)="reset()">
+        <i class="icon-close"></i>
+      </button>
+    </div>
+  </form>
+
+  <!--No search result block-->
+  <section class="no-search-result  mx-auto w-100" [ngClass]="{'d-flex':thereIsOrNotResult, 'd-none': !thereIsOrNotResult }">
+    <i class="no-search-result__icon icon-group"></i>
+    <article>
+      <p class="no-search-result__description m-0">{{'event.no_group_to_share' | translate}}</p>
+    </article>
+  </section>
+
+  <div *ngIf="!thereIsOrNotResult">
+    <ul class="list-unstyled col-12 date-time" infinite-scroll [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="500"
+        [scrollWindow]="false">
+      <li class="search-results" *ngFor="let group of groupsList,let i = index">
+        <div class="d-flex justify-content-between align-items-center share-group-modal__group">
+          <div class="d-flex"><a [routerLink]="['/group/'+group._id]|localize" target="_blank"
+                                 class="d-block overflow-hidden border-0 share-group-modal__group__image float-left text-decoration-none flex-shrink-0">
+            <img [src]="group.poster.cropped.link" class="w-100 h-100" [alt]="group.name">
+          </a>
+            <div class="share-group-modal__group__info">
+              <a target="_blank" [routerLink]="['group/'+group._id]|localize"
+                 class="share-group-modal__group__title text-decoration-none">
+                {{group.name}}
+              </a>
+              <p class="share-group-modal__group__type">
+                <ng-container *ngIf="group.group_type == 'open'; else close">
+                  {{'page.open'|translate}}
+                </ng-container>
+                <ng-template #close>
+                  {{'page.close'|translate}}
+                </ng-template>
+              </p>
+              <ul class="list-unstyled share-group-modal__group__members m-0">
+                <li class="d-inline-block share-group-modal__group__members__item">{{group.members.length}}
+                  {{"members" | translate}}</li>
+                <li class="d-inline-block share-group-modal__group__members__item">{{group.events.length}}
+                  {{"event.events" | translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div>
+              <!--add to group button-->
+              <button #buttons type="button" class="share-group-modal__group__share border-0 text-white mb-0"
+                      [ngClass]="{'disabled':group.alreadyAdded || indexArray.includes(i)}"
+                      (click)="addEventToGroup(group._id,i)"
+                      *ngIf="group.group_type == 'open'? group.imJoined || userId == group.creator._id : group.imJoined && group.state || userId == group.creator._id"
+                      [disabled]="group.alreadyAdded || indexArray.includes(i)">
+                <span *ngIf="group.alreadyAdded || indexArray.includes(i);else add"> {{"added" | translate}} </span>
+                <ng-template #add>
+                  <span>  {{"group.add" | translate}}</span>
+                </ng-template>
+              </button>
+            </div>
+            <!--follow and add to group button-->
+            <button class="share-group-modal__group__join mb-0 p-0" type="button"
+                    *ngIf="!group.imJoined && userId !== group.creator._id && group.group_type =='open'"
+                    (click)="onClickFollowAndAddButton(group._id,i)">
+              {{"group.follow_share" | translate}}</button>
+            <!--join and add to group button-->
+            <button class="share-group-modal__group__join mb-0 p-0" type="button"
+                    *ngIf="!(group.imJoined && group.state) && group.group_type=='closed'  &&  userId !== group.creator._id"
+                    [ngClass]="{'disabled':(group.imJoined && !group.state) || indexArray.includes(i)}"
+                    [disabled]="(group.imJoined && !group.state)|| indexArray.includes(i)"
+                    (click)="onClickJoinAndAddButton(group._id,i)">
+              <span *ngIf="!group.imJoined && !indexArray.includes(i)">
+                {{"group.join_share" | translate}}
+              </span>
+              <ng-container *ngIf="(group.imJoined && !group.state)|| indexArray.includes(i)">
+                {{group.imJoined}}{{ group.state}}
+                {{'invitations.pending'|translate}}
+              </ng-container>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="form-group mb-0 position-relative col-12">
+      <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+      <button type="submit" class="share-group-modal__see-more w-100  d-flex justify-content-center"
+              *ngIf="groupCount>5"
+              (click)="onScroll()">
+        <span
+          *ngIf="groupCount - 5>skip; else seeLess">{{'see_more' | translate}} </span>
+        <ng-template #seeLess>
+          <span>{{'see_less' | translate}} </span>
+        </ng-template>
+        <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+        <span class="spinner-border" role="status" [ngClass]="{'d-block': loading,'d-none': !loading}">
+          <span class="sr-only">Loading...</span>
+        </span></button>
+      <p class="share-group-modal__error position-absolute" *ngIf="errorMessage">{{errorMessage}}</p>
+    </div>
+    <p class="share-group-modal_description col-12">{{"group.share_modal_desc" | translate }}</p>
+  </div>
+</div>
+
+<app-allert-message></app-allert-message>

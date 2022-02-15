@@ -1,0 +1,113 @@
+@import '../../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.cursor {
+  cursor: pointer;
+}
+
+.profile-page {
+  &__image {
+    @include border-radius(5px);
+    @include size(315px);
+    margin-bottom: 23px;
+    app-loading {
+      top: 0;
+      z-index: 2;
+    }
+    img {
+      @include object-fit;
+    }
+    .upload-btn-wrapper {
+      @include transition(.3s);
+      top: 20px;
+      right: 20px;
+      .btn {
+        @include font-size($fz-14);
+        i {
+          @include font-size($fz-16);
+        }
+      }
+    }
+  }
+  &__follow {
+    @include login-btn;
+    margin-bottom: 33px;
+  }
+  &__settings {
+    @include border-radius(5px);
+    border: 1px solid $border-color;
+    background: $gray;
+    color: $text-color;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 0;
+    &__dropdown {
+      left: auto !important;
+      right: 0 !important;
+
+      .dropdown-item {
+        @include font-size($fz-14);
+        @include dropdown-list-hover;
+      }
+    }
+  }
+  &__user-dropdown{
+    margin-bottom: 33px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .profile-page {
+    &__image {
+      @include size(220px);
+      margin-bottom: 23px;
+      .upload-btn-wrapper {
+        top: 15px;
+        right: 15px;
+        .btn {
+          @include font-size($fz-12);
+          i {
+            @include font-size($fz-14);
+          }
+        }
+      }
+    }
+    &__settings {
+      height: 35px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .profile-page {
+    &__image {
+      @include size(200px);
+      margin-bottom: 23px;
+      .upload-btn-wrapper {
+        top: 15px;
+        right: 15px;
+      }
+    }
+    &__settings {
+      margin-top: 22px;
+      height: 35px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .profile-page {
+    &__image {
+      @include size(100%, auto);
+      margin-bottom: 0;
+    }
+    &__follow {
+      margin-top: 22px;
+      margin-bottom: 0;
+    }
+    &__settings {
+      margin-top: 22px;
+      height: 35px;
+    }
+  }
+}

@@ -1,0 +1,292 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.group {
+  @include left-sections;
+  background: $gray;
+  padding: 20px 15px;
+  min-height: 100vh;
+  &__image {
+    @include border-top-left-radius(5px);
+    @include border-top-right-radius(5px);
+    @include size(100%, 355px);
+    img {
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  .btn-group {
+    right: 20px;
+    top: 18px;
+  }
+  &__edit {
+    @include gray-btn-icon;
+    color: $dark-gray;
+    @include hover-focus-active {
+      color: $dark-gray;
+    }
+  }
+  &__edit, &__publish {
+    @include font-size($fz-18);
+    height: 46px;
+  }
+  &__publish {
+    @include login-btn;
+    border: 1px solid $blue;
+    margin-left: 20px;
+    padding: 8px 70px;
+    height: 46px;
+    @include hover {
+      border: 1px solid $darker-blue;
+    }
+  }
+}
+.tab-section {
+  @include tabs;
+  ::ng-deep {
+    .nav-tabs {
+      @include border-bottom-right-radius(5px);
+      @include border-bottom-left-radius(5px);
+      border: 1px solid $border-color;
+      border-top: none;
+      padding: 18px 20px;
+      .nav-item:nth-child(3){
+        display: none;
+      }
+    }
+  }
+}
+
+.tab {
+  &__header {
+    margin-bottom: 20px;
+  }
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-18);
+    color: $dark-gray;
+  }
+}
+
+.create-event-btn {
+  @include border-radius(5px);
+  @include font-size($fz-14);
+  @include transition(.3s);
+  background: $dark-orange;
+  line-height: 1;
+  padding: 10px 12px;
+  height: 36px;
+  span {
+    margin-right: 10px;
+  }
+}
+
+.search {
+  &__input {
+    @include login-input;
+    padding: 13px 20px 13px 45px;
+    width: 400px;
+  }
+  &__btn {
+    color: $blue;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px
+  }
+}
+
+.see-more {
+  margin-bottom: 25px;
+}
+
+.users-section {
+  @include border-radius(5px);
+  border: 1px solid $border-color;
+  padding: 20px;
+  margin: 20px 0;
+  .users {
+    margin-bottom: 17px;
+  }
+}
+
+.creater {
+  @include font-size($fz-14);
+  margin-bottom: 15px;
+  &__image {
+    @include user-image(40px, 40px, 34px)
+  }
+  &__role {
+    color: $text-color
+  }
+  &__name {
+    color: $blue;
+  }
+}
+
+.group__sidebar {
+  &__container {
+    @include group-sidebar;
+    @include size(100%, auto);
+    padding: 18px 15px 20px;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    &__type {
+      @include font-size($fz-14);
+      margin-bottom: 0;
+    }
+    &__title {
+      @include font-size($fz-18);
+      margin-bottom: 8px;
+    }
+    .btn-group {
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .tab-section {
+    ::ng-deep {
+      .nav-tabs {
+        border-top: 1px solid $border-color;
+        padding: 17px 15px;
+      }
+    }
+  }
+  .tab {
+    &__header {
+      margin-bottom: 20px;
+    }
+    &__title {
+      @include font-size($fz-16);
+    }
+  }
+  .search {
+    &__input {
+      width: 300px;
+      padding: 12px 15px 12px 45px;
+    }
+  }
+  .see-more {
+    @include font-size($fz-14);
+  }
+  .group {
+    &__edit, &__publish {
+      @include font-size($fz-14);
+      height: 40px;
+    }
+    &__publish {
+      padding: 8px 35px;
+    }
+    &__sidebar__container__join{
+      @include font-size($fz-14);
+      max-width: 320px;
+      height: 36px;
+      i{
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+app-event-row {
+  margin-bottom: 20px;
+}
+
+@include media-breakpoint-down(sm) {
+  .group {
+    &__image {
+      @include size(100%, 330px);
+    }
+  }
+  .tab {
+    &__header {
+      padding: 0 15px;
+      margin-bottom: 10px;
+    }
+    &__title {
+      @include font-size($fz-14);
+    }
+  }
+  .see-more {
+    @include font-size($fz-12);
+    margin-bottom: 12px;
+  }
+  .create-event-btn {
+    @include font-size($fz-12);
+    padding: 10px 12px;
+    height: 34px;
+    span {
+      margin-right: 10px;
+    }
+  }
+  .creater {
+    @include font-size($fz-12);
+    margin-bottom: 10px;
+  }
+  .group__sidebar {
+    &__container {
+      padding: 18px 15px 15px;
+      border-left: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      &__type {
+        @include font-size($fz-12);
+      }
+      &__title {
+        @include font-size($fz-16);
+        margin-bottom: 8px;
+      }
+      &__join{
+        @include font-size($fz-12);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .tab-section {
+    ::ng-deep {
+      .nav-tabs {
+        @include border-radius(0);
+        border-left: none;
+        border-right: none;
+      }
+    }
+  }
+  .group {
+    padding: 0;
+    margin-top: 0;
+    &__image {
+      @include size(100%, 160px);
+      @include border-radius(0);
+      border-left: none;
+      border-right: none;
+    }
+    &__edit, &__publish {
+      @include font-size($fz-12);
+      height: 34px;
+    }
+    &__publish {
+      padding: 2px 25px;
+    }
+  }
+
+  .search {
+    width: 100%;
+    margin-top: 10px;
+    &__input {
+      width: inherit;
+    }
+  }
+  .group__sidebar {
+    &__container {
+      border-left: none;
+      border-right: none;
+    }
+  }
+  app-event-row {
+    margin-bottom: 15px;
+    padding: 0 15px;
+  }
+}

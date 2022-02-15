@@ -1,0 +1,51 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+app-user-block {
+  @include size(calc(100% / 3 - 15px), auto);
+  margin-bottom: 20px;
+  &:nth-child(3n + 2) {
+    margin: 0 22.5px 20px;
+  }
+}
+
+app-loading {
+  margin: 27px;
+}
+
+:host::ng-deep {
+ @include tabs;
+  .nav-tabs {
+    border: none;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  app-user-block {
+    @include size(calc(100% / 2 - 10px), auto);
+    &:nth-child(3n + 2) {
+      margin: 0 0 20px;
+    }
+    &:nth-child(2n + 1) {
+      margin-right: 20px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  app-user-block {
+    @include size(calc(100% / 2 - 8px), auto);
+    &:nth-child(2n + 1) {
+      margin-right: 16px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  app-user-block {
+    @include size(100%, auto);
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+  }
+}

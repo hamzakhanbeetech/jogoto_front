@@ -1,0 +1,36 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+    <h3 class="mb-0 header__title" mat-dialog-title>{{"event.report_event_title" | translate}}</h3>
+    <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+      <i class="icon-close"></i>
+    </button>
+  </header>
+  <div mat-dialog-content class="feedback-modal">
+    <div class="form-group mb-0 col-12">
+        <p class="feedback-modal__subtitle">{{"event.report_event_question" | translate}}</p>
+        <form [formGroup] = "reportEventForm">
+          <div>
+            <label class="feedback-modal__btn border-0"  *ngFor="let reason of reasonList,let i = index"
+            [ngClass]="{'active': reason == reportEventForm.get('reportEventReasons').value }" >{{reason}}
+              <input type="radio"  [value]="reason" formControlName="reportEventReasons">
+            </label>
+          </div>
+
+          <div class="form-group" *ngIf = "otherReasons" formGroupName="reasonQuestionAnswer">
+              <p class="feedback-modal__subtitle">{{questionOfReason}}</p>
+              <label class="feedback-modal__btn border-0"  *ngFor="let answer of answersOfReasonQuestion,let i = index"
+              [ngClass]="{'active': answer == reportEventForm.get('reasonQuestionAnswer.answerOfQuestion').value }" >{{answer}}
+                <input  style="-webkit-appearance: none;" type="radio"  [value]="answer" formControlName="answerOfQuestion">
+              </label>
+          </div>
+        </form>
+        <div class="position-relative"  >
+          <button type="button" class="feedback-modal__send text-uppercase w-100 border-0 text-white  d-flex
+        justify-content-center align-items-center" [ngClass] = "{'disabled': forDisableOrNot()}" (click) = "sendReportEvent()">
+            <span>{{'send' | translate}} </span>
+            <span class="spinner-border" role="status" [ngClass] = "{'d-block': loading, 'd-none': !loading }">
+          <span class="sr-only">Loading...</span>
+        </span> </button>
+          <!-- <p class="feedback-modal__error position-absolute">This is an error message from server</p> -->
+        </div>
+      </div>
+  </div>

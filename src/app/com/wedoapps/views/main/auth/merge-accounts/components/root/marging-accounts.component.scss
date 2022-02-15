@@ -1,0 +1,100 @@
+@import '../../../../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../../assets/scss/base/mixins';
+
+.marging {
+  &__title {
+    @include login-title;
+    @include font-size($fz-24);
+  }
+
+  &__name {
+    margin-bottom: 9px;
+  }
+
+
+  &__name, &__email {
+    @extend %proxima-semibold;
+    color: $dark-gray;
+    line-height: 1;
+  }
+
+  &__image {
+    @include size(85px);
+    border: 1px solid $dark-gray;
+    margin-bottom: 18px;
+    margin-top: 5px;
+
+    img {
+      @include object-fit
+    }
+  }
+
+  &__desc {
+    @include font-size($fz-14);
+    color: $text-color;
+    margin: 18px 0 16px;
+  }
+
+  &__input {
+    @include login-input-group;
+  }
+
+  &__btn {
+    @include login-btn;
+  }
+
+  .error {
+    @include error;
+  }
+
+  &__singnup {
+    @include login-footer;
+  }
+}
+
+
+@include media-breakpoint-down(lg) {
+  .marging {
+    &__title {
+      @include font-size($fz-20);
+    }
+
+    &__name, &__email {
+      @include font-size($fz-14)
+    }
+
+    &__name {
+      margin-bottom: 6px;
+    }
+
+    &__image {
+      @include size(65px);
+    }
+
+    &__desc {
+      @include font-size($fz-12);
+      margin: 23px 0 18px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+
+  .marging {
+    &__title {
+      @include font-size($fz-18);
+    }
+
+    &__name, &__email {
+      @include font-size($fz-12)
+    }
+
+    &__name {
+      margin-bottom: 3px;
+    }
+
+    &__image {
+      @include size(45px);
+    }
+  }
+}

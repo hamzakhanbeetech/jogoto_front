@@ -1,0 +1,90 @@
+<section class="notification">
+  <header class="d-flex justify-content-between align-items-center notification__header">
+    <!--TODO if there is a notification show {{"notification.notification" | translate}} -->
+    <h3 class="notification__header__title m-0">{{"notifications.notifications" | translate}} {{allCount}}</h3>
+    <div class="d-flex align-items-center">
+      <button
+        (click)="markAll.emit({markAll: true})"
+        class="notification__header__mark border-0 bg-transparent">
+        {{"notifications.mark_all_read" | translate}}
+      </button>
+      <a [routerLink]="['basic/settings']|localize" [queryParams]="{active: 'notify'}"
+         (click)="closeNotifications()"
+         class="notification__header__settings text-decoration-none">
+        <i class="icon-settings"></i>
+      </a>
+    </div>
+  </header>
+  <section class="notification__body">
+
+    <!--TODO show loading if waiting server response-->
+    <app-loading class="d-flex align-items-center justify-content-center notification__body__loading"
+                 *ngIf="isLoading"></app-loading>
+
+    <!--TODO show if there is no notification-->
+    <div class="notification__body__no-notification d-flex align-items-center justify-content-center"
+         *ngIf="!isLoading && notifications.length === 0; else notify">
+      <i class="icon-notification-bell notification__body__no-notification__icon"></i>
+      <p class="notification__body__no-notification__text m-0">{{"notifications.no_notifications" | translate}}</p>
+    </div>
+
+
+    <ng-template #notify>
+      <ul class="list-unstyled notification__body__items">
+        <li class="d-flex m-0" *ngFor="let notification of notifications; let i = index">
+          <!--TODO add bg-white class if this notification already visited-->
+          <a class="dropdown-item notification__body__items__item text-decoration-none"
+             [ngClass]="notification.read  ? 'bg-white' : ''"
+             (click)="markAll.emit({markAll: false, index:i, id:notification._id})"
+             [routerLink]="[ (notification.notify_type == 'page'?'organization':notification.notify_type)  + '/'+ notification.data_id]|localize">
+            <div class="d-flex">
+              <figure class="my-0 notification__body__items__item__image overflow-hidden"
+                      [ngClass]="{'rounded-circle': notification.notify_type === 'user'}">
+                <img [src]="notification.who_user.poster.min" class="w-100 h-100" [alt]="notification.who_user.name + ' ' + notification.who_user.name">
+              </figure>
+              <div class="flex-grow-1">
+                <p class="notification__body__items__item__name overflow-hidden d-block text-truncate" [innerHtml]="notification.text">
+                </p>
+                <p
+                  class="notification__body__items__item__date mb-0">
+                  {{(notification?.date | date: 'EEEE,':undefined:locale|titlecase) + ' ' + (notification?.date | date: 'd MMMM':undefined:locale|titlecase)}}
+                  {{locale == 'en'?'at':'à'}} {{ (notification?.date | date: 'HH:mm') }}</p>
+                <div class="text-right" *ngIf="notification.invite">
+                  <button class="notification__body__items__item__decline mb-0"
+                          (click)="acceptOrDeclineInvitation($event, notification.notify_type, notification.data_id, 'decline', notification.who_user._id, notification.forGroupAdminAcceptDeclineApi)">
+                    {{"notifications.decline" | translate}}
+                  </button>
+                  <button class="text-white mb-0 border-0 notification__body__items__item__accept"
+                          (click)="acceptOrDeclineInvitation($event, notification.notify_type, notification.data_id, 'accept',  notification.who_user._id, notification.forGroupAdminAcceptDeclineApi)">
+                    {{"notifications.accept" | translate}}
+                  </button>
+                </div>
+              </div>
+              <button class="border-0 bg-transparent notification__body__items__item__clear align-self-start"
+                      (click)="removeNotificationById(notification._id, $event)">
+                <i class="icon-close"></i>
+              </button>
+            </div>
+          </a>
+        </li>
+
+
+        <app-loading class="d-flex align-items-center justify-content-center notification__body__loading"
+                     *ngIf="isLoadMore"></app-loading>
+      </ul>
+    </ng-template>
+  </section>
+  <footer class="notification__footer d-flex align-items-center justify-content-center">
+      <p class="border-0 bg-transparent see-more m-0 d-flex align-items-center justify-content-center" *ngIf="notifications.length > 0  && skip>=allCount">
+        {{"notifications.noMoreNotification" | translate}}
+      </p>
+
+      <button class="border-0 bg-transparent see-more"
+      [ngClass]="{'d-none':notifications.length === 0 || allCount <= 5 || skip>=allCount}"
+      [disabled]="notifications.length === 0 || allCount <= 5 || skip>=allCount"
+      (click)="seeMoreNotifications()">
+{{"notifications.see_more_notifications" | translate}}
+</button>
+
+  </footer>
+</section>

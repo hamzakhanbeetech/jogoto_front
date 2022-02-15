@@ -1,0 +1,22 @@
+<header class="d-flex justify-content-between align-items-center header col-12 shadow-none">
+  <h3 class="mb-0 header__title" mat-dialog-title>{{texts.header}}</h3>
+  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+<div mat-dialog-content class="delete">
+  <h3 class="delete__title" *ngIf="texts.title">{{texts.title}}</h3>
+  <p class="delete__description">{{texts.description}} <span *ngIf="texts.social">{{texts.social}}</span></p>
+  <div class="form-group mb-0 position-relative">
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+    <button class="delete__btn text-white text-uppercase w-100 border-0 d-flex
+    justify-content-center align-items-center" [ngClass]="{'disabled': loading}"
+         (click)="delete()"   [disabled]="loading">
+      <span>{{texts.button}} </span>
+      <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+      <span class="spinner-border" role="status" *ngIf="loading">
+        <span class="sr-only">Loading...</span>
+      </span></button>
+    <p class="text-danger position-absolute" *ngIf="errorText">{{errorText}}</p>
+  </div>
+</div>

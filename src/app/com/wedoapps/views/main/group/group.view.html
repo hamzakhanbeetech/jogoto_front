@@ -1,0 +1,199 @@
+<main class="container-fluid group" *ngIf="groupData; else notAvailable">
+  <section class="container">
+    <div class="row d-flex">
+      <section class="group__left">
+        <figure class="mb-0 w-100 group__image overflow-hidden">
+          <img [src]="groupData?.poster.cropped.link" class="img-fluid w-100 h-100" [alt]="groupData?.name" *ngIf="groupData">
+        </figure>
+        <!--TODO show this section for mobile-->
+        <section class="group__sidebar__container bg-white interested-section d-xl-none">
+          <p class="group__sidebar__container__title text-break">{{groupData?.name}}</p>
+          <p class="group__sidebar__container__type border-0">
+            <span
+              *ngIf="groupData?.group_type==='open';else closeGroup">{{"create-group.open_group" | translate}}</span>
+            <ng-template #closeGroup>
+              <span>{{"create-group.close_group" | translate}}</span>
+            </ng-template>
+          </p>
+          <div class="d-flex">
+            <div class="flex-grow-1 d-flex" *ngIf="groupData?.creator._id !== _user_id">
+              <p-dropdown class="position-absolute events-filter"
+                          [options]="title" optionLabel="name" [formControl]="filterEvents"
+              ></p-dropdown>
+              <button *ngIf="groupData?.group_type === 'closed';else follow" (click)="joinGroup(groupData._id)"
+                      [disabled]="loading"
+                      class="group__sidebar__container__join p-0 text-white border-0 col d-flex align-items-center justify-content-center">
+                <span><i class="icon-plus"></i></span>
+                <span *ngIf="!groupData?.imJoined">{{ 'group.join_btn'| translate}}</span>
+                <span *ngIf="groupData?.imJoined && !groupData.state">{{'group.pending_btn' | translate}}</span>
+                <span *ngIf="groupData.state">
+                  {{'group.leave' | translate}}
+                </span>
+              </button>
+              <ng-template #follow>
+                <button (click)="followGroup(groupData?._id)"
+                        class="p-0 col group__sidebar__container__join text-white border-0 flex-grow-1 d-flex align-items-center justify-content-center sugessted-group__btn text-capitalize"
+                        [disabled]="loading">
+                  <i class="icon-plus d-block d-sm-none"></i>
+                  <span class="mr-0 d-none d-sm-block"
+                        *ngIf="groupData?.imJoined">{{ 'event.unfollow'| translate}}</span>
+                  <span class="mr-0 d-none d-sm-block"
+                        *ngIf="!groupData?.imJoined">{{'event.follow' | translate}}</span>
+                </button>
+              </ng-template>
+            </div>
+            <!--<a href=""-->
+            <!--class="group__sidebar__container__join p-0 text-white border-0 col  d-flex align-items-center justify-content-center">-->
+            <!--<i class="icon-promotion"></i>-->
+            <!--<span class="d-none d-sm-block mr-0"> {{"promote_group" | translate}}</span>-->
+            <!--</a>-->
+            <div class="invite-btn text-right ml-auto">
+              <div class="btn-group position-relative" dropdown>
+                <div id="invite-users" dropdownToggle class=" col-12 col-sm-auto p-0 text-right">
+                  <button type="button"
+                          class="group__sidebar__container__invite d-flex align-items-center justify-content-center"
+                          *ngIf="groupData?.imJoined && groupData?.state && !groupData?.archive">
+                    <i class="icon-mail"></i>
+                    <span class="d-none d-sm-block">{{"event.invite" | translate}}</span>
+                  </button>
+                </div>
+                <ul id="invite-users" *dropdownMenu
+                    class="dropdown-menu group__sidebar__container__dropdown border-0 shadow" role="menu"
+                    aria-labelledby="button-basic">
+                  <li role="menuitem">
+                    <button class="dropdown-item position-relative"
+                            (click)="sidebar.openInviteMembersModal()">{{"invite_members" | translate}}
+                    </button>
+                  </li>
+                  <li role="menuitem">
+                    <button (click)="sidebar.openInviteMembersByEmailModal()"
+                            class="dropdown-item position-relative">{{"invite_via_email" |
+                        translate}}
+                    </button>
+                  </li>
+                  <li role="menuitem">
+                    <button (click)="sidebar.openDialogFileUpload()"
+                            class="dropdown-item position-relative">{{"create-group.import_members"
+                        | translate}}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="tab-section position-relative">
+          <div class="btn-group position-absolute" dropdown *ngIf="!isArchivedGroup">
+            <button id="button-basic" dropdownToggle type="button"
+                    class="group__settings border-0 dropdown-toggle bg-transparent" aria-controls="dropdown-basic">
+              <i class="icon-more"></i>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu group__dropdown border-0 shadow" role="menu"
+                aria-labelledby="button-basic">
+              <li role="menuitem" *ngIf="groupData?.imJoined && groupData?.state && groupData?.creator._id === _user_id">
+                <button class="dropdown-item position-relative" (click)="editGroup()">{{"group.edit_group" | translate}}
+                </button>
+              </li>
+              <li role="menuitem" *ngIf="groupData?.imJoined && groupData?.state && groupData?.creator._id === _user_id">
+                <button class="dropdown-item position-relative"
+                        (click)="removeGroup(deleteGroupTexts, 'group')">{{"group.remove_group" | translate}}
+                </button>
+              </li>
+              <li role="menuitem" *ngIf="groupData?.imJoined && groupData?.state">
+                <button class="dropdown-item position-relative" (click)="getNots()">{{"group.notification_settings" |
+                    translate}}
+                </button>
+              </li>
+              <li role="menuitem" *ngIf="groupData?.imJoined && groupData?.state">
+                <button class="dropdown-item position-relative" (click)="createGroupEvent()">
+                  {{"group.create_group_event" |
+                    translate}}
+                </button>
+              </li>
+              <li role="menuitem" *ngIf="groupData?.creator._id !== _user_id">
+                <button class="dropdown-item position-relative"
+                        (click)="openBlockEventModal()">{{"event.block" | translate}}</button>
+              </li>
+            </ul>
+          </div>
+          <tabset #staticTabs>
+            <!--group events tab-->
+            <tab [heading]="'group.event_list' | translate" [active]="groupData.events_count" id="tab1" class="tab"
+                 *ngIf="checkGroupState">
+              <section class="d-flex justify-content-between align-items-center tab__header">
+                <h3 class="tab__title my-0">
+                  <span *ngIf="groupData?.events_count > 1" class="text-capitalize">{{"event.events" | translate}}
+                    {{groupData?.events_count}}</span>
+                  <span *ngIf="groupData?.events_count===1" class="text-capitalize">{{"event.event_singular" | translate}}
+                    {{groupData?.events_count}}</span>
+                  <span *ngIf="groupData?.events_count===0">{{"no_events" | translate}}</span>
+                </h3>
+                <div class="d-flex">
+                  <p-dropdown class="events-filter"
+                              [options]="title" optionLabel="name" [formControl]="filterEvents"
+                  ></p-dropdown>
+                  <a *ngIf="groupData?.imJoined && groupData?.state && !isArchivedGroup && groupData.admin" [routerLink]="'/basic/create-event'|localize"
+                     [queryParams]="{'groupId':groupId}" class="create-event-btn d-inline-flex align-items-center
+              text-white text-decoration-none">
+                    <span><i class="icon-plus"></i></span>{{"header.create.create_event" | translate}}
+                  </a>
+                </div>
+              </section>
+              <app-no-event class="d-block w-100" *ngIf="!events.length" [noResult]="noResult"></app-no-event>
+              <app-event-row class="d-block"
+                             (changeIncomingEvent)="removeGroup(deleteEventTexts, 'groupEvent', $event._id)"
+                             [rowSettings]="{
+                              showClose:(showEventClose || _user_id === event.added_user),
+                              showUserIcons:false,
+                              showDescription:false
+                             }"
+                             *ngFor="let event of events" [incomingEvent]="event">
+              </app-event-row>
+              <div class="text-center">
+                <app-loading *ngIf="eventLoading"></app-loading>
+              </div>
+            </tab>
+            <!--group calendar tab-->
+            <tab [heading]="'calendar' | translate" *ngIf="checkGroupState">
+              <section class="d-flex justify-content-between align-items-center tab__header">
+                <h3 class="text-capitalize tab__title my-0">{{"event.events" | translate}}
+                  {{groupData?.events_count}}</h3>
+                <a [routerLink]="'/basic/create-event'|localize" *ngIf="groupData?.imJoined && groupData?.state && !isArchivedGroup" class="create-event-btn d-inline-flex align-items-center
+              text-white text-decoration-none">
+                  <span><i class="icon-plus"></i></span>{{"header.create.create_event" | translate}}
+                </a>
+              </section>
+              <app-calendar-module *ngIf="groupData" [tab]="{tab:staticTab?.tabs[1]?.active,
+                                                                            events:calendarEvents}" (onBtnClick)="getCalendarEvents($event)">
+              </app-calendar-module>
+            </tab>
+            <!--group members tab-->
+            <tab [heading]="'members' | translate | titlecase " *ngIf="groupData && checkGroupState">
+              <app-members #members class="d-block bg-white"
+                           (moreMembers)="showMoreMembers($event)"
+                           [members]="groupData"
+                           [id]="groupId"></app-members>
+            </tab>
+            <!--group about tab-->
+            <tab [heading]="'about' | translate" *ngIf="groupData"
+                 [active]="!groupData.events_count || !(groupData?.imJoined && groupData?.state) && groupData?.group_type !== 'open'">
+              <app-about-group [groupData]="groupData"></app-about-group>
+            </tab>
+          </tabset>
+        </div>
+      </section>
+      <app-group-sidebar *ngIf="groupData" [groupData]="groupData" [isMembersTab]="staticTab?.tabs[2]?.active"
+                         #sidebar
+                         [moderatorsAdminsArray]="moderatorsAdminsArray" [usersArray]="otherMembers"
+                         (selectUserTab)="selectUserTab()" [isAuthorized]="isAuthorized"
+                         (isJoined)="changeJoin($event)"></app-group-sidebar>
+    </div>
+    <div infiniteScroll [infiniteScrollDistance]="0.5" [infiniteScrollThrottle]="700" [alwaysCallback]="true"
+         (scrolled)="onScroll()" *ngIf="(staticTab?.tabs[2]?.active && (moreMembers || moreSearch)) || staticTab?.tabs[0]?.active && moreEvents"></div>
+  </section>
+</main>
+<ng-template #notAvailable>
+  <app-not-available *ngIf="groupUnavailable"></app-not-available>
+</ng-template>
+<app-allert-message></app-allert-message>

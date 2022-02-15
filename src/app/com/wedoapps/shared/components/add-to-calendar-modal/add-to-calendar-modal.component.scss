@@ -1,0 +1,85 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+@include modals-header;
+
+app-add-to-calendar-modal {
+  display: block;
+  .position-sticky{
+    bottom: 0;
+  }
+}
+
+.date-time {
+  @include event-date;
+  padding-top: 10px;
+
+  label {
+    cursor: pointer;
+    padding-right: 3px;
+  }
+
+  app-checkbox {
+    .container-checkbox {
+      padding-left: 26px;
+
+      .checkmark {
+        top: -17px !important;
+        left: auto !important;
+        right: 0;
+      }
+    }
+  }
+
+  &__add-btn {
+    @include login-btn;
+    padding: 8px 20px;
+  }
+
+  &__error {
+    @include error
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5
+}
+.search-results {
+  overflow: auto;
+  padding-top: 5px;
+  overflow-x: hidden
+}
+
+.user-invite {
+  @include users-list-modal;
+
+  &__see-more {
+    margin-bottom: 15px;
+  }
+
+  app-checkbox .container-checkbox .checkmark {
+    top: -15px !important;
+    left: 15px !important;
+  }
+
+  &__selected {
+    @include gray-btn-icon;
+    margin-right: 20px;
+
+    &.active {
+      color: $blue
+    }
+  }
+
+  &__send-invitation {
+    @include login-btn
+  }
+  .error{
+    @include error
+  }
+  .form-group,.sub-title{
+    margin-bottom: 12px;
+  }
+}

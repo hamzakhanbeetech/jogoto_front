@@ -1,0 +1,5 @@
+<app-header class="position-sticky t-0 d-block" *ngIf="isAuthorized;else onboarding"></app-header>
+<ng-template #onboarding>
+  <app-onboarding-header class="position-sticky t-0 d-block"></app-onboarding-header>
+</ng-template>
+<router-outlet></router-outlet>

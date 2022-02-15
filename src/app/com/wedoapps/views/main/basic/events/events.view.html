@@ -1,0 +1,219 @@
+<main class="container-fluid">
+  <section class="container">
+    <div
+      class="
+        row
+        flex-wrap
+        justify-content-between
+        align-items-center
+        search-user
+      "
+    >
+      <h3 class="search-user__title m-0">
+        <span *ngIf="lng==='fr'">Évènements de</span>
+        <span *ngIf="userInfo">
+          {{userInfo?.name}}<span *ngIf="userInfo?.surname">
+            {{userInfo?.surname}}</span
+          >
+          <span *ngIf="lng==='en'"
+            >{{"s" | translate}} {{"event.events" | translate}}</span
+          ></span
+        >
+      </h3>
+      <form action="">
+        <div class="form-group position-relative ml-auto">
+          <button
+            class="bg-transparent border-0 position-absolute search-user__btn"
+          >
+            <i class="icon-search"></i>
+          </button>
+          <input
+            type="text"
+            class="form-control shadow-none search-user__input"
+            [placeholder]="'followers.search_event' | translate"
+            (input)="search()"
+            #searchText
+          />
+          <button
+            type="reset"
+            class="bg-transparent border-0 position-absolute search-user__reset"
+            (click)="reset()"
+            *ngIf="resetBtn"
+          >
+            <i class="icon-close"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="container p-0">
+    <div class="position-relative tabs-block">
+      <p-dropdown
+        class="position-absolute events-filter"
+        *ngIf="autorizatedUser && !eventsTabs.tabs[3]?.active"
+        [options]="title"
+        [optionLabel]="'name'"
+        [formControl]="filterEvents"
+      ></p-dropdown>
+      <tabset
+        class="position-relative"
+        (click)="tabEventsFromClick(tabName)"
+        #eventsTabs
+      >
+        <tab
+          (selectTab)="tabName = 'interested'"
+          [heading]="('event.interested' | translate) + ' ' + interestedCount || ''"
+          id="interested"
+        >
+          <section
+            class="d-flex flex-wrap"
+            *ngIf="eventsListInterested.length; else noIntersestedEvent"
+          >
+            <app-event-row
+              *ngFor="let event of eventsListInterested"
+              [filterType]="filterType"
+              class="d-block"
+              [incomingEvent]="event"
+              [rowSettings]="{
+              showClose:true,
+              showUserIcons:false,
+              showDescription:false
+              }"
+              (changeIncomingEvent)="deleteEvent($event, 'interested')"
+              (deleteEventEmitter)="deleteEvent($event)"
+            ></app-event-row>
+          </section>
+          <ng-template #noIntersestedEvent>
+            <app-no-event
+              class="d-block w-100"
+              [noResult]="noResult"
+              *ngIf="!isLoadingInterested || !isLoadingInterested && searchText && noResultBlock"
+            ></app-no-event>
+          </ng-template>
+          <app-loading
+            class="d-flex align-items-center justify-content-center"
+            infiniteScroll
+            [infiniteScrollDistance]="0.1"
+            [infiniteScrollThrottle]="500"
+            (scrolled)="onScroll()"
+            [alwaysCallback]="true"
+            *ngIf="eventsTabs.tabs[0].active && isLoadingInterested && interestedCount"
+          ></app-loading>
+        </tab>
+        <tab
+          (selectTab)="tabName = 'favorites'"
+          [heading]="('event.favorites' | translate)  + ' ' + favoritesCount"
+          id="favorites"
+        >
+          <section
+            class="d-flex flex-wrap"
+            *ngIf="eventsListFavorited.length; else noFavoriteEvent"
+          >
+            <app-event-row
+              *ngFor="let event of eventsListFavorited"
+              [filterType]="filterType"
+              class="d-block"
+              [rowSettings]="{
+                              showClose:true,
+                              showUserIcons:false,
+                              showDescription:false
+                             }"
+              (changeIncomingEvent)="deleteEvent($event, 'favorit')"
+              (deleteEventEmitter)="deleteEvent($event)"
+              [incomingEvent]="event"
+            ></app-event-row>
+          </section>
+          <ng-template #noFavoriteEvent>
+            <app-no-event
+              [noResult]="noResult"
+              class="d-block w-100"
+              *ngIf="!isLoadingFavorites || !isLoadingFavorites && searchText && noResultBlock"
+            ></app-no-event>
+          </ng-template>
+          <app-loading
+            class="d-flex align-items-center justify-content-center"
+            infiniteScroll
+            [infiniteScrollDistance]="0.1"
+            [infiniteScrollThrottle]="500"
+            (scrolled)="onScroll()"
+            *ngIf="eventsTabs.tabs[1].active && isLoadingFavorites && favoritesCount"
+          ></app-loading>
+        </tab>
+        <tab
+          (selectTab)="tabName = 'created'"
+          [heading]="('event.created' | translate)  + ' ' + createdCount"
+          id="created"
+        >
+          <section
+            class="d-flex flex-wrap"
+            *ngIf="eventsListCreated.length; else noCreatedEvent"
+          >
+            <app-event-row
+              *ngFor="let event of eventsListCreated"
+              [filterType]="filterType"
+              class="d-block"
+              [incomingEvent]="event"
+              (deleteEventEmitter)="deleteEvent($event)"
+            ></app-event-row>
+          </section>
+          <ng-template #noCreatedEvent>
+            <app-no-event
+              class="d-block w-100"
+              [noResult]="noResult"
+              *ngIf="!isLoadingCreated || !isLoadingCreated && searchText && noResultBlock"
+            >
+            </app-no-event>
+          </ng-template>
+          <app-loading
+            class="d-flex align-items-center justify-content-center"
+            infiniteScroll
+            [infiniteScrollDistance]="0.1"
+            [infiniteScrollThrottle]="500"
+            (scrolled)="onScroll()"
+            *ngIf="eventsTabs.tabs[2].active && isLoadingCreated"
+          ></app-loading>
+        </tab>
+        <tab
+          *ngIf="autorizatedUser"
+          (selectTab)="tabName = 'archived'"
+          [heading]="('event.archived' | translate)"
+          id="archived"
+        >
+          <section
+            class="d-flex flex-wrap"
+            *ngIf="eventsListArchive.length; else noArchivedEvent"
+          >
+            <app-event-row
+              *ngFor="let event of eventsListArchive"
+              [filterType]="filterType"
+              class="d-block"
+              [incomingEvent]="event"
+              [rowSettings]="{
+                              showClose: true,
+                              showUserIcons: false,
+                              showDescription: false
+                             }"
+              (changeIncomingEvent)="deleteEvent($event)"
+              (deleteEventEmitter)="deleteEvent($event)"
+            ></app-event-row>
+          </section>
+          <ng-template #noArchivedEvent>
+            <app-no-event
+              class="d-block w-100"
+              [noResult]="noResult"
+              *ngIf="!isLoadingArchive || !isLoadingCreated && searchText && noResultBlock"
+            ></app-no-event>
+          </ng-template>
+          <app-loading
+            class="d-flex align-items-center justify-content-center"
+            infiniteScroll
+            [infiniteScrollDistance]="0.1"
+            [infiniteScrollThrottle]="500"
+            (scrolled)="onScroll()"
+            *ngIf="eventsTabs.tabs[3].active && isLoadingArchive"
+          ></app-loading>
+        </tab>
+      </tabset>
+    </div>
+  </section>
+</main>

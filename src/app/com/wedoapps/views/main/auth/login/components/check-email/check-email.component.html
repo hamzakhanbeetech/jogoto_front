@@ -1,0 +1,24 @@
+<form class="check">
+  <h3 class="check__title text-center">{{'check.title' | translate}}</h3>
+  <p class="check__description text-center">
+    {{'check.description' | translate}}<br/>
+    <span>example@example.com</span>
+  </p>
+  <p class="check__sub text-center">{{'check.sub_description' | translate}}</p>
+
+  <div class="form-group mb-0 position-relative">
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+      <button class="check__btn text-white text-uppercase w-100 border-0 d-flex justify-content-center disabled" type="button">
+      <span>{{'check.resend' | translate}} </span>
+      <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+      <span class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </span></button>
+    <p class="error position-absolute">This is an error message from server</p>
+  </div>
+  <div class="check__singnup">
+    <p class="mb-0 text-center">
+      {{"forgot.return" | translate}}
+      <a [routerLink]="" class="check__singnup__link text-decoration-none">{{"login.login" | translate}}</a></p>
+  </div>
+</form>

@@ -1,0 +1,61 @@
+<section class="event shadow position-relative">
+  <button
+    class="border-0 event__close__btn p-0 float-right"
+    *ngIf="!rowSettings.showClose"
+  >
+    <i class="icon-close" (click)="deleteCreatedEvent($event)"></i>
+  </button>
+  <section class="d-flex flex-column flex-sm-row">
+    <a
+      [routerLink]="link | localize"
+      [target]="hrefTarget"
+      class="mb-0 event__image"
+    >
+      <img
+        (error)="onImageError()"
+        [src]="img"
+        [alt]="data?.name"
+        class="w-100 h-100"
+        alt=""
+        [hidden]="isImageLoaded"
+        (load)="onImageLoaded()"
+      />
+      <app-loading
+        class="w-100 h-100 d-flex justify-content-center align-items-center"
+        *ngIf="isImageLoaded"
+      ></app-loading>
+    </a>
+    <div class="overflow-hidden flex-grow-1 mw-100">
+      <app-event-short-descriptiopn
+        [hrefTarget]="hrefTarget"
+        [filterType]="filterType"
+        [locale]="locale"
+        class="col p-0 d-block"
+        [data]="data"
+        [isShowDescription]="!isSearchPage || rowSettings.showDescription"
+      ></app-event-short-descriptiopn>
+    </div>
+    <div class="event__close">
+      <!--TODO hide for search page-->
+      <button
+        class="border-0 event__close__btn p-0"
+        (click)="changeEvent($event)"
+        *ngIf="!isSearchPage && rowSettings.showClose"
+      >
+        <i class="icon-close"></i>
+      </button>
+    </div>
+  </section>
+  <footer>
+    <app-event-categories-section
+      [categories]="categories"
+    ></app-event-categories-section>
+    <app-event-iterested-section
+      *ngIf="!archive && showBtn"
+      [isInterested]="incomingEvent?.im_joined"
+      [isShowUserIcons]="!isSearchPage && rowSettings.showUserIcons"
+      [eventId]="eventId"
+      [joinedUsers]="joinedUsers"
+    ></app-event-iterested-section>
+  </footer>
+</section>

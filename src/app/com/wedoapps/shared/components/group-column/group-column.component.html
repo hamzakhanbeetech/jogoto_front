@@ -1,0 +1,61 @@
+<section class="card w-100 h-100 group-column border-0 d-flex flex-column overflow-hidden position-relative">
+  <button class="border-0 group-column__close p-0 position-absolute" type="button" (click)="deleteGroup()"
+    *ngIf="archiveGroup">
+    <i class="icon-close text-white"></i>
+  </button>
+  <a *ngIf="!blockGroup" [routerLink]="link|localize" class="m-0 w-100 group-column__image d-block">
+    <img [src]="currentGroup.poster?.min" class="img-fluid h-100 w-100" [alt]="currentGroup?.name" />
+  </a>
+  <p *ngIf="blockGroup" class="m-0 w-100 group-column__image d-block">
+    <img [src]="currentGroup.poster?.min" class="img-fluid h-100 w-100" [alt]="currentGroup?.name" />
+  </p>
+  <div class="card-body d-flex flex-column">
+    <article class="event-data flex-grow-1">
+      <a *ngIf="!blockGroup" [routerLink]="link|localize"
+        class="group-column__title text-truncate text-decoration-none d-block">{{currentGroup?.name}}</a>
+      <p *ngIf="blockGroup" class="group-column__title text-truncate text-decoration-none d-block">
+        {{currentGroup?.name}}</p>
+      <ul class="list-unstyled group-column__members">
+        <li class="d-inline-block group-column__member__item">{{groupMembers}}
+          {{(groupMembers <= 1 ? "member": "members") | translate}}</li>
+        <li class="d-inline-block group-column__member__item">{{currentGroup?.events.length}}
+          {{(currentGroup?.events.length <= 1 ? "event.event_singular" : "event.events") | translate}}
+        </li>
+      </ul>
+      <!--TODO show only in search page-->
+      <p class="group-column__description text-truncate" *ngIf="isSearchPage">
+        {{currentGroup?.description | slice:0:150}}</p>
+    </article>
+    <footer class="group-column__footer" *ngIf="!imCreator">
+      <button class="btn-block group-column__footer__btn text-truncate"
+        [disabled]="imJoined && !currentGroup.state && join" *ngIf="!blockGroup" (click)="joinGroup(currentGroup._id)">
+        <span *ngIf="join; else follow">
+          <span *ngIf="imJoined && currentGroup.state">
+            {{'group.leave' | translate}}
+          </span>
+          <span *ngIf="imJoined && !currentGroup.state">
+            {{'group.pending_btn' | translate}}
+          </span>
+          <span *ngIf="!imJoined && !currentGroup.state">
+            <i class="icon-plus"></i>
+            {{'group.join_btn' | translate}}
+          </span>
+        </span>
+        <ng-template #follow>
+          <span *ngIf="imJoined">
+            {{'search.user.unfollow' | translate}}
+          </span>
+          <span *ngIf="!imJoined">
+            {{'group.follow_btn' | translate}}
+          </span>
+        </ng-template>
+      </button>
+      <button class="btn-block group-column__footer__btn text-truncate" *ngIf="blockGroup"
+        (click)="unblockGroup(currentGroup._id)">
+        <span>
+          {{'settings.unblock' | translate}}
+        </span>
+      </button>
+    </footer>
+  </div>
+</section>

@@ -1,0 +1,412 @@
+<main class="container-fluid settings">
+    <section class="container p-0">
+        <h3 class="settings__title">{{"settings.title" | translate}}</h3>
+        <tabset class="d-flex flex-wrap settings-tab" #tabset>
+            <!--Start Account settings-->
+            <tab [heading]="'settings.account' | translate" id="tab1">
+                <form action="" class="settings__form border-bottom" [formGroup]="emailForm">
+                    <h3 class="settings__sub-title">{{"settings.change_email_title" | translate}}</h3>
+                    <p class="settings__description">{{"settings.use_address" | translate}}</p>
+                    <div class="form-group position-relative settings__group">
+                        <input type="email" class="form-control shadow-none settings__input" formControlName="email"/>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="emailForm.get('email').hasError('required')">
+                            {{"registration.email_required" | translate}}
+                        </p>
+                        <p class="position-absolute text-danger m-0" *ngIf="emailForm.get('email').hasError('pattern')">
+                            {{"registration.invalid_email" | translate}}
+                        </p>
+                    </div>
+                    <!-- <p class="settings__description">{{"settings.for_security" | translate}}</p>
+                    <div class="form-group position-relative settings__group">
+                      <input type="password" class="form-control shadow-none settings__input"
+                             formControlName="password"
+                             [placeholder]="'settings.current_password' | translate"/>
+                      <p class="position-absolute text-danger m-0" *ngIf="emailForm.get('password').hasError('minlength')">
+                          It must be at least 6 characters
+                       </p>
+                    </div> -->
+                    <div class="position-relative settings__group text-right">
+                        <div class="d-inline-block">
+                            <button class="settings__btn text-white text-uppercase  border-0 d-flex mb-0
+            justify-content-center align-items-center"
+                                    [disabled]="emailForm.invalid"
+                                    (click)="updateUserInfo()"
+                                    [ngClass]="{'disabled': emailForm.invalid || loaders.isUpdateEmail}">
+                                <span>{{'settings.update_email' | translate}} </span>
+                                <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+                                <span class="spinner-border" role="status"
+                                      [ngClass]="loaders.isUpdateEmail ? 'd-block' : 'd-none' ">
+                  <span class="sr-only">Loading...</span>
+                </span></button>
+                            <p class="position-absolute text-danger m-0" *ngIf="errors.email.message">
+                                {{ errors.email.message }}
+                            </p>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="" class="settings__form border-bottom" [formGroup]="passForm">
+                    <h3 class="settings__sub-title">
+                        <span *ngIf="userPassword;else noPassword"> {{"settings.change_password_title" | translate}}</span>
+                        <ng-template #noPassword>
+                            <span> {{"settings.set_password__title" | translate}}</span>
+                        </ng-template>
+                    </h3>
+                    <p class="settings__description">{{"settings.choose_unique_password" | translate}}</p>
+                    <div class="form-group position-relative settings__group" *ngIf="userPassword">
+                        <input type="password" class="form-control shadow-none settings__input"
+                               formControlName="password"
+                               [placeholder]="'settings.current_password' | translate"/>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="passForm.get('password').touched && passForm.get('password').hasError('required')">
+                            {{'login.required_pass' | translate}}
+                        </p>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="passForm.get('password').hasError('minlength')">
+                            {{'registration.invalid_pass' | translate}}
+                        </p>
+                    </div>
+                    <p class="settings__description">{{"settings.new_password" | translate}}</p>
+                    <div class="form-group position-relative settings__group">
+                        <input type="password" class="form-control shadow-none settings__input"
+                               formControlName="new_password"
+                               [placeholder]="'settings.new_password_placeholder' | translate"/>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="passForm.get('new_password').touched && passForm.get('new_password').hasError('required')">
+                            {{'login.required_pass' | translate}}
+                        </p>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="passForm.get('new_password').hasError('minlength')">
+                            {{'registration.invalid_pass' | translate}}
+                        </p>
+                    </div>
+                    <div class="form-group position-relative settings__group">
+                        <input type="password" class="form-control shadow-none settings__input"
+                               formControlName="re_password"
+                               [placeholder]="'settings.submit_password' | translate"/>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="passForm.get('re_password').touched && passForm.get('re_password').hasError('required')">
+                            {{'login.required_pass' | translate}}
+                        </p>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="passForm.get('re_password').dirty
+                && passForm.hasError('mismatchedPasswords')
+                && !passForm.get('re_password').hasError('required')">
+                            {{'registration.pass_dont_match' | translate}}
+                        </p>
+                    </div>
+                    <div class="settings__group pb-0">
+                        <app-checkbox class="d-block" [filterName]="'settings.require_all' | translate"></app-checkbox>
+                    </div>
+                    <div class="position-relative settings__group text-right">
+                        <div class="d-inline-block">
+                            <button class="settings__btn text-white text-uppercase  border-0 d-flex mb-0
+            justify-content-center align-items-center"
+                                    [disabled]="passForm.invalid"
+                                    [ngClass]="{'disabled': passForm.invalid || loaders.isUpdatePasswrod}"
+                                    (click)="changeUserPassword()">
+                                <span *ngIf="userPassword;else savePassword">{{'settings.update_password' | translate}} </span>
+                                <ng-template #savePassword>
+                                    <span>{{'settings.save_password' | translate}} </span>
+                                </ng-template>
+
+                                <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+                                <span class="spinner-border" role="status"
+                                      [ngClass]="loaders.isUpdatePasswrod ? 'd-block' : 'd-none' ">
+                  <span class="sr-only">Loading...</span>
+                </span></button>
+                            <p class="position-absolute text-danger m-0" *ngIf="errors.password.message">
+                                {{ errors.password.message}}
+                            </p>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="" class="settings__form" [formGroup]="deleteAccountForm">
+                    <h3 class="settings__sub-title">{{"settings.close_account" | translate}}</h3>
+                    <p class="settings__description">{{"settings.close_reason" | translate}}
+                        <a [routerLink]="['/contact-us'|localize]" class="settings__description__link">{{"settings.let_us_know"
+                            |
+                            translate}}</a></p>
+                    <div class="settings__close">
+                        <p class="settings__close__title">{{"settings.why_you_leaving" | translate}}</p>
+
+                        <mat-radio-group *ngFor="let r of reasons; let i = index">
+                            <mat-radio-button class="d-block"
+                                              value="{{'settings.' + r.name | translate}}"
+                                              (change)="resetCheckedReason(i)"
+                                              [checked]="r.checked">
+                                {{"settings." + r.name | translate}}
+                            </mat-radio-button>
+                            <p class="settings__close__help" *ngIf="r.name === 'many_emails' && reasons[i].checked">
+                                {{"settings.turn_notification" | translate}}
+                                <a [routerLink]="['/basic/settings'|localize]"
+                                   [queryParams]="{active: 'notify'}">{{"settings.notifications_settings"
+                                    | translate}}</a>
+                                {{"settings.control_notification" | translate}}
+                            </p>
+
+                            <p class="settings__close__help"
+                               *ngIf="r.name === 'getting_membership' && reasons[i].checked">
+                                {{"settings.helpline_check" | translate}}
+                                <a [routerLink]="'/term-of-use'|localize">{{"settings.helpline" | translate}}</a>
+                                {{"settings.helpline_valuable" | translate}}
+                            </p>
+
+                            <p class="settings__close__help" *ngIf="r.name === 'privacy_concern' && reasons[i].checked">
+                                {{"settings.view_privacy" | translate}}
+                                <a [routerLink]="'/privancy-policy'|localize">{{"settings.privacy_policy" |
+                                    translate}}</a>
+                                {{"settings.to_learn" | translate}}
+                            </p>
+
+                            <p class="settings__close__help"
+                               *ngIf="r.name === 'unwanted_contact' && reasons[i].checked">
+                                {{"settings.sorry" | translate}}
+                                <a [routerLink]="['/basic/settings'|localize]"
+                                   [queryParams]="{active: 'notify'}">{{"settings.notifications_settings"
+                                    | translate}}</a>
+                                {{"settings.see_options" | translate}}
+                            </p>
+
+                            <textarea class="settings__close__text w-100"
+                                      *ngIf="r.name === 'other' && reasons[i].checked"
+                                      [readonly]="!reasons[i].checked"
+                                      (change)="setReason($event)"
+                                      [placeholder]="'settings.please_explain' | translate"></textarea>
+                            <p class="position-absolute text-danger m-0"
+                               *ngIf="hasDeleteReason && deleteAccountForm.get('text').hasError('required')">
+                                Please explain
+                            </p>
+                        </mat-radio-group>
+                    </div>
+                    <p class="settings__description">{{"settings.enter_password" | translate}}</p>
+                    <div class="form-group position-relative settings__group">
+                        <input type="password" class="form-control shadow-none settings__input"
+                               formControlName="password"
+                               [placeholder]="'settings.current_password' | translate"/>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="!deleteAccountForm.get('password').hasError('required') && errors.closeAccount.message">
+                            {{ errors.closeAccount.message }}
+                        </p>
+                        <p class="position-absolute text-danger m-0"
+                           *ngIf="deleteAccountForm.get('password').hasError('required') && deleteAccountForm.get('password').touched">
+                            {{ 'settings.req-password' | translate }}
+                        </p>
+                    </div>
+                    <div class="position-relative settings__group text-right">
+                        <div class="d-inline-block">
+                            <button class="settings__btn text-white text-uppercase  border-0 d-flex mb-0
+                              justify-content-center align-items-center"
+                                    [ngClass]="{'disabled': deleteAccountForm.invalid || loaders.isCloseAccount}"
+                                    [disabled]="deleteAccountForm.invalid"
+                                    (click)="deleteUserAccount()">
+                                <span>{{'settings.close_account_btn' | translate}} </span>
+                                <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+                                <span class="spinner-border" [ngClass]="loaders.isCloseAccount ? 'd-block' : 'd-none' "
+                                      role="status">
+                  <span class="sr-only">Loading...</span>
+                </span></button>
+                        </div>
+                    </div>
+                </form>
+            </tab>
+            <!--end Account settings-->
+            <!--Start notifications settings-->
+            <tab [heading]="'settings.notifications' | translate" [active]="isSelectedNotifications">
+                <ul class="list-unstyled notification">
+                    <li class="d-flex justify-content-between align-items-center notification__item">
+                        <div>
+                            <h3 class="settings__sub-title mt-0">{{"header.notification" | translate}}</h3>
+                            <p class="settings__description mb-0">{{"settings.allow_notifications_applications" |
+                                translate}}</p>
+                        </div>
+                        <div>
+                            <mat-slide-toggle [checked]="isEnabledJogoto"
+                                              (change)="changeNotificationsSettingsAll('jogoto')"></mat-slide-toggle>
+                        </div>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center notification__item">
+                        <div>
+                            <h3 class="settings__sub-title mt-0">{{"settings.push_notifications" | translate}}</h3>
+                            <p class="settings__description mb-0">{{"settings.allow_pop_ups_device" | translate}}</p>
+                        </div>
+                        <div>
+                            <mat-slide-toggle [checked]="isEnabledPush"
+                                              (change)="changeNotificationsSettingsAll('push')"></mat-slide-toggle>
+                        </div>
+                    </li>
+                </ul>
+                <h3 class="settings__sub-title title">{{"settings.what_notifications_receive" | translate}}</h3>
+                <form action="" [formGroup]="notifyGroup">
+                    <table class="table">
+                        <tr>
+                            <th class="settings__sub-title mt-0 border-0">{{"settings.your_reservations" | translate}}
+                            </th>
+                            <th class="settings__sub-title mt-0 text-center border-0">{{"header.notification" |
+                                translate}}
+                            </th>
+                            <th
+                                    class="settings__sub-title mt-0 text-center border-0">
+                                {{"settings.push_notifications" | translate}}
+                            </th>
+                        </tr>
+                        <tr *ngFor="let n of notifySettingsList; let i = index">
+                            <td [ngClass]="{'border-0': i > 4}">
+                                <h4 class="settings__sub-title mt-0" *ngIf="n.title">{{"settings." + n.title |
+                                    translate}}</h4>
+                                <p class="settings__description mb-0">{{"settings." + (n.title.length ? n.title +
+                                    "_desc" :
+                                    n.sub_title)| translate}}</p>
+                            </td>
+                            <td class="align-middle text-center" [ngClass]="{'border-0': i > 4}">
+                                <label class="container-checkbox position-relative">
+                                    <input type="checkbox" class="position-absolute"
+                                           formControlName="{{ n.formControlName }}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <td class="align-middle text-center" [ngClass]="{'border-0': i > 4}">
+                                <label class="container-checkbox position-relative">
+                                    <input type="checkbox" class="position-absolute"
+                                           formControlName="{{ 'p-' + n.formControlName }}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="position-relative settings__group text-right">
+                        <div class="d-inline-block">
+                            <button class="settings__btn text-white text-uppercase  border-0 d-flex mb-0
+            justify-content-center align-items-center"
+                                    [ngClass]="{'disabled' : notifyGroup.invalid}"
+                                    (click)="saveNotificationsSettings()">
+                                <span>{{'save' | translate}} </span>
+                                <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+                                <span class="spinner-border d-none" role="status"
+                                      [ngClass]="loaders.isLoading ? 'd-block' : 'd-none'">
+                  <span class="sr-only">Loading...</span>
+                </span></button>
+                            <p class="position-absolute text-danger m-0" *ngIf="errors.saveSettings.message">{{
+                                errors.saveSettings.message }}</p>
+                        </div>
+                    </div>
+                </form>
+            </tab>
+            <!--end notifications settings-->
+
+            <!--Start notifications content preferences-->
+            <tab [heading]="'settings.content_preferences' | translate" id="customClass">
+                <form action="" class="settings__form">
+                    <h3 class="settings__sub-title title">{{"settings.jogoto_language" | translate}}</h3>
+                    <p class="settings__description">{{"settings.select_language" | translate}}</p>
+                    <div class="settings__close languages">
+                        <p-dropdown [options]="languages" [formControl]="langDropdown" optionLabel="label"
+                                    [editable]="false"
+                                    (onChange)="changeLang($event)"
+                                    class="carensy h-100">
+                        </p-dropdown>
+                    </div>
+                </form>
+                <form class="social-preferences" *ngIf="userType">
+                    <h3 class="settings__sub-title title">{{"settings.social_preferences" | translate}}</h3>
+                    <p class="settings__description">{{"settings.connect_select" | translate}}</p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <mat-slide-toggle class="w-100" (change)="submitFacebookLogin($event)"
+                                              [checked]='fbChecked'><i
+                                    class="icon-facebook icon"></i>
+                                Facebook
+                            </mat-slide-toggle>
+                        </li>
+                        <!--<li>-->
+                        <!--<mat-slide-toggle class="w-100"><i class="icon-instagram icon"></i> Instagram-->
+                        <!--</mat-slide-toggle>-->
+                        <!--</li>-->
+                        <li>
+                            <mat-slide-toggle class="w-100" (change)="linkedinLogin($event)"
+                                              [checked]="linkedinChecked">
+                                <i class="icon-linkedin icon"></i>
+                                Linkedin
+                            </mat-slide-toggle>
+                        </li>
+                        <li>
+                            <mat-slide-toggle class="w-100" (change)="submitTwitterLogin($event)" [checked]='twChecked'>
+                                <i class="icon-twitter icon"></i> Twitter
+                            </mat-slide-toggle>
+                        </li>
+                    </ul>
+                </form>
+            </tab>
+            <!--end notifications content preferences-->
+            <!--Start blocked users preferences-->
+            <tab [heading]="'settings.blocking_users' | translate" (selectTab)="getSectionTab('users')">
+                <div class="container-fluid">
+                    <div class="container" #searchUsers>
+                        <app-search-users [isAuthorized]="true"
+                                          [isSearchPage]="false"
+                                          (unblockUser)="unblockUser($event)"
+                                          [users]="users">
+                        </app-search-users>
+                        <div class="text-center w-100">
+                            <app-loading *ngIf="loading"></app-loading>
+                        </div>
+                    </div>
+                    <app-no-event class="d-block w-100" *ngIf="!loading && !users.length" [noResult]="noResults.users"></app-no-event>
+                    <span infiniteScroll
+                          [infiniteScrollDistance]="0.1"
+                          *ngIf="tabset.tabs[3]?.active && sectionCount >= skipLimit.users.skip"
+                          [infiniteScrollThrottle]="500"
+                          (scrolled)="onScroll('users')"></span>
+                </div>
+            </tab>
+            <!--end blocked users preferences-->
+            <!--Start blocked events preferences-->
+            <tab [heading]="'settings.blocking_events' | translate" (selectTab)="getSectionTab('events')">
+                <section class="d-flex flex-wrap setting-events">
+                    <app-event-column *ngFor="let event of events"
+                                      [eventItem]="event"
+                                      [isSettingsPage]="true"
+                                      [isShowUserIcons]="false"
+                                      [isShowDescription]="false"
+                                      [userIsLoggedIn]="true"></app-event-column>
+                    <div class="text-center w-100">
+                        <app-loading *ngIf="loading"></app-loading>
+                    </div>
+                </section>
+                <app-no-event class="d-block w-100" *ngIf="!loading && !events.length" [noResult]="noResults.events"></app-no-event>
+                <span infiniteScroll
+                      [infiniteScrollDistance]="0.1"
+                      *ngIf="tabset.tabs[4]?.active && sectionCount >= skipLimit.events.skip"
+                      [infiniteScrollThrottle]="500"
+                      (scrolled)="onScroll('events')"></span>
+            </tab>
+            <!--end blocked events preferences-->
+            <!--Start blocked groups preferences-->
+            <tab [heading]="'settings.blocking_groups' | translate" (selectTab)="getSectionTab('groups')">
+                <section class="d-flex flex-wrap" >
+                    <app-group-column class="shadow overflow-hidden" *ngFor="let group of groups"
+                                      [isSearchPage]="false"
+                                      [currentGroup]="group"
+                                      [userIsLoggedIn]="true"
+                                      [archiveGroup]="false"
+                                      [blockGroup]="true"></app-group-column>
+                    <div class="text-center w-100">
+                        <app-loading *ngIf="loading"></app-loading>
+                    </div>
+                </section>
+                    <app-no-event class="d-block w-100" *ngIf="!loading && !groups.length" [noResult]="noResults.groups"></app-no-event>
+                <span infiniteScroll
+                      [infiniteScrollDistance]="0.1"
+                      *ngIf="tabset.tabs[5]?.active && sectionCount >= skipLimit.groups.skip"
+                             [infiniteScrollThrottle]="500"
+                             (scrolled)="onScroll('group')"></span>
+            </tab>
+            <!--end blocked groups preferences-->
+        </tabset>
+    </section>
+</main>
+
+<app-allert-message></app-allert-message>
+

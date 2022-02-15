@@ -1,0 +1,42 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.selected-filter {
+  background: $gray;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  min-height: 50px;
+  &__btn{
+    @include category-btn;
+    margin-bottom: 20px;
+    max-width: 100%;
+    &:last-of-type{
+      margin-right: 20px;
+    }
+  }
+  .close-icon{
+    @include font-size($fz-12);
+    right: 3px;
+    top: 7px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .selected-filter {
+    .close-icon{
+      @include font-size($fz-10 - 1);
+    }
+  }
+  .see-more {
+    @include font-size($fz-14);
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+  .see-more {
+    @include font-size($fz-12);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+}

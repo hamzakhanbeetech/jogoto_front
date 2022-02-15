@@ -1,0 +1,14 @@
+<main class="not-found d-flex">
+  <section class="container-fluid
+  not-found__section text-white d-flex flex-column align-items-center justify-content-center">
+    <h1 class="not-found__section__title">404</h1>
+    <p class="not-found__section__sub-title">{{"not-found.sub_title" | translate}}</p>
+    <p class="not-found__section__description mb-0 text-center" [innerHTML]="'not-found.description' | translate"></p>
+    <ul class="list-unstyled characters">
+      <li class="d-inline-block"><a [routerLink]="'/'|localize" class="text-white">{{"header.menu.home" | translate}}</a></li>
+      <li class="d-inline-block"><a [routerLink]="'/contact-us'|localize" class="text-white">{{"header.menu.contact_us" | translate}}</a></li>
+      <li class="d-inline-block"><a [routerLink]="'/about'|localize" class="text-white">{{"onboarding-header.info.about" | translate}}</a></li>
+    </ul>
+  </section>
+</main>
+<app-onboarding-footer></app-onboarding-footer>

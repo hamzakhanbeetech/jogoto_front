@@ -1,0 +1,29 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.where {
+  color: $dark-gray;
+
+  &__title {
+    @include font-size($fz-16);
+    color: $text-color;
+    margin: 33px 0 40px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .where {
+    &__title {
+      @include font-size($fz-14);
+      margin: 28px 0 30px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .where {
+    &__title {
+      @include font-size($fz-12);
+    }
+  }
+}

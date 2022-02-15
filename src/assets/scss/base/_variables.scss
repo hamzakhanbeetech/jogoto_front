@@ -1,0 +1,82 @@
+//colors
+
+$light-blue: #49A4D9;
+$darker-blue: #2D69A2;
+$blue: #3B86BD;
+$blue-transparent: rgba(12, 136, 195, .1);
+
+$lighter-gray: #C6C5C3;
+$light-gray: #d0d2cf;
+$dark-gray: #343a40;
+$gray: #F8F8FA;
+$gray70: #707070;
+$gray-cookies: #DDDFE2;
+$gray-border: rgba(198, 197, 195, .5);
+
+$event-title: #343A40;
+$text-color: #666C72;
+$more-gray: #EBEDF0;
+$hover-gray: #D8D9DB;
+$sidebar-footser: #fafafa;
+$black-transparent: rgba(0, 0, 0, 0.4);
+$black-upload: rgba(0, 0, 0, 0.5);
+$black-shadow: rgba(0, 0, 0, 0.4);
+$black-shadow-lighter: rgba(0, 0, 0, 0.1);
+$white-transparent: rgba(255, 255, 255, 0.3);
+$white-transparent-gradient: rgba(255, 255, 255, .2);
+$white-transparent-gradient-saturation: rgba(255, 255, 255, .9);
+
+$dark-orange: #FF6602;
+$dark-orange-opacity: rgba(255,102,2,.05);
+$darker-orange: #D85B0A;
+$light-orange: #f79c61;
+
+$error: #FF0000;
+$error-alert: #DB4437;
+
+$fb: #385C8E;
+$in: #007AAA;
+//fonts
+$fz-12: 12px;
+$fz-10: 10px;
+$fz-14: 14px;
+$fz-16: 16px;
+$fz-18: 18px;
+$fz-25: 25px;
+$fz-26: 26px;
+$fz-24: 24px;
+$fz-20: 20px;
+$fz-30: 30px;
+$fz-40: 40px;
+$fz-36: 36px;
+$fz-60: 60px;
+$fz-40: 40px;
+$fz-80: 80px;
+$fz-100: 100px;
+$fz-52: 52px;
+
+//font family
+%proxima-regular {
+  font-family: 'ProximaNova-Regular';
+}
+
+%proxima-semibold {
+  font-family: 'ProximaNova-Semibold';
+}
+
+%proxima-semibold-it {
+  font-family: 'ProximaNova-Semibold-It';
+}
+
+%roboto-regular {
+  font-family: 'Roboto-Regular';
+}
+
+%fontello {
+  font-family: 'fontello';
+}
+
+%display-bold{
+  font-family: 'display-bold';
+}
+

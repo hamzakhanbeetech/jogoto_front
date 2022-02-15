@@ -1,0 +1,32 @@
+<div class="upload">
+  <p class="upload__title">{{"create-group.import_members" | translate}}</p>
+  <p class="upload__desc mb-0" [style.color]="typeError?'red':'#666C72'">{{(type == 'event'?"event.import_members_desc":"create-group.import_members_desc") | translate}}</p>
+</div>
+<div class="position-relative upload-container">
+  <input type="file" name="file" id="file" class="upload"
+         accept=".csv, .xml, .xlsx, .xlsm, .xltm, .xls"
+         (change)="upload($event)"
+         #import [disabled]="name"/>
+  <div class="label-container position-absolute w-100 d-flex">
+    <label for="file" class="flex-shrink-0">
+      <span class="upload-container__btn">{{"create-group.choose_file" | translate}}</span>
+    </label>
+    <div class="flex-grow-1">
+      <p
+        class="upload-container__text mb-0 d-flex justify-content-between">
+        <span class="text-truncate">{{name || "create-group.no_file_chosen" | translate}}</span>
+        <button type="button" class="bg-transparent border-0 upload-container__text__close" *ngIf="name && !stopLoad"  #input>
+          <i class="icon-close" (click)="stopLoading()"></i></button>
+      </p>
+      <div class="progress-container" *ngIf="fileChoosed && !stopLoad">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" [style.width.%]="progress" [attr.aria-valuenow]="progress" aria-valuemin="0"
+               aria-valuemax="100">
+          </div>
+        </div>
+        <p class="progress-aria-valuenow mb-0">{{progress}} % {{(file?"create-group.uploaded": "create-group.uploading") |translate}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

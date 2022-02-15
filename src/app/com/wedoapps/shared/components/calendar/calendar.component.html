@@ -1,0 +1,27 @@
+<div class="d-flex flex-column align-items-center">
+  <h3 class="m-0 when__title text-center d-none d-sm-block">{{"filter.date_filter"|translate}} </h3>
+  <div class="form-group">
+    <div class="btn-group date-group w-100">
+      <button type="button" [ngClass]="{'active': type=='today'}" class="btn bg-transparent date-group__btn"
+              (click)="setToday();dp.navigateTo()">{{"filter.today" | translate}}
+      </button>
+      <button type="button" [ngClass]="{'active': type=='week'}" class="btn bg-transparent date-group__btn"
+              (click)="setThisWeek();dp.navigateTo()">{{"filter.this_week" | translate}}
+      </button>
+      <button type="button" [ngClass]="{'active': type=='weekend'}" class="btn bg-transparent date-group__btn"
+              (click)="setWeekend();dp.navigateTo()">{{"filter.this_weekend" | translate}}
+      </button>
+    </div>
+  </div>
+  <ngb-datepicker #dp (select)="onDateSelection($event)" [startDate]="startDay" [minDate]="minDate" [displayMonths]="2"
+                  [dayTemplate]="t" outsideDays="hidden">
+  </ngb-datepicker>
+
+  <ng-template #t let-date let-focused="focused">
+        <span [ngClass]="isDisabled(date)?'custom-day':'disabled-day'" [class.focused]="focused"
+              [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)"
+              (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+    {{ date.day }}
+  </span>
+  </ng-template>
+</div>

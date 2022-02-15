@@ -1,0 +1,58 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.on-boarding {
+  @include size(100%, auto);
+  min-height: calc(100vh - 70px);
+  background: url("../../../../../../assets/images/home/home-main.jpg") no-repeat;
+  background-size: cover;
+
+  &__transparent {
+    background: $black-transparent;
+    padding: 20px;
+    height: inherit;
+    min-height: inherit;
+
+    &__main {
+      @include border-radius(5px);
+      padding: 30px;
+      width: 500px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .on-boarding {
+    &__transparent {
+      &__main {
+        padding: 30px 25px;
+        width: 460px;
+      }
+    }
+  }
+}
+@include media-breakpoint-down(sm) {
+  .on-boarding {
+    &__transparent {
+      &__main {
+        padding: 25px;
+        width: 400px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .on-boarding {
+    background: none;
+    &__transparent {
+      background: transparent;
+      padding: 0;
+      &__main {
+        @include border-radius(0);
+        @include size(100%);
+        padding: 30px 15px;
+      }
+    }
+  }
+}

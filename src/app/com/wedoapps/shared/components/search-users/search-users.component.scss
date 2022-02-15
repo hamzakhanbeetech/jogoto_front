@@ -1,0 +1,106 @@
+@import '../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.users-block {
+  margin: 20px 0;
+
+  .app-user-block {
+    @include size(calc(100% / 3 - 15px), auto);
+    margin-bottom: 20px;
+    &:nth-child(3n + 2) {
+      margin: 0 22.5px 20px;
+    }
+  }
+  .app-user-setting-block {
+    @include size(calc(100% / 2 - 15px), auto);
+    margin-bottom: 20px;
+    &:nth-child(2n + 1) {
+      margin-right: 20px;
+    }
+  }
+
+  &__btn {
+    @include hover-focus-active {
+      color: $blue;
+    }
+    @extend %proxima-regular;
+    color: $dark-gray;
+    margin-left: 20px;
+    margin-bottom: 20px;
+
+    &.active {
+      color: $blue !important;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .users-block {
+    margin: 17px 0;
+
+    .app-user-block {
+      @include size(calc(100% / 2 - 10px), auto);
+      &:nth-child(3n + 2) {
+        margin: 0 0 20px;
+      }
+      &:nth-child(2n + 1) {
+        margin-right: 20px;
+      }
+    }
+    .app-user-setting-block{
+      @include size(calc(100% / 1 - 10px), auto);
+      &:nth-child(3n + 2) {
+        margin: 0 0 20px;
+      }
+      &:nth-child(2n + 1) {
+        margin-right: 0;
+      }
+    }
+    &__btn {
+      @include font-size($fz-14);
+      margin-left: 20px;
+      margin-bottom: 17px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .users-block {
+    margin: 15px 0;
+
+    .app-user-block {
+      @include size(calc(100% / 2 - 8px), auto);
+      &:nth-child(2n + 1) {
+        margin-right: 16px;
+      }
+    }
+    .app-user-setting-block{
+      @include size(calc(100% / 1 - 8px), auto);
+      &:nth-child(2n + 1) {
+        margin-right: 0;
+      }
+    }
+    &__btn {
+      @include font-size($fz-12);
+      margin-left: 10px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .users-block {
+
+    .app-user-block {
+      @include size(100%, auto);
+      &:nth-child(2n + 1) {
+        margin-right: 0;
+      }
+    }
+    &__btn {
+      @include hover-focus-active {
+        color: $dark-gray;
+      }
+    }
+  }
+}

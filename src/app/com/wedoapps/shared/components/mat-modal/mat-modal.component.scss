@@ -1,0 +1,56 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+::ng-deep {
+  app-mat-modal{
+    display: block;
+    height: 100%;
+  }
+  .cdk-overlay-container {
+    z-index: 10000;
+  }
+
+  .mat-dialog-container {
+    padding: 0;
+    @include border-radius(0);
+  }
+
+  .mat-typography.mat-dialog-content {
+    margin: 0;
+    max-height: calc(100vh - 100px);
+    padding: 25px 15px;
+  }
+
+  .mat-modal {
+    height: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
+    .title {
+      @include filter-title;
+    }
+
+    &__close {
+      @include font-size($fz-16);
+      transform: translateY(-50%);
+      color: $blue;
+      right: 15px;
+      top: 50%;
+      z-index: 10;
+    }
+  }
+
+  .modal-filters{
+    z-index: 999999;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  ::ng-deep {
+    .cdk-global-overlay-wrapper .cdk-overlay-pane {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100%;
+      transform: translateX(0) translateY(0) !important;
+    }
+  }
+}

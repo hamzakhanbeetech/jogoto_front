@@ -1,0 +1,83 @@
+<section class="container p-sm-0">
+  <div class="interests-header">
+    <h2 class="interests-header__title">{{"interests-page.my_interests" | translate}}</h2>
+    <p class="interests-header__description">{{"interests-page.description" | translate}}</p>
+  </div>
+
+  <div class="categories-section position-relative">
+    <app-loading class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center"
+                 *ngIf="loadingCategories"></app-loading>
+    <form [formGroup]="categoriesForm" *ngIf="!loadingCategories">
+      <div class="overflow-hidden position-relative d-inline-block categories-block"
+           *ngFor="let category of categoriesForm.get('items').controls;let i = index;">
+        <label
+          (click)="updateForm(categoriesList[i], !category.value)"
+          class="categories-block__btn m-0 d-flex flex-column align-items-center justify-content-between position-relative position-relative w-100"
+          [for]="categoriesList[i].name"
+          [style.borderColor]="!category.value ?  'transparent':categoriesList[i].styleData.color">
+          <input class="categories-block__checkbox position-absolute w-100 h-100" type="checkbox"
+                 [id]="categoriesList[i].name" [formControl]="category">
+          <i [ngClass]="categoriesList[i].styleData.icon" [ngStyle]="{'color': categoriesList[i].styleData.color}"></i>
+          <span
+            class="flex-grow-1 d-flex align-items-center justify-content-center text-center">  {{categoriesList[i].name}}</span>
+        </label>
+      </div>
+    </form>
+    <div class="interest-events" *ngIf="!loadingCategories">
+      <div class=" d-flex title">
+        <a [routerLink]="'/basic/interests/'|localize" fragment="discover"
+           class="icon-calendar interest-events__icon text-decoration-none"></a>
+        <a [routerLink]="'/basic/interests/'|localize" fragment="discover"
+           class="interest-events__title align-self-end m-0 text-decoration-none"> {{eventsCount}} {{"filter.events" |
+          translate}}</a>
+      </div>
+      <div *ngFor="let name of activeCategoriesNames">
+
+        <p class="interest-events__description mb-0" *ngIf="name==='Sport'"
+           [innerHTML]="'interests-page.sport_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Art & Culture'"
+           [innerHTML]="'interests-page.art_culture_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Education'"
+           [innerHTML]="'interests-page.education_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Music'"
+           [innerHTML]="'interests-page.music_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Health & Wellness'"
+           [innerHTML]="'interests-page.health_wellness_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Night Out'"
+           [innerHTML]="'interests-page.night_out_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Business & Technologies'"
+           [innerHTML]="'interests-page.business_technologies_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Cuisine & Gastronomy'"
+           [innerHTML]="'interests-page.cuisine_gastronomy_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Fashion & Shopping'"
+           [innerHTML]="'interests-page.fashion_shopping_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Kids & Family'"
+           [innerHTML]="'interests-page.kids_family_description' | translate">
+        </p>
+        <p class="interest-events__description mb-0" *ngIf="name==='Volunteering & Social'"
+           [innerHTML]="'interests-page.volunteering_social_description' | translate">
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<app-incoming-events class="d-block"
+                     [ngStyle]="{'margin-bottom': !eventsByCategories.length ? '30px' : '' }"></app-incoming-events>
+<section class="container p-sm-0 " id="discover" *ngIf="eventsByCategories.length">
+  <app-block-title-see-more class="w-100" [title]=" 'interests-page.discover_categories' | translate"
+                            [link]="'/search'" *ngIf="eventsByCategories.length">
+  </app-block-title-see-more>
+  <div class="d-flex flex-wrap events-by-categories categories-section position-relative">
+    <app-event-column *ngFor="let event of eventsByCategories" [eventItem]="event" [isShowUserIcons]="false"
+                      [isShowDescription]="false"></app-event-column>
+  </div>
+</section>

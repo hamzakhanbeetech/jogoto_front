@@ -1,0 +1,20 @@
+@import '../../../../../../assets/scss/base/variables';
+
+.mat-accent {
+  &.mat-slider-disabled{
+    .mat-slider-track-fill,
+    .mat-slider-thumb,
+    .mat-slider-thumb-label {
+      background-color: $lighter-gray;
+    }
+  }
+  .mat-slider-track-fill,.mat-slider-thumb,.mat-slider-thumb-label {
+    background-color: $blue;
+  }
+}
+
+
+.radius {
+  font-size: 14px;
+  bottom: -5px;
+}

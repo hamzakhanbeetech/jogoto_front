@@ -1,0 +1,78 @@
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "../../../../../../../assets/scss/base/mixins";
+
+@include modals-header;
+
+::ng-deep {
+  app-delete {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+  }
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
+
+.delete {
+  padding: 0 20px 20px;
+  min-height: auto;
+  &__title {
+    @include font-size($fz-16);
+    @extend %proxima-regular;
+    font-weight: normal;
+    color: $dark-gray;
+    margin: 0 0 20px;
+  }
+  &__description {
+    color: $text-color;
+    margin: 0 0 20px;
+  }
+  &__btn {
+    @include login-btn;
+    margin-bottom: 15px;
+  }
+}
+.text-danger {
+  top: 38px;
+}
+@include media-breakpoint-down(lg) {
+  .delete {
+    padding: 0 15px 15px;
+    &__title,
+    &__description {
+      @include font-size($fz-14);
+      margin: 0 0 17px;
+    }
+  }
+  .text-danger {
+    top: 32px;
+  }
+}
+@include media-breakpoint-down(sm) {
+  .delete {
+    &__title,
+    &__description {
+      @include font-size($fz-12);
+      margin: 0 0 12px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  ::ng-deep {
+    app-delete {
+      width: 100%;
+      max-width: 290px;
+    }
+    .cdk-global-overlay-wrapper .cdk-overlay-pane {
+      min-width: auto !important;
+      max-width: auto !important;
+      height: auto;
+    }
+  }
+  .header {
+    border-bottom: 1px solid $border-color;
+    padding-top: 0;
+  }
+}

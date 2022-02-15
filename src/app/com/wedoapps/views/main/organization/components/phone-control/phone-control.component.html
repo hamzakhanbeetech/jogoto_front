@@ -1,0 +1,7 @@
+<ngx-intl-tel-input *ngIf="phone" [cssClass]="'form-control'" [preferredCountries]="preferredCountries"
+    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+    [selectedCountryISO]="CountryISO.Germany" [maxLength]="15" [phoneValidation]="true"
+    [separateDialCode]="separateDialCode" name="phone" [formControl]="phone"
+    >
+</ngx-intl-tel-input>

@@ -1,0 +1,85 @@
+<main class="container-fluid contact-us">
+  <section class="container">
+    <div class="row">
+      <h2 class="contact-title w-100">{{'contact.contact_us' | translate}}</h2>
+    </div>
+  </section>
+  <ul class="container list-unstyled d-flex flex-wrap justify-content-between contact-info">
+    <li class="contact-info__item text-center">
+      <i class="icon-pin-location contact-info__item__icon"></i>
+      <h3 class="contact-info__item__title text-uppercase">{{"contact.location" | translate}}</h3>
+      <address class="contact-info__item__info mx-auto my-0">Route de la Crétasse 25a,
+        1854 Leysin,
+        Switzerland
+      </address>
+    </li>
+    <li class="contact-info__item text-center">
+      <i class="icon-phone contact-info__item__icon"></i>
+      <h3 class="contact-info__item__title text-uppercase">{{"contact.call_us" | translate}}</h3>
+      <a href="tel:+ 41 797 422 119" class="contact-info__item__info d-block mx-auto text-decoration-none">+ 41 797 422
+        119</a>
+    </li>
+    <li class="contact-info__item text-center">
+      <i class="icon-mail contact-info__item__icon"></i>
+      <h3 class="contact-info__item__title text-uppercase">{{"contact.send_email" | translate}}</h3>
+      <a href="mailto:contact@jogoto.com" class="contact-info__item__info  d-block mx-auto text-decoration-none">contact@jogoto.com</a>
+    </li>
+  </ul>
+  <section class="container text-center social-block">
+    <h4 class="social-block__title text-uppercase">{{"contact.social_contact" | translate}}</h4>
+<app-social-links-jogoto></app-social-links-jogoto>
+  </section>
+  <section class="container p-0 d-flex flex-wrap flex-column-reverse flex-md-row justify-content-center contact-block">
+    <form class="contact-block__form" [formGroup]="contactForm" (submit)="sendMessage()">
+      <h3 class="contact-block__form__title"> {{"contact.get_touch" | translate}}</h3>
+      <p class="contact-block__form__desc">{{"contact.form_description" | translate}}</p>
+      <div class="form-group position-relative contact-block__form__input">
+        <input type="text" [placeholder]="'contact.name' | translate" formControlName="name"
+               class="form-control shadow-none" (input)="checkName()"/>
+        <p class="position-absolute text-danger">
+          <span *ngIf="this.contactForm.get('name').touched && this.contactForm.get('name').hasError('required') ||  !nameError">
+               {{"contact.error.name" | translate}}
+          </span>
+          <span *ngIf="this.contactForm.get('name').touched && this.contactForm.get('name').hasError('maxLength') || !nameMaxError">
+               {{"contact.error.max" | translate}}
+          </span>
+        </p>
+      </div>
+      <div class="form-group position-relative  contact-block__form__input">
+        <input type="email" [placeholder]="'contact.email' | translate" formControlName="email"
+               class="form-control shadow-none" (input)="checkEmail($event)"/>
+        <p class="position-absolute text-danger">
+          <span *ngIf="this.contactForm.get('email').touched && this.contactForm.get('email').hasError('required')">{{"contact.error.email_required" | translate}}</span>
+          <span
+            *ngIf="this.contactForm.get('email').touched && !emailError && !emailMaxError && !this.contactForm.get('email').hasError('required')"> {{"contact.error.email_novalid" | translate}}</span>
+          <span
+            *ngIf="this.contactForm.get('email').touched && emailMaxError && !this.contactForm.get('email').hasError('maxLength')"> {{"contact.error.max" | translate}}</span>
+        </p>
+      </div>
+      <div class="form-group position-relative  contact-block__form__input">
+        <textarea [placeholder]="'contact.message' | translate" formControlName="message"
+                  (input)="checkMessage()"
+                  class="form-control shadow-none"></textarea>
+        <p class="position-absolute text-danger"
+           *ngIf="this.contactForm.get('message').touched && this.contactForm.get('message').hasError('required') || !messageError">
+          {{"contact.error.message" | translate}}
+        </p>
+      </div>
+      <div class="form-group mb-0 position-relative">
+        <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+        <button class="contact-block__form__btn text-white text-uppercase border-0 d-flex my-0 ml-auto
+    justify-content-center align-items-center"
+                [ngClass]="{'disabled':!contactForm.valid || loading || !nameError || !nameMaxError || !emailError || emailMaxError || !messageError}"
+                [disabled]="!contactForm.valid  || loading || !nameError || !nameMaxError || !emailError || emailMaxError || !messageError" type="submit">
+          <span>{{'contact.send_message' | translate}} </span>
+          <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+          <span class="spinner-border" role="status" *ngIf="loading">
+        <span class="sr-only">Loading...</span>
+      </span></button>
+        <p class="position-absolute text-danger">{{serverError}}</p>
+      </div>
+    </form>
+  </section>
+</main>
+<app-onboarding-footer></app-onboarding-footer>
+<app-allert-message></app-allert-message>

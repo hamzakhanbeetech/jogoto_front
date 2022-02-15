@@ -1,0 +1,18 @@
+<section class="map-list">
+  <div class="container">
+    <div class="row">
+      <div class="col-7 pl-0">
+        <app-no-search-result *ngIf="events === undefined || events.length == 0" [noSearchResult]="{icon: 'icon-search-calendar'}">
+        </app-no-search-result>
+        <app-event-row (mouseover)="getEventHoverState(event._id, true)" [searchDate]="{end:searchDate.end, start:searchDate.start, isMultiDate: event.dates.length > 1}" (mouseleave)="getEventHoverState(event._id, false)" class="d-block" *ngFor="let event of events" [incomingEvent]="event"
+                       [isSearchPage]="true"></app-event-row>
+        <div class="text-center w-100" *ngIf="loading">
+          <app-loading class="d-flex justify-content-center"></app-loading>
+        </div>
+      </div>
+      <section class="col-5 pos p-0  position-sticky map-list__map">
+        <app-map *ngIf="isGridMap" [isHovered]="hover"></app-map>
+      </section>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+app-notification-settings-modal {
+  display: block;
+}
+
+::ng-deep {
+  @include modals-header;
+}
+
+.notification-modal {
+  padding-top: 15px;
+  min-height: 300px;
+
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-16);
+    color: $dark-gray;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  &__desc {
+    @extend %proxima-regular;
+    @include font-size($fz-14);
+    color: $text-color;
+    white-space: initial;
+  }
+
+  .mat-radio-label-content {
+    padding-left: 20px;
+  }
+
+  .mat-radio-label {
+    align-items: flex-start;
+    margin-right: 0;
+  }
+
+  &__btn {
+    @include login-btn
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .header {
+    padding-top: 0;
+  }
+  .notification-modal {
+    &__title {
+      @include font-size($fz-14);
+    }
+
+    &__desc {
+      @include font-size($fz-12);
+    }
+  }
+}

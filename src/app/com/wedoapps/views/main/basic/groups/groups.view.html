@@ -1,0 +1,95 @@
+<main class="container-fluid">
+  <section class="container">
+    <div class="row flex-wrap justify-content-between align-items-center search-user">
+      <h3 class="search-user__title m-0">
+        <span *ngIf="userInfo">  {{userInfo?.name}}<span
+          *ngIf="userInfo?.surname"> {{userInfo?.surname}}</span>{{"s" | translate}} {{"groups" | translate}}</span>
+      </h3>
+      <form action="">
+        <div class="form-group position-relative ml-auto">
+          <button class="bg-transparent border-0 position-absolute search-user__btn"><i class="icon-search"></i>
+          </button>
+          <input type="text" class="form-control shadow-none search-user__input"
+                 [placeholder]="'groups_page.search' | translate" (input)="search()"
+                 #searchText>
+          <button type="reset" class="bg-transparent border-0 position-absolute search-user__reset"
+                  (click)="reset(searchText)"
+                  *ngIf="resetBtn">
+            <i class="icon-close"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="container p-0 d-flex align-items-start">
+    <div class=" position-relative tabs-block">
+      <a   [routerLink]="'/basic/create-group'|localize" queryParamsHandling = "merge"
+           class="create__group text-white border-0 d-flex align-items-center justify-content-center text-decoration-none position-absolute">
+        <i class="icon-plus text-white mr-0 mr-sm-1"></i>
+        <span class="d-none d-sm-block">{{'header.create.create_group' | translate}}</span>
+      </a>
+      <tabset class="position-relative" #groupsTabs>
+        <tab
+          (selectTab)="tabEventsFromClick($event)"
+          [heading]="('groups_page.groups_manage' | translate) + ' ' + manageCount" id="manage">
+          <section class="d-flex flex-wrap" *ngIf="groupsManage?.length;else nogroupsManage">
+            <app-group-column class="shadow overflow-hidden" [isSearchPage]="false" [currentGroup]="group"
+                              [userIsLoggedIn]="true"
+                              *ngFor="let group of groupsManage"></app-group-column>
+          </section>
+          <ng-template #nogroupsManage>
+            <app-no-event class="d-block w-100" [noResult]="noResult"
+                          *ngIf="!manageCount && !isLoadingManage || !isLoadingManage && searchText && noResultBlock"></app-no-event>
+          </ng-template>
+          <app-loading class="d-flex align-items-center justify-content-center"
+                       infiniteScroll [infiniteScrollDistance]="0.1"
+                       [infiniteScrollThrottle]="500"
+                       (scrolled)="onScroll()"
+                       [alwaysCallback]="true"
+                       *ngIf="groupsTabs.tabs[0].active && isLoadingManage"></app-loading>
+        </tab>
+        <tab
+          (selectTab)="tabEventsFromClick($event)"
+          [heading]="('groups_page.groups_in' | translate)  + ' ' + inCount" id="in">
+          <section class="d-flex flex-wrap" *ngIf="groupsIn?.length;else npGroupsIn">
+            <app-group-column class="shadow overflow-hidden"
+                              *ngFor="let group of groupsIn"
+                              [isSearchPage]="false" [currentGroup]="group"
+                              [userIsLoggedIn]="true"></app-group-column>
+          </section>
+          <ng-template #npGroupsIn>
+            <app-no-event class="d-block w-100" [noResult]="noResult"
+                          *ngIf="!inCount && !isLoadingIn || !isLoadingIn && searchText && noResultBlock"></app-no-event>
+          </ng-template>
+          <app-loading class="d-flex align-items-center justify-content-center"
+                       infiniteScroll [infiniteScrollDistance]="0.1"
+                       [infiniteScrollThrottle]="500"
+                       (scrolled)="onScroll()"
+                       *ngIf="groupsTabs.tabs[1].active && isLoadingIn"></app-loading>
+        </tab>
+        <tab *ngIf="autorizatedUser"
+             (selectTab)="tabEventsFromClick($event)"
+             [heading]="('event.archived' | translate)" id="archive">
+          <section class="d-flex flex-wrap" *ngIf="groupsArchive?.length;else npGroupsArchive">
+            <app-group-column class="shadow overflow-hidden" *ngFor="let group of groupsArchive" [isSearchPage]="false"
+                              [currentGroup]="group"
+                              [userIsLoggedIn]="true" [archiveGroup]="true"
+                              (removeGroup)="removeGroup($event)"></app-group-column>
+          </section>
+          <ng-template #npGroupsArchive>
+            <app-no-event class="d-block w-100" [noResult]="noResult"
+                          *ngIf="!archiveCount && !isLoadingArchive || !isLoadingArchive && searchText && noResultBlock"></app-no-event>
+          </ng-template>
+          <app-loading class="d-flex align-items-center justify-content-center"
+                       infiniteScroll [infiniteScrollDistance]="0.1"
+                       [infiniteScrollThrottle]="500"
+                       (scrolled)="onScroll()"
+                       *ngIf="groupsTabs.tabs[2].active && isLoadingArchive"></app-loading>
+        </tab>
+      </tabset>
+    </div>
+    <section class="sidebar-groups d-none d-xl-block">
+      <app-sidebar-suggested-groups class="d-block" [isAuthorized]="true"></app-sidebar-suggested-groups>
+    </section>
+  </section>
+</main>

@@ -1,0 +1,124 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.tabs-block {
+  width: 725px;
+}
+
+.sidebar-groups {
+  margin-top: 10px;
+  width: calc(100% - 725px - 34px);
+  margin-left: 34px;
+}
+
+app-loading {
+  margin: 27px;
+}
+
+app-group-column {
+  @include border-radius(5px);
+  width: calc(100% / 2 - 10px);
+  margin-bottom: 25px;
+
+  &:nth-child(2n + 1) {
+    margin-right: 20px;
+  }
+}
+
+:host::ng-deep {
+  @include tabs;
+
+  .nav-tabs {
+    border: none;
+    margin-bottom: 32px;
+    line-height: 1;
+    margin-top: 10px;
+
+    .nav-item {
+      margin-right: 25px;
+
+      .nav-link {
+        @include font-size($fz-18);
+        @extend %proxima-semibold;
+      }
+    }
+  }
+}
+
+.create {
+  &__group {
+    @include border-radius(5px);
+    top: 0;
+    right: 0;
+    z-index: 2;
+    @include hover-focus-active {
+      background: $darker-orange;
+    }
+    padding: 5px 20px;
+    background: $dark-orange;
+    margin-left: 25px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .tabs-block {
+    width: 100%;
+  }
+
+  :host::ng-deep {
+    .nav-tabs .nav-item .nav-link {
+      @include font-size($fz-14);
+    }
+  }
+  app-group-column {
+    width: calc(100% / 2 - 8px);
+
+    &:nth-child(2n + 1) {
+      margin-right: 16px;
+    }
+  }
+  .create {
+    &__group {
+      @include font-size($fz-14)
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  :host::ng-deep {
+    .nav-tabs .nav-item {
+      margin-right: 10px;
+
+      .nav-link {
+        @include font-size($fz-12);
+      }
+    }
+
+    .tab-content {
+      margin-top: 46px;
+    }
+  }
+  app-group-column {
+    width: 100%;
+
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+  }
+  .create {
+    &__group {
+      @include font-size($fz-12);
+      padding: 5px 10px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  app-group-column {
+    width: 100%;
+
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+  }
+}

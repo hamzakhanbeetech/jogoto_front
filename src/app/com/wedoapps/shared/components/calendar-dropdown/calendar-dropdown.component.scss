@@ -1,0 +1,32 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.calendar-dropdown {
+  @include border-radius(5px);
+  position: absolute;
+  box-shadow: 0 0 5px $black-shadow-lighter;
+  z-index: 20;
+  top: 0;
+  width: 215px;
+  padding: 15px 0;
+  margin-top: 20px;
+  &__item {
+    @include dropdown-list-hover;
+    @include font-size($fz-14);
+    color: $dark-gray;
+    padding: 5px 20px;
+  }
+
+  li {
+    cursor: pointer !important;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .calendar-dropdown {
+    width: 180px;
+    &__item {
+      @include font-size($fz-12);
+    }
+  }
+}

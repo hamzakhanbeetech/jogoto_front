@@ -1,0 +1,38 @@
+<section class="d-sm-none modal-filters d-flex flex-column h-100">
+  <header class="position-relative mat-modal d-flex align-items-center justify-content-center">
+    <h3 class="m-0 title text-center">{{data.title}} </h3>
+    <button mat-button mat-dialog-close class="bg-transparent border-0 position-absolute mat-modal__close">
+      <i class="icon-close"></i>
+    </button>
+  </header>
+  <mat-dialog-content class="mat-typography flex-grow-1 d-flex">
+    <section [ngSwitch]="data.name" class="flex-grow-1 d-flex flex-column">
+
+      <app-calendar class="flex-grow-1" *ngSwitchCase="'dropdownWhen'"
+                    [isClosed]="filterData"
+                    [isDynamicSearch]="isDynamicSearch"></app-calendar>
+      <app-event-filter-where-content class="flex-grow-1"
+                                      *ngSwitchCase="'dropdownWhere'"
+                                      [isClosed]="filterData"
+                                      [saveState]="saveState"
+                                      [isDynamicSearch]="isDynamicSearch"></app-event-filter-where-content>
+      <app-event-filter-content class="flex-grow-1"
+                                *ngSwitchCase="'dropdownFilter'"
+                                [isClosed]="filterData"
+                                [saveState]="saveState"
+                                [isDynamicSearch]="isDynamicSearch"></app-event-filter-content>
+      <app-event-filter-categories-content class="flex-grow-1"
+                                           *ngSwitchCase="'dropdownCats'"
+                                           [isClosed]="filterData"
+                                           [saveState]="saveState"
+                                           [isDynamicSearch]="isDynamicSearch"
+                                           [checkAllFalse]="data.checkAll"
+      ></app-event-filter-categories-content>
+      <div class="text-right w-100 dropdown-footer">
+        <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto" mat-button mat-dialog-close
+                (click)="close()">Ok
+        </button>
+      </div>
+    </section>
+  </mat-dialog-content>
+</section>

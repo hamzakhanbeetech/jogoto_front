@@ -1,0 +1,95 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+.categories {
+  &__title {
+    @include filter-title;
+  }
+
+  &__dropdown {
+    .back-btn {
+      color: $blue;
+    }
+
+    &__title {
+      @include filter-title;
+    }
+
+    .checklabel {
+      @include border-radius(5px);
+      @include font-size($fz-14);
+      color: $dark-gray;
+      padding: 9px 20px;
+      line-height: 1;
+      border: 1px solid $lighter-gray;
+      margin: 0 15px 15px 0;
+      cursor: pointer;
+    }
+
+    .checkbox {
+      @include size(100%);
+      left: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      appearance: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      vertical-align: middle;
+      outline: 0;
+      cursor: pointer;
+      opacity: 0;
+
+    }
+
+    .checkbox:checked {
+      display: inline-block;
+    }
+
+    app-checkbox {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__btn {
+    @include border-radius(5px);
+    @include font-size($fz-14);
+    background: $gray;
+    color: $event-title;
+    padding: 5px 20px;
+    line-height: 1;
+    border: 1px solid;
+    margin: 0 20px 20px 0;
+    height: 44px;
+
+    i {
+      @include font-size($fz-30);
+      margin-right: 15px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .categories {
+    &__title {
+      position: absolute;
+      top: 12px
+    }
+
+    &__dropdown {
+      &__header {
+        top: 12px;
+        position: absolute !important;
+      }
+    }
+
+    &__btn {
+      @include font-size($fz-12);
+      height: 36px;
+
+      i {
+        @include font-size($fz-24);
+      }
+    }
+  }
+}

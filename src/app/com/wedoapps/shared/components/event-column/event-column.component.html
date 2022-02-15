@@ -1,0 +1,27 @@
+<section class="card w-100 h-100 d-flex flex-column shadow event-column border-0">
+  <a [routerLink]="'event/' + eventItem?._id|localize"
+     [target]="hrefTarget"
+     *ngIf="!isSettingsPage"
+     class="m-0 position-relative w-100 event-column__image overflow-hidden d-block">
+    <app-event-date [locale]="locale" [eventDate]="otherDate"></app-event-date>
+    <img [errorImage]="BASE_IMG" [lazyLoad]="img" offset="400" class="img-fluid h-100 w-100" [alt]="eventItem.name"/>
+  </a>
+  <p *ngIf="isSettingsPage"
+     class="m-0 position-relative w-100 event-column__image overflow-hidden d-block">
+    <app-event-date [locale]="locale" [eventDate]="otherDate"></app-event-date>
+    <img [errorImage]="BASE_IMG" [lazyLoad]="img" offset="400" class="img-fluid h-100 w-100" [alt]="eventItem.name"/>
+  </p>
+  <div class="card-body d-flex flex-column">
+    <app-event-short-descriptiopn [hrefTarget]="hrefTarget" [isSettingsPage]="isSettingsPage" [locale]="locale" class="flex-grow-1"  [isShowDescription]="isShowDescription" [data]='data'></app-event-short-descriptiopn>
+    <footer>
+      <app-event-categories-section [categories]='eventItem?.category'></app-event-categories-section>
+      <app-event-iterested-section [isSettingsPage]="isSettingsPage"
+                                   [isInterested]="eventItem?.im_joined"
+                                   [iAmOrgnizer]="eventItem?.im_organaizer"
+                                   [isShowUserIcons]="isShowUserIcons"
+                                   [joinedUsers]='eventItem?.joined_users'
+                                   [eventId]="eventItem?._id" [userIsLoggedIn]="userIsLoggedIn">
+      </app-event-iterested-section>
+    </footer>
+  </div>
+</section>

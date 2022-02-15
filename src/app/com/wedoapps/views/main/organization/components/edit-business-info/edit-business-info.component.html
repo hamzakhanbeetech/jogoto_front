@@ -1,0 +1,65 @@
+<section class="d-flex  justify-content-between block-header align-items-center">
+  <h2 class="block-header__title my-0">{{"page.business_info" | translate}}</h2>
+
+  <div class="d-flex justify-content-between">
+    <button class="border-0 bg-transparent edit-profile__textarea__save"
+            (click)="saveBusinessInfo()"
+            type="button">{{"save" | translate }}
+    </button>
+    <button class="border-0 bg-transparent edit-profile__textarea__cancel"
+            (click)="cancel()"
+            type="button">{{"page.cancel" | translate}}
+    </button>
+  </div>
+</section>
+
+<p class="text-right analitics">{{"user.data_analiysis" | translate}} <i class="icon-secury"></i></p>
+
+<form action="" class="edit-profile" [formGroup]="businessGroup">
+
+  <div class="d-flex flex-wrap justify-content-between">
+    <div class="form-group edit-profile__input">
+      <label for="numberEmployees">{{"user.numbers_employees" | translate}}</label>
+      <input type="number" class="form-control shadow-none text-center"
+             max="999999999"
+             (input)="replaceText($event, 'employees')"
+             formControlName="employees"
+             [value]="organization?.employees"
+             id="numberEmployees">
+    </div>
+    <div class="form-group edit-profile__input">
+      <label for="averageEvents">{{"user.average_events" | translate}}</label>
+      <input type="number" class="form-control shadow-none text-center"
+             max="999999999"
+             (input)="replaceText($event, 'events_count_year')"
+             formControlName="events_count_year"
+             [value]="organization?.events_count_year"
+             id="averageEvents">
+    </div>
+    <div class="form-group edit-profile__input">
+      <label for="averageAttendees">{{"user.average_attendees" | translate}}</label>
+      <input type="number" class="form-control shadow-none text-center"
+             max="999999999"
+             [value]="organization?.attendees"
+             (input)="replaceText($event, 'attendees')"
+             formControlName="attendees"
+             id="averageAttendees">
+    </div>
+    <div class="form-group edit-profile__input">
+      <label for="averageBudget">{{"user.average_budget" | translate}}</label>
+      <div class="position-relative">
+        <p-dropdown [options]="carensy"  [editable]="false"
+                    formControlName="budget_type"
+                    class="position-absolute carensy h-100">
+        </p-dropdown>
+
+        <input type="number" class="form-control shadow-none text-center"
+               [value]="organization?.budget"
+                max="999999999"
+               (input)="replaceText($event, 'budget')"
+               formControlName="budget"
+               id="averageBudget">
+      </div>
+    </div>
+  </div>
+</form>

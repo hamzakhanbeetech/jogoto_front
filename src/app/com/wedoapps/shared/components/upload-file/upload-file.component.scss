@@ -1,0 +1,88 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.upload {
+  @include create-title-desc;
+}
+
+.upload-container {
+  height: 80px;
+  .label-container {
+    left: 0;
+    top: 0;
+  }
+
+  #file {
+    opacity: 0;
+  }
+
+  #file + .label-container label .upload-container__btn {
+    @include gray-btn-icon;
+    text-align: center;
+    display: inline-block;
+  }
+  #file:disabled + .label-container label .upload-container__btn{
+    opacity: .4;
+  }
+  .flex-grow-1 {
+    margin-left: 20px;
+    min-width: calc(100% - 200px);
+  }
+  &__text {
+    color: $dark-gray;
+    padding: 10px 0;
+    line-height: 1;
+    &__close {
+      @include font-size($fz-12);
+      color: $error-alert;
+      line-height: 1;
+    }
+  }
+}
+
+.progress {
+  height: 2px;
+  &-bar {
+    background: $blue;
+  }
+  &-aria-valuenow {
+    color: $blue;
+    margin-top: 6px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .progress {
+    &-aria-valuenow {
+      @include font-size($fz-14)
+    }
+  }
+  .upload-container__text {
+    @include font-size($fz-14)
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .progress {
+    &-aria-valuenow {
+      @include font-size($fz-12)
+    }
+  }
+  .upload-container__text {
+    @include font-size($fz-12)
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .upload-container{
+    .flex-grow-1 {
+      min-width: calc(100% - 120px);
+    }
+  }
+  .progress-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -26px;
+  }
+}

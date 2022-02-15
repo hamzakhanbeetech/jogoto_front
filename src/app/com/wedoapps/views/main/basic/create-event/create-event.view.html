@@ -1,0 +1,330 @@
+<form class="container-fluid p-0" [formGroup]="eventForm">
+  <section class="container bg-white create shadow">
+
+    <section class="mx-auto dublicate-ivent create__container">
+      <p class="dublicate-ivent__desc">{{"create-event.dublicate_desc" | translate}}</p>
+      <button type="button" class="dublicate-ivent__btn" (click)="openDublicateModal()"
+        [disabled]="!pastEventsExist">{{"create-event.dublicate_btn" | translate}}
+      </button>
+    </section>
+
+    <section class="mx-auto create__container">
+      <app-created-pages-type (value)="eventForm.get('visibility').setValue($event)"
+        [checked]="eventForm.get('visibility').value" [checkType]='checkEventType'
+        [title]="'create-event.event_status' | translate">
+      </app-created-pages-type>
+    </section>
+
+    <section class="mx-auto create__container">
+      <div class="event-creator d-flex justify-content-between flex-column flex-sm-row">
+        <div>
+          <p class="create__container__title">{{"create-event.event_creator" | translate}}</p>
+          <p class="create__container__desc mb-0">{{"create-event.event_creator_desc" | translate}}</p>
+        </div>
+        <!--user settings section-->
+        <div class="btn-group select-creator align-self-end align-self-sm-center" dropdown>
+          <button dropdownToggle type="button" *ngIf="creator"
+            class="select-creator__btn border-0  dropdown-toggle  bg-transparent">
+            <span class="d-flex align-items-center justify-content-center">
+              <span class="text-truncate">
+                {{creator}}</span>
+              <img [src]="creatorImage" class="rounded-circle select-creator_image" [alt]="creator" />
+              <span class="caret icon-down-open-big" *ngIf="!isEditing && userGroups.length"></span></span>
+          </button>
+          <!--user settings dropdown-->
+          <ul *dropdownMenu [hidden]="!userGroups.length" class="dropdown-menu border-0 shadow select-creator__dropdown"
+            role="menu">
+            <li role="menuitem" (click)="onClickCreatorItem('user')">
+              <button type="button"
+                class="dropdown-item text-truncate text-decoration-none bg-transparent position-relative"
+                [ngClass]="{'active':creatorType=='user'}">
+                {{userInformation.name + ' ' + (userInformation.surname ? userInformation.surname :
+                '')}}
+              </button>
+            </li>
+            <li role="menuitem" *ngIf="groupInfo" (click)="onClickCreatorItem('group')">
+              <button type="button"
+                class="dropdown-item text-truncate text-decoration-none bg-transparent position-relative"
+                [ngClass]="{'active':creatorType=='group'}">
+                {{groupInfo?.name}}
+              </button>
+            </li>
+            <li role="menuitem" *ngFor="let group of userGroups">
+              <button type="button" (click)="onClickGroup(group)" *ngIf="!groupInfo || group._id !== groupInfo?._id"
+                class="dropdown-item text-truncate text-decoration-none bg-transparent position-relative">
+                {{group?.name}}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="mx-auto create__container">
+      <app-crop-image #cropImage (value)="handleCrop($event)" [imageLoading]="imageLoading" [isEdit]="isEditing"
+        [info]="info"></app-crop-image>
+    </section>
+
+    <section class="mx-auto create__container">
+      <app-create-name formControlName="title" (eventForMarkingTouched)="markControlAsTouched(eventForm.get('title'))"
+        [isEventCreate]="true"
+        [hasError]="eventForm.get('title').invalid && (eventForm.get('title').touched || submited)"></app-create-name>
+      <div class="d-none d-sm-flex align-items-start flex-wrap" *ngIf="!smallDisplay">
+        <div class="d-inline-block">
+          <app-filter-category></app-filter-category>
+        </div>
+        <app-filter></app-filter>
+        <p class="max-event w-100"
+          [ngClass]="{'error-color': eventForm.get('category').invalid && categoriesHaveBeenChanged}">
+          {{eventForm.get('category').invalid && (categoriesHaveBeenChanged || submited) ?
+          ('create-event.cat_required' | translate) : ('create-event.max_two' | translate)}}
+        </p>
+      </div>
+      <div class="d-flex flex-wrap justify-content-between mobile-filters d-sm-none">
+        <div class="filter-btn">
+          <button mat-button (click)="openDialog('dropdownCats',title.dropdownCats)" type="button" class="w-100">
+            <i class="icon-category"></i>{{'filter.category' | translate}}
+          </button>
+        </div>
+        <div class="filter-btn">
+          <button mat-button (click)="openDialog('dropdownFilter',title.dropdownFilter)" type="button" class="w-100">
+            <i class="icon-filter"></i>{{'create-event.filter' | translate}}
+          </button>
+        </div>
+        <p class="max-event"
+          [ngClass]="{'error-color': eventForm.get('category').invalid && categoriesHaveBeenChanged}">
+          {{eventForm.get('category').invalid && (categoriesHaveBeenChanged || submited) ?
+          ('create-event.cat_required' | translate) : ('create-event.max_two' | translate)}}
+        </p>
+      </div>
+      <app-event-category-btn class="d-inline-flex" *ngFor="let filter of checkedCategories.concat(checkedFilters)"
+        [category]="filter"></app-event-category-btn>
+    </section>
+
+    <section class="mx-auto create__container description">
+      <div>
+        <p class="create__container__title">{{"create-event.description_title" | translate}}</p>
+        <p class="create__container__desc mb-0">{{"create-event.description_desc" | translate}}</p>
+      </div>
+      <div class="form-group textarea-container mx-0 my-auto" #container>
+        <div class="backdrop position-absolute w-100 bg-white overflow-auto h-100" #backdrop>
+          <div class="highlights h-auto" #highlights></div>
+        </div>
+        <textarea
+          [ngClass]="{'error':eventForm.get('description').invalid && (eventForm.get('description').touched  || submited)}"
+          #textarea (scroll)="handleScrollEvent()" formControlName="description"
+          class="form-control shadow-none bg-transparent d-block position-absolute m-0"
+          [placeholder]="'create-event.description_placeholder' | translate"></textarea>
+      </div>
+      <ul class="list-unstyled d-flex justify-content-end"
+        *ngIf="eventForm.get('description').invalid && (eventForm.get('description').touched || submited)">
+        <li class="mr-auto" *ngIf="eventForm.get('description').errors.minlength">
+          <p class="m-0 position-absolute text-danger">{{"create-event.min_length_error" | translate}}</p>
+        </li>
+        <li class="mr-auto" *ngIf="eventForm.get('description').errors.required">
+          <p class="m-0 position-absolute text-danger">{{"create-event.description_error" | translate}}</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="mx-auto create__container">
+      <app-checkbox (chackboxValue)="isOnlineCheckbox($event)" [value]="eventForm.get('isOnline').value"
+        class="check-all mb-0" [filterName]="'create-event.is_online' | translate">
+      </app-checkbox>
+      <div class="my-5">
+        <app-create-location *ngIf="eventForm.get('location')" [description]="'create-event.location_desc' | translate"
+          [isInCreatePage]="true" formControlName="location"
+          (eventForMarkingTouched)="markControlAsTouched(eventForm.get('location'))"
+          [hasError]="eventForm.get('location').hasError('invalidLocation') && (eventForm.get('location').touched  || submited)">
+        </app-create-location>
+      </div>
+
+
+      <section class="mx-auto create__container " *ngIf="eventForm.get('webAddress')">
+        <div>
+          <p class="create__container__title">{{"create-event.web_address_label" | translate}}</p>
+          <p class="create__container__desc mb-0">{{"create-event.web_address_desc" | translate}}</p>
+        </div>
+        <div class="form-group  mx-0 my-auto" #container>
+
+          <input
+            [ngClass]="{'error':eventForm.get('webAddress').invalid && (eventForm.get('webAddress').touched  || submited)}"
+            #textarea (scroll)="handleScrollEvent()" formControlName="webAddress"
+            class="form-control shadow-none bg-transparent"
+            [placeholder]="'create-event.web_address_placeholder' | translate">
+
+        </div>
+        <ul class="list-unstyled d-flex justify-content-end"
+          *ngIf="eventForm.get('webAddress').invalid && (eventForm.get('webAddress').touched || submited)">
+          <li class="mr-auto" *ngIf="eventForm.get('webAddress').errors.required">
+            <p class="m-0 position-absolute text-danger">{{"create-event.webAddress_error" | translate}}</p>
+          </li>
+          <li class="mr-auto" *ngIf="eventForm.get('webAddress').errors.pattern">
+            <p class="m-0 position-absolute text-danger">{{"create-event.webAddress_URL_error" | translate}}</p>
+        </ul><br>
+
+
+        <div>
+          <p class="create__container__title">{{"create-event.event_link_label" | translate}}</p>
+          <p class="create__container__desc mb-0">{{"create-event.event_link_desc" | translate}}</p>
+        </div>
+        <div class="form-group  mx-0 my-auto" #container>
+
+          <input
+            [ngClass]="{'error':eventForm.get('event_link').invalid && (eventForm.get('event_link').touched  || submited)}"
+            #textarea (scroll)="handleScrollEvent()" formControlName="event_link"
+            class="form-control shadow-none bg-transparent"
+            [placeholder]="'create-event.event_link_placeholder' | translate">
+
+        </div>
+        <ul class="list-unstyled d-flex justify-content-end"
+          *ngIf="eventForm.get('event_link').invalid && (eventForm.get('event_link').touched || submited)">
+          <li class="mr-auto" *ngIf="eventForm.get('event_link').errors.required">
+            <p class="m-0 position-absolute text-danger">{{"create-event.event_link_error" | translate}}</p>
+          </li>
+          <li class="mr-auto" *ngIf="eventForm.get('event_link').errors.pattern">
+            <p class="m-0 position-absolute text-danger">{{"create-event.event_link_URL_error" | translate}}</p>
+        </ul>
+      </section>
+    </section>
+
+    <section class="mx-auto create__container date-time mb-4 mb-sm-0">
+      <div>
+        <p class="create__container__title">{{"create-event.date_and_time" | translate}}</p>
+        <p class="create__container__desc mb-0">{{"create-event.date_and_time_description" | translate}}</p>
+      </div>
+      <div formGroupName="defaultTime"
+        class="d-flex justify-content-between flex-column-reverse flex-wrap flex-sm-nowrap flex-sm-row mt-2">
+        <div class="date-time__inputs d-flex justify-content-between flex-grow-1 position-relative">
+          <div class="form-group mb-0">
+            <p class="d-block label"
+              [class.text-danger]="eventForm.get('defaultTime.startDate').invalid && eventForm.get('defaultTime.startDate').dirty">
+              {{'create-event.start_day' | translate}}
+            </p>
+            <p-calendar #deafaultCalendar1 dateFormat="dd/mm/yy" [locale]="calendarSettings" [showOtherMonths]="false"
+              [minDate]="currentDate" formControlName="startDate" id="start-date" showTime="true" hourFormat="24"
+              [stepMinute]="5" [readonlyInput]="true" [touchUI]="smallDisplay">
+              <p-footer>
+                <div class="text-right w-100 dropdown-footer">
+                  <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto"
+                    (click)="deafaultCalendar1.hideOverlay()">Ok</button>
+                </div>
+              </p-footer>
+            </p-calendar>
+          </div>
+          <div class="form-group mb-0">
+            <p class="d-block label" [class.text-danger]="eventForm.get('defaultTime.endDate').invalid">
+              {{'create-event.end_day' | translate}}
+            </p>
+            <p-calendar #deafaultCalendar2 dateFormat="dd/mm/yy" [locale]="calendarSettings" [showOtherMonths]="false"
+              [minDate]="endDateMin" [maxDate]="maxDateMulti" formControlName="endDate" id="end-date" showTime="true"
+              hourFormat="24" [stepMinute]="5" [readonlyInput]="true" [touchUI]="smallDisplay">
+              <p-footer>
+                <div class="text-right w-100 dropdown-footer">
+                  <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto"
+                    (click)="deafaultCalendar2.hideOverlay()">Ok</button>
+                </div>
+              </p-footer>
+            </p-calendar>
+          </div>
+          <p *ngIf="(eventForm.get('defaultTime.startDate').invalid && eventForm.get('defaultTime.startDate').dirty) || eventForm.get('defaultTime.endDate').invalid"
+            class="text-danger position-absolute">
+            {{'create-event.invalid_date' | translate}}
+          </p>
+        </div>
+        <div class="d-flex flex-column justify-content-start justify-content-sm-end">
+
+          <div class="form-group zones">
+            <label
+              [ngClass]="{'error-color':eventForm.get('defaultTime.timeZone').invalid && (eventForm.get('defaultTime.timeZone').touched || submited)}"
+              for="timezone" class="d-block label">{{"create-event.timezone" | translate}}</label>
+            <select formControlName="timeZone" id="timezone">
+              <option *ngFor="let tz of utcSet" [value]="tz">{{tz}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between flex-column flex-wrap flex-sm-nowrap flex-sm-row"
+        *ngFor="let item of multiTimeFormArray?.controls; let i = index">
+        <div class="date-time__inputs d-flex justify-content-between flex-grow-1 position-relative">
+          <div class="form-group mb-0">
+            <p class="d-block label"
+              [class.text-danger]="item.get('startDate').invalid && item.get('startDate').dirty && item.get('startDate').touched">
+              {{'create-event.start_day' | translate}}
+            </p>
+            <p-calendar #calendarsStart dateFormat="dd/mm/yy" [locale]="calendarSettings" [showOtherMonths]="false"
+              [defaultDate]="minDateMulti" [minDate]="minDateMulti" [maxDate]="maxDateMulti"
+              [formControl]="item.get('startDate')" id="start-date" showTime="true" hourFormat="24" [stepMinute]="5"
+              [readonlyInput]="true" [touchUI]="smallDisplay">
+              <p-footer>
+                <div class="text-right w-100 dropdown-footer">
+                  <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto"
+                    (click)="closeCalendar(calendarsStart)">Ok</button>
+                </div>
+              </p-footer>
+            </p-calendar>
+          </div>
+          <div class="form-group mb-0">
+            <p class="d-block label" [class.text-danger]="item.get('endDate').invalid">
+              {{'create-event.end_day' | translate}}
+            </p>
+            <p-calendar #calendarsEnd dateFormat="dd/mm/yy" [locale]="calendarSettings" [showOtherMonths]="false"
+              [minDate]="item.get('startDate').value" [maxDate]="maxDateMulti" [formControl]="item.get('endDate')"
+              id="end-date" showTime="true" hourFormat="24" [stepMinute]="5" [readonlyInput]="true"
+              [touchUI]="smallDisplay">
+              <p-footer>
+                <div class="text-right w-100 dropdown-footer">
+                  <button type="button" class="ok-btn text-white border-0 text-uppercase ml-auto w-auto"
+                    (click)="closeCalendar(calendarsEnd)">Ok</button>
+                </div>
+              </p-footer>
+            </p-calendar>
+          </div>
+          <p *ngIf="(item.get('startDate').invalid && item.get('startDate').dirty && item.get('startDate').touched) || item.get('endDate').invalid"
+            class="text-danger position-absolute mb-0">
+            {{'create-event.invalid_date' | translate}}
+          </p>
+        </div>
+        <div class="d-flex flex-column flex-sm-row align-items-end remove-date">
+          <button class="bg-transparent border-0" (click)="removeTheDate(i)" type="button">{{"remove_date" |
+            translate }}
+          </button>
+          <div class="form-group zones invisible position-absolute">
+            <label for="timezone" class="d-block label">{{"create-event.timezone" | translate}}</label>
+            <select id="timezone">
+              <option *ngFor="let tz of utcSet" [value]="tz">{{'UTC (' + tz + ')'}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="mx-auto create__container date-time mt-0">
+      <div class="d-flex flex-column align-items-end">
+        <button type="button" class="see-more border-0 bg-transparent" (click)="addTimeControl()">
+          {{"create-event.multi_date_btn" | translate}}
+        </button>
+        <button type="submit" (click)="onCreateEvent()" [ngClass]="{'disabled':eventForm.invalid || loading}"
+          [disabled]="eventForm.invalid || loading || imageLoading "
+          class="date-time__create text-white mb-0  float-right border-0 d-flex align-items-center justify-content-center">{{(isEditing
+          ? 'page.edit' : "create-event.create")|translate}}
+          <span class="spinner-border" role="status" *ngIf="loading || imageLoading">
+            <span class="sr-only">Loading...</span>
+          </span>
+        </button>
+        <p *ngIf="eventForm.invalid" class="create__container__desc">{{'create-event.required_fields'|translate}}
+          <ng-container *ngFor="let field of requiredFields; let i = index">
+            <span [ngClass]="{
+             'd-none':!eventForm.get(field.formName).invalid,
+             'text-danger':eventForm.get(field.formName).invalid}">
+              "{{field.title|translate}}"{{i == 3? '' : ', '}}
+            </span>
+          </ng-container>
+        </p>
+      </div>
+    </div>
+    <div *ngIf="serverSideValidationError && !eventForm.invalid" class="mx-auto create__container error-text">
+      <p class="text-danger mb-0 text-right">{{serverSideValidationError}}</p>
+    </div>
+  </section>
+</form>
+<app-allert-message></app-allert-message>

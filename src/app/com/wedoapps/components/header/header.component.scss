@@ -1,0 +1,56 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../assets/scss/base/mixins';
+
+@include header-menu;
+.notification-dropdown {
+  @include border-radius(5px);
+  width: 430px;
+  left: 0 !important;
+  right: 0 !important;
+  transform: translate(-37%, 0) !important;
+  box-shadow: 0 0 10px $black-shadow;
+}
+
+.menu__item span.notification-count {
+  @include font-size($fz-12);
+  background: $error-alert;
+  padding: 4px;
+  right: -4px;
+  top: -2px;
+  min-width: 18px;
+  height: 18px;
+}
+
+@include media-breakpoint-down(lg) {
+  .notification-dropdown {
+    width: 410px;
+  }
+}
+
+
+
+@include media-breakpoint-down(sm) {
+  .notification-dropdown {
+    width: 320px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .notification-container {
+    position: static;
+  }
+  .notification-dropdown {
+    width: 100%;
+    transform: translate(0, 0) !important;
+  }
+}
+
+.wemakeit {
+  border-radius: 5px;
+  background-color: #FF6602;
+  height: 75px;
+  width: 130px;
+  padding: 8px;
+  margin: 12px;
+  box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
+}

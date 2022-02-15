@@ -1,0 +1,48 @@
+<main class="container-fluid" *ngIf="user; else notAvailable">
+  <section class="container profile-page">
+    <section class="row d-flex">
+      <div class="profile-page__left__section">
+        <app-user-image [userData]="{poster:user?.poster, id:user?._id, name: user?.name + ' ' + user?.surname, isProf: false, isFollower:isFollowerPage}" (toggleFollowType)="toggleFollow($event)" [isFollow]="isFollow"
+                        [isFollowerPage]="isFollowerPage"></app-user-image>
+        <app-pages-categories [isFollowerPage]="isFollowerPage" [user]="user"
+                              class="d-none d-lg-block"></app-pages-categories>
+      </div>
+      <div class="profile-page__right-section">
+        <h1 class="user-name">{{ user?.name }} {{ user?.surname }}</h1>
+        <p class="date">{{ 'user.joined' | translate }} {{ user?.createdAt | date: 'mediumDate':undefined:locale }}</p>
+        <ul class="follower-following list-unstyled d-flex">
+          <li class="follower-following__item"
+              (click)="navigateToFollowerPage('followings')"
+              (mouseover)="isShowFollowingFullCount = true"
+              (mouseout)="isShowFollowingFullCount = false">
+            {{"following" | translate}} {{ isShowFollowingFullCount ? user?.followings : user?.followings | largeNumbers }}
+          </li>
+          <li class="follower-following__item"
+              (click)="navigateToFollowerPage('followers')"
+              (mouseover)="isShowFollowersFullCount = true"
+              (mouseout)="isShowFollowersFullCount = false">
+            {{"followers.followers" | translate}} {{isShowFollowersFullCount ? user?.followers : user?.followers | largeNumbers}}
+          </li>
+        </ul>
+        <a class="d-flex align-items-center justify-content-center fb-btn text-white text-decoration-none"
+           *ngIf="user?.fbId">
+          <i class="icon-facebook"></i>
+        </a>
+        <a class="d-flex align-items-center justify-content-center text-white text-decoration-none"
+           *ngIf="user?.googleId">
+          <i class="icon-google"></i>
+        </a>
+        <app-dashboard-profile [isFollowerPage]="isFollowerPage" [followUsers]="followUsers" [user]="user"
+                               (userData)="updateUserInfo($event)" class="d-none d-lg-block"></app-dashboard-profile>
+      </div>
+      <app-pages-categories [user]="user" [isFollowerPage]="isFollowerPage" class="d-block d-lg-none w-100"></app-pages-categories>
+      <app-dashboard-profile [followUsers]="followUsers" [user]="user" [isFollowerPage]="isFollowerPage"
+                             (userData)="updateUserInfo($event)"
+                             class="d-block d-lg-none w-100"></app-dashboard-profile>
+    </section>
+  </section>
+</main>
+<ng-template #notAvailable>
+  <app-not-available *ngIf="userUnavailable"></app-not-available>
+</ng-template>
+<app-allert-message></app-allert-message>

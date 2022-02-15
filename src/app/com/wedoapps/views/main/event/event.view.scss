@@ -1,0 +1,432 @@
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "../../../../../../assets/scss/base/mixins";
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 576px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 710px,
+  lg: 960px,
+  xl: 1140px,
+);
+
+.btn-default {
+  color: black;
+  background: #f8f8fa;
+  border-radius: 5px;
+  line-height: 1;
+  float: right;
+  border: 1px solid #dee2e6;
+  padding: 10px 20px;
+}
+
+.event {
+  background: $gray;
+  padding-top: 20px;
+  padding-bottom: 100px;
+
+  @include left-sections;
+
+  &__container {
+    @include border-radius(5px);
+    padding-bottom: 20px;
+    background: $white;
+    box-shadow: 0 2px 1px $black-shadow-lighter;
+
+    &__image {
+      @include size(100%, 375px);
+      margin-bottom: 25px;
+
+      img {
+        max-width: 100%;
+        max-height: 375px;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      &__category {
+        @include category-btn;
+        color: $white;
+        cursor: pointer;
+        @include hover-focus-active {
+          &::before {
+            @include transition(0.3s);
+            background: transparent;
+          }
+        }
+
+        &::before {
+          @include border-radius(5px);
+          content: "";
+          display: block;
+          position: absolute;
+          @include size(calc(100% + 2px));
+          left: -1px;
+          top: -1px;
+          background: rgba(0, 0, 0, 0.1);
+          @include transition(0.3s);
+        }
+      }
+    }
+
+    &__names {
+      left: 15px;
+      bottom: 15px;
+    }
+
+    &__title {
+      @extend %proxima-semibold;
+      @include font-size($fz-20);
+      color: $event-title;
+      margin: 0 0 10px;
+    }
+
+    &__type {
+      color: $text-color;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    &__start-end {
+      margin-bottom: 15px;
+      color: $dark-orange;
+      span {
+        @include font-size(inherit);
+      }
+    }
+
+    &__settings {
+      @include transition(0.3s);
+      @include border-radius(5px);
+      background: transparent;
+      padding: 0 15px;
+      color: $text-color;
+      @include hover-focus-active {
+        background: $sidebar-footser;
+      }
+    }
+
+    &__dropdown {
+      left: auto !important;
+      right: 0 !important;
+
+      .dropdown-item {
+        @include font-size($fz-14);
+        @include dropdown-list-hover;
+      }
+    }
+
+    &__creater-image {
+      @include user-image(45px, 40px, 32px);
+    }
+
+    &__creater-name {
+      color: $blue;
+      line-height: 1;
+      @include hover-focus-active {
+        color: $blue;
+      }
+    }
+
+    &__source__logo {
+      height: 45px;
+      margin-right: 15px;
+
+      img {
+        height: inherit;
+      }
+    }
+
+    &__source-name {
+      color: $blue;
+      line-height: 1;
+      text-decoration: underline;
+      @include hover-focus-active {
+        color: $blue;
+      }
+    }
+
+    &__section {
+      border-top: solid $gray-border;
+      border-width: 1px 0;
+      margin-top: 20px;
+      padding: 20px 15px 0;
+
+      .event__container__creater-image {
+        margin-right: 5px;
+      }
+
+      &__more {
+        @include size(47px);
+        background: $more-gray;
+        color: $blue;
+      }
+
+      &__filter {
+        @include filter-btn-gray;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.description {
+  @include font-size($fz-14);
+  color: $dark-gray;
+
+  a {
+    color: $blue;
+  }
+
+  .opacity {
+    background: linear-gradient(
+      180deg,
+      $white-transparent-gradient 20%,
+      $white-transparent-gradient-saturation 100%
+    );
+  }
+}
+
+//similar Events blocks
+.similar-events__block {
+  width: calc((100% - 50px) / 3);
+  margin-bottom: 20px;
+
+  &:nth-child(3n + 2) {
+    margin: 0 24.5px 20px;
+  }
+}
+
+.translate {
+  margin-bottom: 20px;
+
+  &__btn {
+    @include gray-btn-icon;
+    color: $blue;
+    span {
+      @include font-size(inherit);
+    }
+  }
+
+  &__text {
+    @include font-size($fz-14);
+    color: $text-color;
+    margin-top: 10px;
+    padding: 0 40px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .event {
+    &__container {
+      &__image {
+        margin-bottom: 18px;
+      }
+
+      &__source__logo {
+        height: 40px;
+      }
+
+      &__title {
+        @include font-size($fz-18);
+      }
+      &__type,
+      &__start-end {
+        @include font-size($fz-14);
+        margin-bottom: 15px;
+      }
+
+      &__creater-name,
+      &__source-name {
+        @include font-size($fz-14);
+      }
+
+      &__section {
+        margin-top: 15px;
+        padding: 15px 15px 0;
+
+        .event__container__creater-image {
+          margin-right: 5px;
+        }
+
+        &__more {
+          @include size(42px);
+        }
+
+        &__filter {
+          @include transition(0.3s);
+          @include border-radius(5px);
+          @include font-size($fz-14);
+          color: $dark-gray;
+          background: $more-gray;
+          padding: 5px 20px;
+          max-width: 150px;
+          margin-right: 15px;
+          @include hover-focus-active {
+            background: $hover-gray;
+          }
+        }
+      }
+    }
+
+    .promote-event {
+      @include font-size($fz-14);
+      @include login-btn;
+      height: 36px;
+      max-width: 310px;
+      padding: 0;
+      margin-bottom: 18px;
+
+      i {
+        @include font-size($fz-16);
+        margin-right: 10px;
+      }
+    }
+  }
+
+  //similar Events blocks
+  .similar-events__block {
+    width: calc((100% - 35px) / 2);
+
+    &:nth-child(3n + 2) {
+      margin: 0 0 20px;
+    }
+
+    &:nth-child(2n + 1) {
+      margin: 0 35px 20px 0;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event {
+    &__container {
+      &__title {
+        @include font-size($fz-16);
+      }
+
+      &__type,
+      &__start-end {
+        @include font-size($fz-12);
+        margin-bottom: 15px;
+      }
+
+      &__creater-name,
+      &__source-name {
+        @include font-size($fz-12);
+      }
+
+      &__section {
+        margin-top: 15px;
+        padding: 15px 15px 0;
+
+        .event__container__creater-image {
+          margin-right: 5px;
+        }
+
+        &__more {
+          @include size(34px);
+        }
+      }
+    }
+
+    .promote-event {
+      @include font-size($fz-12);
+      height: 34px;
+      max-width: 290px;
+      padding: 0;
+      margin-bottom: 18px;
+
+      i {
+        @include font-size($fz-14);
+        margin-right: 10px;
+      }
+    }
+  }
+  .contact {
+    border-top: solid $gray-border;
+    border-width: 1px 0;
+    margin-top: 20px;
+    padding: 20px 15px 0;
+    button {
+      width: 100% !important;
+    }
+  }
+
+  .description {
+    @include font-size($fz-12);
+  }
+
+  //similar Events blocks
+  .similar-events__block {
+    width: calc((100%));
+
+    &:nth-child(3n + 2) {
+      margin: 0 0 20px;
+    }
+
+    &:nth-child(2n + 1) {
+      margin: 0 0 20px 0;
+    }
+  }
+  .translate {
+    &__text {
+      @include font-size($fz-12);
+      padding: 0 0;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .event {
+    padding: 0;
+
+    &__container {
+      @include border-radius(0);
+
+      &__source__logo {
+        height: 35px;
+      }
+
+      app-invite-btn {
+        margin-top: 10px;
+      }
+
+      &__image {
+        @include size(100%, 170px);
+      }
+    }
+
+    app-block-title-see-more,
+    .similar-events {
+      padding: 0 15px;
+    }
+
+    .promote-event {
+      min-width: 100%;
+    }
+
+    .invite-btn {
+      width: 100%;
+    }
+  }
+  .contact {
+    border-top: solid $gray-border;
+    border-width: 1px 0;
+    margin-top: 20px;
+    padding: 20px 15px 0;
+    width: 100% !important;
+  }
+}

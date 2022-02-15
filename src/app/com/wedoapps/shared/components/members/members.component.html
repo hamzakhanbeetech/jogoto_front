@@ -1,0 +1,62 @@
+<section class="bg-white users-section">
+  <section class="d-flex justify-content-between align-items-center flex-wrap px-0 tab__header">
+    <h3 class="text-capitalize tab__title my-0">{{"members" | translate}}
+      {{members?.members_count}}</h3>
+    <div class="form-group position-relative search mb-0">
+      <button class="bg-transparent border-0 position-absolute search__btn"><i class="icon-search"></i>
+      </button>
+      <input type="text" [placeholder]="'search_members' | translate"
+             class="form-control search__input shadow-none" [formControl]="search"
+             (input)="autocomplet($event.target.value)">
+      <button class="border-0 bg-transparent reset-inputs position-absolute" *ngIf="searchValue" (click)="resetSearch()">
+        <i class="icon-close"></i>
+      </button>
+    </div>
+  </section>
+  <section *ngIf="autocompletResult.length">
+    <ul class="list-unstyled users">
+      <li *ngFor="let user of autocompletResult">
+        <app-users-list [user]="user" [creatorId]="members?.creator._id" [currentUser]="currentUser"
+                        [groupId]="members?._id" (updatedGroup)="updatemembers($event)" class="d-block">
+        </app-users-list>
+      </li>
+    </ul>
+    <div class="text-center">
+      <app-loading *ngIf="showLoading"></app-loading>
+    </div>
+  </section>
+  <app-no-event *ngIf="searchValue && !autocompletResult.length && noSearchResult" [noResult]="noResult"></app-no-event>
+  <section *ngIf="!autocompletResult.length && !searchValue">
+    <h3 class="tab__title my-0">{{"group.admins_moderators" |
+      translate}} {{members?.adminsAndModeratorsCount}}</h3>
+    <ul class="list-unstyled users">
+      <li *ngFor="let admin of adminsToShow">
+        <app-users-list class="d-block" [currentUser]="currentUser" [creatorId]="members?.creator._id"
+                        [user]="admin" [groupId]="members?._id" (updatedGroup)="updatemembers($event)">
+        </app-users-list>
+      </li>
+    </ul>
+    <div class="text-center" *ngIf="moderatorsAdminsArray.length>3">
+      <button class="border-0 bg-transparent see-more" (click)="showMoreLessAdmins()">
+        <span *ngIf="arr.length;else less">{{"group.see_more_admins" | translate}}</span>
+        <ng-template #less>
+          <span>{{"group.see_less_admins" | translate}}</span>
+        </ng-template>
+      </button>
+    </div>
+  </section>
+  <section *ngIf="!autocompletResult.length && !searchValue">
+    <h3 class="text-capitalize tab__title my-0">{{"group.others" | translate}}
+      {{members?.standart_users_count}}</h3>
+    <ul class="list-unstyled users">
+      <li *ngFor="let user of otherMembers">
+        <app-users-list [user]="user" [currentUser]="currentUser" [creatorId]="members?.creator._id"
+                        [groupId]="members?._id" (updatedGroup)="updatemembers($event)" class="d-block">
+        </app-users-list>
+      </li>
+    </ul>
+    <div class="text-center">
+      <app-loading *ngIf="showLoading"></app-loading>
+    </div>
+  </section>
+</section>

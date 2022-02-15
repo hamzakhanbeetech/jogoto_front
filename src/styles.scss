@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import './assets/scss/base/fonts';
+@import './assets/scss/base/variables';
+@import './assets/scss/base/mixins';
+@import './assets/scss/reset';
+@import './assets/scss/fontello';

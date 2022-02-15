@@ -1,0 +1,105 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.apps-block {
+  background: $gray;
+  padding: 44px;
+  margin: 44px 0;
+  &__title {
+    @include font-size($fz-26);
+    @extend %proxima-semibold;
+    color: $blue;
+    margin-bottom: 35px;
+  }
+  &__desc {
+    @include font-size($fz-20);
+    color: $dark-gray;
+    margin-bottom: 31px;
+  }
+  &__nav {
+    &__item {
+      @include size(168px, 50px);
+      &:not(:last-of-type) {
+        margin-right: 100px;
+      }
+    }
+  }
+}
+
+.footer-desc {
+  max-width: 826px;
+  margin-bottom: 60px;
+  p {
+    @include font-size($fz-20);
+    color: $dark-gray;
+    margin-bottom: 20px;
+  }
+  a {
+    color: $blue;
+  }
+}
+
+//media
+@include media-breakpoint-down(lg) {
+  .apps-block {
+    padding: 33px;
+    margin: 33px 0;
+    &__title {
+      @include font-size($fz-18);
+      margin-bottom: 24px;
+    }
+    &__desc {
+      @include font-size($fz-16);
+      margin-bottom: 21px;
+    }
+    &__nav {
+      &__item {
+        @include size(131px, 40px);
+        &:not(:last-of-type) {
+          margin-right: 30px;
+        }
+      }
+    }
+  }
+
+  .footer-desc {
+    max-width: 662px;
+    margin-bottom: 40px;
+    p {
+      @include font-size($fz-16);
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .apps-block {
+    padding: 22px;
+    margin: 25px 0;
+    &__title {
+      @include font-size($fz-14);
+      margin-bottom: 13px;
+    }
+    &__desc {
+      @include font-size($fz-12);
+      margin-bottom: 13px;
+    }
+    &__nav {
+      &__item {
+        @include size(98px, 30px);
+        &:not(:last-of-type) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+  .footer-desc {
+    max-width: 286px;
+    p {
+      @include font-size($fz-12);
+      margin-bottom: 16px;
+    }
+  }
+
+}

@@ -1,0 +1,56 @@
+@import '../../../../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../../assets/scss/base/mixins';
+
+.marging {
+  &__title {
+    @include login-title;
+  }
+  &__desc {
+    @include font-size($fz-16);
+    color: $text-color;
+    margin: 30px 0 27px;
+  }
+
+  &__input {
+    @include login-input-group;
+  }
+
+  &__btn {
+    @include login-btn;
+  }
+
+  .error {
+    @include error;
+  }
+
+  &__singnup {
+    @include login-footer;
+  }
+}
+
+
+@include media-breakpoint-down(lg) {
+  .marging {
+    &__title {
+      @include font-size($fz-20);
+    }
+
+    &__desc {
+      @include font-size($fz-14);
+      margin: 38px 0 36px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+
+  .marging {
+    &__title {
+      @include font-size($fz-18);
+    }
+    &__desc {
+      @include font-size($fz-12);
+      margin: 28px 0 28px;
+    }
+  }
+}

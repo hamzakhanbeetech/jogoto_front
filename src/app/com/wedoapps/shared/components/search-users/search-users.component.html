@@ -1,0 +1,20 @@
+<div class="users-block" >
+  <div class="row" *ngIf="isSearchPage">
+    <div class="w-100 d-flex justify-content-end">
+      <button class="border-0 bg-transparent p-0 users-block__btn" [ngClass]="{'active':userType=='all'}"
+        (click)="changeUserType('all')">{{'all' | translate}}</button>
+      <button class="border-0 bg-transparent p-0 users-block__btn" [ngClass]="{'active':userType=='individual'}"
+        (click)="changeUserType('individual')">{{'filter.users' | translate}}</button>
+      <button class="border-0 bg-transparent p-0 users-block__btn" (click)="changeUserType('professional')"
+        [ngClass]="{'active':userType=='professional'}">{{'registration.professional_plural' | translate}}</button>
+    </div>
+
+  </div>
+  <section class="d-flex flex-wrap  w-100">
+    <app-user-block
+            [ngClass]="{'app-user-setting-block': !isSearchPage, 'app-user-block': isSearchPage}"
+            (unblockUser)="unblockUser.emit($event)"
+      class="d-block"
+      *ngFor="let user of users" [isAuthorized]="isAuthorized" [isSettingPage]="!isSearchPage" [user]="user"></app-user-block>
+  </section>
+</div>

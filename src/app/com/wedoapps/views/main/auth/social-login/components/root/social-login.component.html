@@ -1,0 +1,31 @@
+<div class="social-icons mx-auto">
+  <button type="button" class="border-0 bg-transparent mb-2"
+          [ngClass]="{'d-none':showFbBtn}"
+          [disabled]="activeRadioButtonName != 'user'"
+          [style.opacity]="activeRadioButtonName != 'user' ?  '.5': '1'"
+          (click)="fbLogin()">
+    <span class="overlapping-layer"></span>
+    <span class="fb-login-button" data-width="" data-size="large"
+          data-button-type="continue_with"
+          data-auto-logout-link="false" data-use-continue-as="true">
+   </span>
+  </button>
+  <button type="button" class="social-icons__items" *ngIf="showFbBtn" [disabled]="activeRadioButtonName != 'user'"
+          (click)="fbLogin()"
+          [style.opacity]="activeRadioButtonName != 'user' ?  '.5': '1'">
+    <img src="./assets/images/icons/facebook.svg" alt="facebook"/>
+    Facebook
+  </button>
+  <button type="button" class="social-icons__items" id="googleBtn" [disabled]="activeRadioButtonName != 'user'"
+          [style.opacity]="activeRadioButtonName != 'user' ?  '.5': '1'">
+    <img src="./assets/images/icons/google.svg" alt="google"/>
+    <span class="g-signin2" data-onsuccess="onSignIn"></span>
+    Continue with Google
+  </button>
+  <button class="social-icons__items"
+          [disabled]="activeRadioButtonName != 'user'"
+          [style.opacity]="activeRadioButtonName != 'user' ?  '.5': '1'"
+          (click)="appleSingIn($event)">
+    <img src="./assets/images/icons/apple.svg" [style.height]="'25px'" alt="apple"/>
+    Continue with Apple </button>
+</div>

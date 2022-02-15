@@ -1,0 +1,59 @@
+<section class="container-fluid home p-0">
+  <section
+    class="text-center home__filter d-flex flex-column align-items-center justify-content-center position-relative">
+    <h1 class="text-white home__filter__title">{{'home.find_events' | translate}}</h1>
+
+    <h3 class="d-flex text-white home__subtitle align-items-center">{{'home.sub_title' | translate}}</h3>
+
+    <div class=" btn text-white home__filter__location d-flex" *ngIf="place">
+      <div class="d-flex flex-grow justify-content-center flex-wrap">
+        <span class="d-flex align-items-center"
+          *ngIf="placeRegistrInfo;else apiLocation">{{'home.current_location' | translate}}</span>
+        <ng-template #apiLocation>
+          <span class="d-flex align-items-center">{{locationChangedText| translate}}</span>
+        </ng-template>
+        <button type="button" *ngIf="showLocation" class="border-0 home__filter__location__btn btn p-0 shadow-none"
+          (click)="showLocationAutocomplite()">
+         <i class="icon-pin-location"></i>
+          {{place}}</button>
+      </div>
+      <div class="d-flex autocomplete" *ngIf="!showLocation">
+        <app-mat-autocomplete [isUserLocation]="true" (autocomplete)="changeUserLocation($event)">
+        </app-mat-autocomplete>
+        <button type="button" class="ok-btn text-white border-0 text-uppercase w-auto"
+          (click)="saveNewLocation()">Ok</button>
+      </div>
+    </div>
+
+    <form [formGroup]="searchForm" class="home__search mx-auto" (ngSubmit)="onClickSearch()">
+      <div class=" d-flex">
+        <div class="form-group mb-0 col px-0 position-relative">
+          <input type="text" class="form-control home__search__input shadow-none"
+            [placeholder]="'home.search_placeholder' | translate" formControlName="search"
+            (clickOutside)="inputBlur($event)" (input)="searchText($event)" maxlength="100" #searchInputText />
+          <button class="border-0 bg-transparent position-absolute reset-inputs" *ngIf="resetButton" id="reset"
+            (click)="resetSearchText()" type="reset"><i class="icon-close" id="close"></i></button>
+        </div>
+        <button class="home__search__btn border-0 text-white" type="submit"><i class="icon-search"></i></button>
+      </div>
+      <div class="d-sm-flex d-none flex-wrap justify-content-between home__search__btn-group" *ngIf="!smallDisplay">
+        <app-filter-where class="home__search__fiter"></app-filter-where>
+        <app-filter-when class="home__search__fiter"></app-filter-when>
+        <!--        <app-filter></app-filter>-->
+        <app-filter-category class="home__search__fiter"></app-filter-category>
+      </div>
+      <div class="d-flex flex-wrap justify-content-between home__search__btn-group d-sm-none">
+        <button mat-button (click)="openDialog('dropdownWhere',title.dropdownWhere)" type="button" class="filter-btn">
+          <i class="icon-pin-location"></i>
+        </button>
+        <button mat-button (click)="openDialog('dropdownWhen',title.dropdownWhen)" type="button" class="filter-btn">
+          <i class="icon-when-calendar"></i>
+        </button>
+        <!--        <button mat-button (click)="openDialog('filter',title.filter)"  type="button"  class="filter-btn">-->
+        <!--          <i class="icon-filter"></i>{{'filter.filter' | translate}}</button>-->
+        <button mat-button (click)="openDialog('dropdownCats',title.dropdownCats)" type="button" class="filter-btn">
+          <i class="icon-category"></i></button>
+      </div>
+    </form>
+  </section>
+</section>

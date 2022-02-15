@@ -1,0 +1,179 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+@include block_header;
+.block-header {
+  padding-top: 0;
+  border-bottom: 1px solid $border-color;
+
+  &__title {
+    @include font-size($fz-18)
+  }
+  &__link {
+    color: $blue !important;
+    cursor: pointer;
+  }
+}
+
+.title {
+  @include font-size($fz-18);
+  @extend %proxima-semibold;
+  color: $dark-gray
+}
+
+.profile-page {
+  margin: 30px auto;
+  line-height: 1;
+
+  &__left__section {
+    width: 315px;
+    margin-right: 40px;
+  }
+
+  &__right-section {
+    width: calc(100% - 355px);
+  }
+
+  .user-name {
+    @include font-size($fz-30);
+    @extend %proxima-semibold;
+    color: $dark-gray;
+    margin-bottom: 10px;
+    line-height: 1;
+    word-break: break-word;
+  }
+
+  .date {
+    @include font-size(14px);
+    color: $text-color;
+    margin-bottom: 10px;
+  }
+}
+
+//organization
+.business-type {
+  @include font-size($fz-16);
+  color: $dark-gray;
+}
+
+:host::ng-deep {
+  app-user-image {
+    .profile-page__follow {
+      margin-bottom: 23px;
+    }
+  }
+
+  app-invite-btn {
+    margin-top: 36px;
+
+    .invite__dropdown {
+      left: 0 !important;
+      right: auto !important;
+    }
+  }
+
+  app-social-links {
+    &.sidebar {
+      border-top: 1px solid $border-color;
+      padding-top: 15px;
+    }
+
+    &.social-mobile {
+      margin-top: 40px;
+    }
+  }
+}
+
+//organization
+
+@include media-breakpoint-down(lg) {
+  .title {
+    @include font-size($fz-16);
+  }
+  .see-more {
+    @include font-size($fz-14);
+  }
+  .profile-page {
+    margin: 20px auto;
+
+    &__left__section {
+      width: 220px;
+      margin-right: 30px;
+    }
+
+    &__right-section {
+      width: calc(100% - 250px);
+    }
+
+    .user-name {
+      @include font-size($fz-26);
+    }
+
+    .date {
+      @include font-size(12px);
+    }
+  }
+  .business-type {
+    @include font-size($fz-14);
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .title {
+    @include font-size($fz-14);
+  }
+  .see-more {
+    @include font-size($fz-12);
+  }
+  .profile-page {
+    margin: 20px auto;
+
+    &__left__section {
+      width: 200px;
+      margin-right: 20px;
+    }
+
+    &__right-section {
+      width: calc(100% - 220px);
+    }
+
+    .user-name {
+      @include font-size($fz-20);
+    }
+  }
+  .business-type {
+    @include font-size($fz-12);
+  }
+  app-invite-btn {
+    margin-top: 20px;
+  }
+  :host::ng-deep {
+    app-social-links {
+      &.social-mobile {
+        margin-top: 25px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .profile-page {
+    &__left__section {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+
+    &__right-section {
+      width: 100%;
+    }
+
+    .user-name {
+      margin-bottom: 6px;
+    }
+
+    .date {
+      margin-bottom: 18px;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+:host::ng-deep {
+  app-map-image {
+    margin-bottom: 17px;
+  }
+}
+
+.info {
+  margin-bottom: 19px;
+  i {
+    margin-right: 10px;
+    color: $text-color;
+    &.icon-mail {
+      @include font-size($fz-12);
+      margin-right: 17px;
+    }
+    &::before {
+      margin: 0;
+    }
+  }
+  a {
+    color: $text-color;
+    @include hover-focus-active {
+      color: $blue;
+    }
+    &.email, &.url {
+      color: $blue;
+      word-break: break-all;
+      line-height: 20px;
+      @include hover-focus-active{
+        text-decoration: underline;
+
+      }
+    }
+    &.tel {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .info {
+    a {
+      @include font-size($fz-14);
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .info {
+    margin-bottom: 12px;
+    a {
+      @include font-size($fz-12);
+    }
+  }
+}

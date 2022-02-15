@@ -1,0 +1,478 @@
+<header class="container-fluid bg-white menu notranslate">
+  <nav class="container p-0 h-100">
+    <div class="d-flex align-items-center justify-content-between w-100 h-100">
+      <section class="d-flex align-items-center">
+        <!--main menu section start-->
+        <div dropdownToggle class="btn-group menu__open" dropdown>
+          <!--main menu button-->
+          <button
+            type="button"
+            class="
+              bg-transparent
+              border-0
+              d-flex
+              align-items-center
+              flex-column
+              dropdown-toggle
+              menu__profile
+            "
+          >
+            <i class="icon-menu"></i>
+          </button>
+          <!--main menu dropdown-->
+          <ul
+            *dropdownMenu
+            class="
+              dropdown-menu
+              shadow
+              menu__dropdown menu__dropdown-mobile
+              pb-0
+              m-0
+              overflow-hidden
+            "
+            role="menu"
+          >
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="'/' | localize"
+                routerLinkActive="active"
+              >
+                <i class="icon-home"></i>
+                {{ "header.menu.home" | translate }}</a
+              >
+            </li>
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="'basic/calendar' | localize"
+              >
+                <i class="icon-calendar"></i>
+                {{ "header.menu.calendar" | translate }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="'basic/my-invitations' | localize"
+              >
+                <i class="icon-invitation"></i>
+                {{ "header.menu.invitations" | translate }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="['basic/events/' + userId | localize]"
+                [queryParams]="{ type: 'interested', filter: 'incoming' }"
+              >
+                <i class="icon-calendar"></i>
+                {{ "header.my_events" | translate }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="['basic/groups/' + userId | localize]"
+              >
+                <i class="icon-group"></i>
+                {{ "header.my_groups" | translate }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="['basic/followers/' + userId | localize]"
+                [queryParams]="{ type: 'followers' }"
+              >
+                <i class="icon-user-follower"></i>
+                {{ "header.menu.follower" | translate }}
+              </a>
+            </li>
+            <!--<li role="menuitem"><a class="dropdown-item text-decoration-none bg-transparent position-relative"-->
+            <!--[routerLink]="">-->
+            <!--<i class="icon-statistics"></i>-->
+            <!--{{'header.menu.statistics' | translate}}-->
+            <!--</a></li>-->
+            <!--<li role="menuitem"><a class="dropdown-item text-decoration-none bg-transparent position-relative"-->
+            <!--[routerLink]="">-->
+            <!--<i class="icon-promotion"></i>-->
+            <!--{{'header.menu.promotion' | translate}}-->
+            <!--</a></li>-->
+            <li role="menuitem">
+              <a
+                class="
+                  dropdown-item
+                  text-decoration-none
+                  bg-transparent
+                  position-relative
+                "
+                [routerLink]="['/basic/settings' | localize]"
+              >
+                <i class="icon-settings"></i>
+                {{ "header.menu.settings" | translate }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <footer class="menu__dropdown__footer">
+                <ul class="list-unstyled d-flex">
+                  <li>
+                    <a
+                      [routerLink]="'contact-us' | localize"
+                      class="menu__dropdown__footer-item"
+                    >
+                      {{ "header.menu.contact_us" | translate }}
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      [routerLink]="'about' | localize"
+                      class="menu__dropdown__footer-item"
+                    >
+                      {{ "onboarding-header.info.about" | translate }}
+                    </a>
+                  </li>
+                </ul>
+                <ul class="list-unstyled d-flex">
+                  <li>
+                    <a
+                      [routerLink]="'term-of-use' | localize"
+                      class="menu__dropdown__footer-item"
+                    >
+                      {{ "header.menu.terms_of_use" | translate }}
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      [routerLink]="'privancy-policy' | localize"
+                      class="menu__dropdown__footer-item"
+                    >
+                      {{ "header.menu.privacy_policy" | translate }}
+                    </a>
+                  </li>
+                </ul>
+                <p class="copyright text-center mb-0">
+                  &copy; {{ year }} {{ "header.menu.jogoto" | translate }}
+                </p>
+              </footer>
+            </li>
+          </ul>
+          <!--main menu dropdown end-->
+        </div>
+        <!--main menu section end-->
+        <a
+          [routerLink]="'/' | localize"
+          class="navbar-brand p-0 menu__logo position-relative"
+        >
+          <img
+            src="./assets/images/jogoto-logo.svg"
+            class="img-fluid d-sm-block d-none"
+            alt="jogoto"
+          />
+          <img
+            src="./assets/images/jogoto-logo-mobile.svg"
+            class="img-fluid d-sm-none"
+            alt="jogoto"
+          />
+          <!-- <div>
+            carrousel ?
+          </div> -->
+        </a>
+      </section>
+      <section class="menu__right h-100 d-flex">
+        <div class="menu__right__border h-100 d-flex">
+          <a
+            [routerLink]="'search' | localize"
+            [queryParams]="{
+              type: 'event',
+              lat: lat,
+              lon: lon,
+              autocomplete: place,
+              distance: 50,
+              start_date: defaultDates.start_date,
+              end_date: defaultDates.end_date
+            }"
+            *ngIf="searchIcon"
+            class="
+              menu__item
+              text-capitalize text-decoration-none
+              d-flex
+              align-items-center
+              justify-content-center
+              flex-column
+              dropdown-toggle
+              menu__profile
+            "
+          >
+            <i class="icon-search"></i>
+            <span class="d-none d-md-block">
+              {{ "search_text" | translate }}</span
+            >
+          </a>
+          <!--notification section-->
+          <div
+            class="btn-group notification-container"
+            dropdown
+            [insideClick]="true"
+            [autoClose]="true"
+          >
+            <button
+              dropdownToggle
+              type="button"
+              (click)="getUserNotifications()"
+              class="
+                border-0
+                d-inline-flex
+                dropdown-toggle
+                align-items-center
+                justify-content-center
+                flex-column
+                menu__item
+              "
+            >
+              <i class="icon-notification-bell position-relative">
+                <span
+                  class="
+                    notification-count
+                    rounded-circle
+                    text-white
+                    position-absolute
+                  "
+                  *ngIf="newNotifications > 0"
+                  >{{ newNotifications }}</span
+                >
+              </i>
+              <span class="d-none d-md-block">{{
+                "header.notification" | translate
+              }}</span>
+            </button>
+
+            <div
+              *dropdownMenu
+              class="
+                dropdown-menu
+                notification-dropdown
+                p-0
+                m-0
+                border-0
+                overflow-hidden
+              "
+              role="menu"
+            >
+              <app-notifications
+                [notifications]="notifications"
+                [locale]="locale"
+                [allCount]="notificationsCount"
+                [isLoading]="isLoadingChildLoader"
+                [skip]="skip + limit"
+                (markAll)="markAsRead($event)"
+                (acceptOrDecline)="acceptOrDeclineInvitation($event)"
+                (seeMore)="getUserNotifications($event)"
+                (removeNotification)="removeNotification($event)"
+                (clickOutside)="clickOutside()"
+              ></app-notifications>
+            </div>
+          </div>
+          <!--my ivents section-->
+          <a
+            [routerLink]="['basic/events/' + userId | localize]"
+            [queryParams]="{ type: 'interested', filter: 'incoming' }"
+            class="
+              d-inline-flex
+              align-items-center
+              justify-content-center
+              flex-column
+              text-decoration-none
+              menu__item
+            "
+          >
+            <i class="icon-calendar"></i>
+            <span class="d-none d-md-block">
+              {{ "header.my_events" | translate }}</span
+            >
+          </a>
+          <!--user settings section-->
+          <div class="btn-group" dropdown>
+            <button
+              dropdownToggle
+              type="button"
+              class="
+                menu__item
+                border-0
+                d-flex
+                align-items-center
+                justify-content-center
+                flex-column
+                dropdown-toggle
+                menu__profile
+              "
+            >
+              <img
+                [src]="userImage"
+                class="rounded-circle menu__profile__image"
+                [alt]="userName"
+              />
+              <span class="d-none d-md-block">
+                {{ "header.me" | translate }}
+                <span class="caret icon-down-open-big"></span
+              ></span>
+            </button>
+            <!--user settings dropdown-->
+            <ul
+              *dropdownMenu
+              class="dropdown-menu shadow menu__dropdown menu__dropdown-user"
+              role="menu"
+            >
+              <li role="menuitem">
+                <a
+                  class="
+                    dropdown-item
+                    text-decoration-none
+                    bg-transparent
+                    position-relative
+                    active
+                  "
+                  [routerLink]="[
+                    (_getUserData().register_type === UserType.INDIVIDUAL
+                      ? '/user/' + _getUserData()._id
+                      : '/organization/' + _getUserData()._id
+                    ) | localize
+                  ]"
+                >
+                  {{ "header.my_profile" | translate }}</a
+                >
+              </li>
+              <li role="menuitem">
+                <a
+                  class="
+                    dropdown-item
+                    text-decoration-none
+                    bg-transparent
+                    position-relative
+                  "
+                  [routerLink]="'/basic/interests' | localize"
+                >
+                  {{ "header.my_interests" | translate }}</a
+                >
+              </li>
+              <li role="menuitem">
+                <a
+                  class="
+                    dropdown-item
+                    text-decoration-none
+                    bg-transparent
+                    position-relative
+                  "
+                  [routerLink]="['/basic/groups/' + userId] | localize"
+                >
+                  {{ "header.my_groups" | translate }}</a
+                >
+              </li>
+              <li>
+                <ul class="addition-items list-unstyled d-md-none">
+                  <!--<li role="menuitem"><a class="dropdown-item text-decoration-none bg-transparent position-relative"-->
+                  <!--[routerLink]="">-->
+                  <!--{{'header.promote_btn_text' | translate}}</a></li>-->
+                  <li role="menuitem">
+                    <a
+                      class="
+                        dropdown-item
+                        text-decoration-none
+                        bg-transparent
+                        position-relative
+                      "
+                      [routerLink]="'/basic/create-event' | localize"
+                    >
+                      {{ "header.create.create_event" | translate }}</a
+                    >
+                  </li>
+                  <li role="menuitem">
+                    <a
+                      class="
+                        dropdown-item
+                        text-decoration-none
+                        bg-transparent
+                        position-relative
+                      "
+                      [routerLink]="'/basic/create-group' | localize"
+                    >
+                      {{ "header.create.create_group" | translate }}</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li role="menuitem" (click)="onClickSignOut()">
+                <a
+                  class="
+                    dropdown-item
+                    text-decoration-none
+                    bg-transparent
+                    position-relative
+                  "
+                >
+                  {{ "header.sign_out" | translate }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-md-flex d-none align-items-center">
+          <!--<a [routerLink]="" class="border-0 text-white menu__create-promote text-decoration-none">-->
+          <!--<i class="icon-promotion text-white d-block d-xl-none"></i>-->
+          <!--<span class="d-none d-xl-block">{{'header.promote_btn_text' | translate}}</span>-->
+          <!--</a>-->
+          <div class="btn-group menu__create p-0">
+            <a
+              [routerLink]="'/basic/create-event' | localize"
+              queryParamsHandling="merge"
+              class="
+                menu__create__event
+                text-white
+                border-0
+                d-flex
+                align-items-center
+                justify-content-center
+                text-decoration-none
+              "
+            >
+              <i class="icon-plus text-white d-block d-xl-none"></i>
+              <span class="d-none d-xl-block">{{
+                "header.create.create_event" | translate
+              }}</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </nav>
+</header>

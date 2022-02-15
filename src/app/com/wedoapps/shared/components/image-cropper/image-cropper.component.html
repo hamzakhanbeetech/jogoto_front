@@ -1,0 +1,2 @@
+<image-cropper *ngIf="showCropperActions" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" [resizeToWidth]="0" [cropperMinWidth]='250' [cropperMinHeight]='132' format="png" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"
+    (imageLoaded)="imageLoaded($event)" [autoCrop]="true"></image-cropper>

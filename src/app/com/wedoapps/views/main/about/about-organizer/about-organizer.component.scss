@@ -1,0 +1,72 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.about-organizer {
+  @include about-pages;
+  &__hero {
+    background: url("../../../../../../../assets/images/about/aboutOrganzier.jpg") no-repeat;
+  }
+  &__block {
+    &__item {
+      width: calc(100% / 2 - 18px);
+      margin-bottom: 30px;
+      &__image{
+        @include size(100%,200px)
+      }
+      &:nth-of-type(2) {
+        margin-right: 0;
+      }
+      ul {
+        li {
+          @include font-size($fz-18);
+          &::before {
+            @include size(8px);
+            background: $dark-gray;
+            margin-right: 15px;
+            content: '';
+            display: inline-block;
+            transform: rotate(45deg);
+            margin-top: 10px;
+            min-width: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg){
+  .about-organizer {
+    &__block {
+      &__item {
+        ul {
+          li {
+            @include font-size($fz-14);
+            &::before {
+              @include size(6px);
+              margin-top: 10px;
+              min-width: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm){
+  .about-organizer {
+    &__block {
+      &__item {
+        ul {
+          li {
+            @include font-size($fz-12);
+            &::before {
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

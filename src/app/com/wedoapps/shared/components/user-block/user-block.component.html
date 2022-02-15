@@ -1,0 +1,45 @@
+<section class="user-block shadow w-100 h-100">
+  <div class="d-flex align-items-center">
+    <a [routerLink]="[user.register_type === 'individual' ? 'user/' + user._id : '/organization/' + user._id]|localize"
+       *ngIf="!isSettingPage"
+       class="user-block__image rounded-circle overflow-hidden">
+      <img [src]="user?.poster.min" [alt]="user?.name + ' ' + user?.surname">
+    </a>
+    <p *ngIf="isSettingPage"
+       class="user-block__image rounded-circle overflow-hidden">
+      <img [src]="user?.poster.min" [alt]="user?.name + ' ' + user?.surname">
+    </p>
+    <button class="user-block__btn text-white border-0 d-flex align-items-center justify-content-center"
+      (click)="onClickFollow(user._id)" [ngClass]="{'disabled':isLoading}" [disabled]="isLoading"
+      *ngIf="isShowFollow && !isSettingPage">
+      <span> {{(user.im_follow ? 'search.user.unfollow' : 'search.user.follow') | translate}}</span>
+      <span class="spinner-border flex-shrink-0" role="status" *ngIf="isLoading">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </button>
+    <button class="user-block__btn text-white border-0 d-flex align-items-center justify-content-center"
+            (click)="onClickUnblock(user._id)" [ngClass]="{'disabled':isLoading}" [disabled]="isLoading"
+            *ngIf="isSettingPage">
+      <span>{{'settings.unblock' | translate}}</span>
+      <span class="spinner-border flex-shrink-0" role="status" *ngIf="isLoading">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </button>
+  </div>
+  <div>
+    <a [routerLink]="[user.register_type === 'individual' ? '/user/' + user._id : '/organization/' + user._id]|localize"
+       *ngIf="!isSettingPage"
+      class="user-block__name d-block text-decoration-none text-truncate">{{user?.name}} {{user?.surname}}</a>
+    <p *ngIf="isSettingPage"
+       class="user-block__name d-block text-decoration-none text-truncate">{{user?.name}} {{user?.surname}}</p>
+    <p class="user-block__company mb-0 text-truncate" *ngIf="user.register_type === 'professional'">
+      {{user?.professional_category}} {{user?.address.full_address}}</p>
+    <ul class="user-block__followers list-unstyled mb-0">
+      <li class="d-inline-block user-block__followers__item">{{user?.events_count}}
+        {{'search.user.created_events' | translate}}</li>
+      <li class="d-inline-block user-block__followers__item" *ngIf="user?._id !== _userId">
+        {{user?.followers_count}} {{'search.user.followers' | translate}}
+      </li>
+    </ul>
+  </div>
+</section>

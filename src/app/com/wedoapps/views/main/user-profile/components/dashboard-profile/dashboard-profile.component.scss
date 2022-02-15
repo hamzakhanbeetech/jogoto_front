@@ -1,0 +1,395 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.tab-section {
+  .tab {
+    &__edit__btn {
+      top: 0;
+      right: 0;
+      color: $blue
+    }
+  }
+  ::ng-deep {
+    .nav-tabs {
+      @extend %proxima-regular;
+      background: $white;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 30px;
+      .nav-item {
+        @include font-size($fz-16);
+        margin: 0 40px 0 0;
+        padding: 0 0 13px;
+        position: relative;
+        a {
+          @include border-radius(0);
+          color: $dark-gray;
+          border: none;
+          padding: 0;
+        }
+        &.active, &:hover {
+          &::after {
+            content: '';
+            border-bottom: 1px solid $blue;
+            display: block;
+            position: absolute;
+            bottom: -1px;
+            width: 100%;
+          }
+          a {
+            border: none;
+            color: $blue
+          }
+        }
+      }
+    }
+  }
+}
+
+.analitics {
+  @include font-size($fz-16);
+  color: $text-color;
+  margin-bottom: 34px;
+}
+
+.icon-secury {
+  color: $blue
+}
+
+.statistics-block {
+  @include border-radius(5px);
+  @include size(calc((100% / 2) - 22px), 125px);
+  background: $sidebar-footser;
+
+  &__items {
+    padding: 20px 30px;
+
+    &__item {
+      color: $text-color;
+      line-height: 1;
+      span{
+        @include font-size(inherit)
+      }
+      @include hover-focus-active {
+        color: $text-color
+      }
+    }
+    li {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &__icon {
+    @include size(125px);
+    @include font-size($fz-60);
+    padding: 20px 15px;
+    div {
+      @include font-size(inherit);
+      i {
+        @include font-size(inherit);
+      }
+    }
+ 
+    &__text {
+      @include font-size($fz-16);
+      margin-top: 16px;
+    }
+  }
+
+  &.blue {
+    .statistics-block__icon {
+      background: $blue;
+    }
+  }
+
+  &.orange {
+    .statistics-block__icon {
+      background: $dark-orange;
+    }
+  }
+}
+
+.follower {
+  width: 90px;
+  &:not(:nth-child(n + 7)) {
+    margin-right: 22px;
+  }
+  &__name {
+    @include font-size($fz-16);
+    color: $dark-gray;
+    @include hover-focus-active {
+      color: $dark-gray;
+    }
+  }
+  &__image {
+    @include user-image(70px, 70px, 40px);
+    margin: 0 0 13px 0;
+  }
+}
+
+.edit-profile {
+  width: 690px;
+  &__input, .gender {
+    width: calc(100% / 2 - 15px);
+    margin-bottom: 40px;
+    line-height: 1;
+    input {
+      @include login-input
+    }
+    label, &__title {
+      @extend %proxima-semibold;
+      @include font-size($fz-16);
+      color: $dark-gray;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    ::ng-deep {
+      .dropdown-menu {
+        width: 100%;
+        overflow: hidden;
+        .dropdown-item {
+          @include dropdown-list-hover;
+          @extend %proxima-regular;
+          @include font-size($fz-14);
+          @include text-truncate;
+          width: 100%;
+          color: $dark-gray;
+          padding: 10px 20px;
+          position: relative;
+          &.active, &:active {
+            background: $white;
+            height: 100%;
+            @include dropdown-list-hover;
+            color: $dark-gray
+          }
+        }
+      }
+      .ui-calendar {
+        width: 100%;
+        background: $white;
+        input {
+          @include login-input;
+          padding: 9px 40px 9px 20px;
+          width: inherit;
+          @include hover {
+            border: 1px solid $border-color !important;
+          }
+        }
+        .ui-button:enabled:focus {
+          box-shadow: none;
+        }
+        .ui-datepicker-trigger {
+          background: transparent;
+          border: none;
+          color: $border-color;
+          position: absolute;
+          right: 6px;
+          @include hover-focus-active {
+            outline: none;
+          }
+        }
+        .pi-calendar:before {
+          @extend %fontello;
+          content: '\e800';
+        }
+      }
+      .mat-radio-label-content {
+        @extend %proxima-regular;
+        color: $dark-gray
+      }
+    }
+  }
+}
+
+.edit {
+  &__save, &__close{
+    @include size(130px,40px)
+  }
+  &__close {
+    @include gray-btn-icon;
+    margin-right: 20px;
+  }
+  &__save {
+    @include login-btn;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .analitics {
+    @include font-size($fz-14);
+  }
+
+  .statistics-block {
+    @include size(calc((100% / 2) - 22px), 90px);
+    &__items {
+      padding: 12px 40px 12px 20px;
+
+      &__item {
+        @include font-size($fz-14);
+      }
+      li {
+        &:not(:last-child) {
+          margin-bottom: 13px;
+        }
+      }
+    }
+
+    &__icon {
+      @include size(185px, inherit);
+      @include font-size($fz-36);
+    }
+  }
+  .follower {
+    width: 80px;
+    &__name {
+      @include font-size($fz-14);
+    }
+  }
+  .edit-profile {
+    &__input, .gender {
+      label {
+        margin-top: 2px;
+      }
+      label, &__title {
+        @include font-size($fz-14);
+      }
+      ::ng-deep {
+        .ui-calendar {
+          .ui-datepicker-trigger {
+            @include font-size($fz-12);
+          }
+          input {
+            padding: 7px 40px 7px 20px;
+          }
+        }
+        .mat-radio-label-content {
+          @include font-size($fz-14)
+        }
+      }
+    }
+  }
+
+  .edit {
+    &__close,  &__save {
+      @include size(125px,35px);
+      @include font-size($fz-14);
+
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .edit-profile {
+    width: 100%;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .analitics {
+    @include font-size($fz-12);
+    margin-bottom: 23px;
+  }
+  .tab-section {
+    ::ng-deep {
+      .nav-tabs {
+        margin-bottom: 20px;
+        .nav-item {
+          @include font-size($fz-14);
+        }
+      }
+    }
+  }
+
+  .statistics-block {
+    @include size(calc((100% / 2) - 11px), 85px);
+    &__items {
+      padding: 16px 20px 16px 20px;
+
+      &__item {
+        @include font-size($fz-12);
+      }
+      li {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    &__icon {
+      @include size(135px, inherit);
+      @include font-size($fz-30 - 2px);
+      &__text {
+        @include font-size($fz-12)
+      }
+    }
+  }
+  .follower {
+    width: 65px;
+    &:not(:nth-child(n + 7)) {
+      margin-right: 10px;
+    }
+    &__image {
+      margin-bottom: 10px;
+    }
+    &__name {
+      @include font-size($fz-12);
+    }
+  }
+  .edit-profile {
+    &__input, .gender {
+      margin-bottom: 33px;
+      label, &__title {
+        @include font-size($fz-12);
+      }
+      ::ng-deep {
+        .ui-calendar {
+          input {
+            padding: 7px 40px 7px 20px;
+          }
+        }
+        .mat-radio-label-content, .dropdown-menu  .dropdown-item {
+          @include font-size($fz-12)
+        }
+        .dropdown-menu  .dropdown-item{
+          padding: 5px 20px;
+        }
+      }
+    }
+  }
+  .edit {
+    &__close,  &__save {
+      @include size(120px,35px);
+      @include font-size($fz-12);
+      max-width: 120px;
+
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .statistics-block {
+    @include size(100%, 85px);
+    &:first-of-type {
+      margin-bottom: 15px;
+    }
+  }
+  .follower {
+    margin-bottom: 16px;
+    margin-right: 10px;
+    &:nth-child(n + 7) {
+      margin-right: 10px;
+    }
+    &__image {
+      margin-bottom: 10px;
+    }
+    &__name {
+      @include font-size($fz-12);
+    }
+  }
+  .edit-profile {
+    &__input, .gender {
+      width: 100%;
+    }
+  }
+}

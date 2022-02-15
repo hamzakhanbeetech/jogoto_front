@@ -1,0 +1,497 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+@include characters;
+.suggestions-container.is-visible {
+  z-index: 2;
+}
+
+.create {
+  @include border-radius(5px);
+  padding: 17px 15px;
+  margin: 20px auto;
+
+  app-event-category-btn {
+    margin-bottom: 15px;
+  }
+
+  &__container {
+    width: 710px;
+    color: $dark-gray;
+    @include create-title-desc;
+    @include form-control-focus;
+
+    app-filter-category,
+    app-filter {
+      .filter__btn,
+      .categories__btn__filter {
+        border: 1px solid $gray-border;
+        margin-right: 20px;
+        margin-top: 20px;
+        @include hover {
+          border-color: $blue;
+        }
+      }
+
+      .dropdown-menu,
+      .categories__dropdown {
+        left: 0 !important;
+
+        &.dropdown-menu {
+          transform: translateX(0) translateY(-13px) !important;
+        }
+      }
+
+      + p {
+        @include font-size($fz-14);
+        color: $text-color;
+      }
+    }
+
+    &.description {
+      margin: 24px 0 44px;
+
+      .form-group.textarea-container {
+        height: 130px;
+        transform: translateZ(0);
+        -webkit-text-size-adjust: none;
+
+        textarea.form-control,
+        .highlights {
+          height: 130px;
+          resize: none;
+          padding: 15px;
+        }
+
+        .backdrop {
+          z-index: 1;
+          pointer-events: none;
+          transition: transform 1s;
+        }
+
+        .highlights {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          color: transparent;
+          border: 1px solid transparent;
+        }
+
+        textarea {
+          z-index: 2;
+          transition: transform 1s;
+          @include hover-focus-active {
+            border-color: $border-color;
+          }
+        }
+
+        mark {
+          @include border-radius(3px);
+          color: transparent;
+          padding: 2px 0;
+          background-color: $blue-transparent;
+        }
+
+        .perspective .backdrop {
+          transform: perspective(1500px) translateX(-125px) rotateY(45deg) scale(.9);
+        }
+
+        .perspective textarea {
+          transform: perspective(1500px) translateX(155px) rotateY(45deg) scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.dublicate-ivent {
+  &__desc {
+    margin-bottom: 11px;
+    color: $dark-gray;
+    line-height: 1;
+  }
+
+  &__btn {
+    @include gray-btn-icon
+  }
+}
+
+.event-creator {
+  @include border-radius(5px);
+  border: 1px solid $gray-border;
+  padding: 18px 15px;
+  margin: 20px 0 23px;
+
+  > div {
+    max-width: calc(100% / 2);
+  }
+}
+
+.select-creator {
+  &_image {
+    @include size(28px);
+    border: 1px solid;
+    margin: 0 7px 0 15px;
+  }
+
+  &__dropdown {
+    @include border-radius(5px);
+    right: 0 !important;
+    left: auto !important;
+    max-width: 300px;
+    min-width: calc(100% + 20px);
+    width: 100%;
+    padding: 15px 0;
+
+    .dropdown-item {
+      @include dropdown-list-hover;
+      @include font-size($fz-14);
+      color: $dark-gray;
+      padding: 5px 20px;
+      background: transparent;
+
+      &.active {
+        background: $white;
+        color: $blue;
+
+        &::before {
+          background: $blue;
+          @include size(2px, 100%);
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+
+  &__btn {
+    @include font-size($fz-14);
+    max-width: 100%;
+  }
+}
+
+//datepicker
+.date-time {
+  margin: 40px 0 0;
+
+  .label {
+    @extend %proxima-semibold;
+    @include font-size($fz-14 - 1);
+    margin: 0 0 8px;
+    line-height: 1;
+  }
+
+  .zones {
+    padding-bottom: 22px;
+  }
+
+  &__inputs {
+    margin-right: 30px;
+    padding-bottom: 22px;
+
+    p-calendar {
+      position: relative;
+
+      &:before {
+        @extend %fontello;
+        content: '\e80b';
+        color: $blue;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      input {
+        @include login-input;
+        @include size(220px, 40px);
+        padding: 10px 15px 10px 50px !important;
+        background: transparent;
+        @include hover-focus-active {
+          border-color: $border-color !important;
+        }
+      }
+    }
+
+    .text-danger {
+      bottom: 0;
+    }
+  }
+
+  #timezone {
+    @include size(220px, 40px);
+    @include login-input;
+    padding: 10px 15px;
+  }
+
+  .remove-date {
+    width: 220px;
+    padding-bottom: 22px;
+
+    button {
+      @include font-size($fz-16);
+      color: $error-alert;
+      line-height: 1;
+    }
+  }
+
+  .see-more {
+    @include font-size($fz-16);
+  }
+
+  &__create {
+    @include login-btn;
+    @include font-size($fz-18);
+    padding: 12px 98px;
+    height: auto;
+    margin-top: 50px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .create {
+    &__container {
+      app-filter-category,
+      app-filter {
+        + p {
+          @include font-size($fz-12);
+        }
+      }
+
+      &.description {
+        margin: 37px 0;
+
+        .form-group.textarea-container {
+          height: 100px;
+
+          textarea.form-control,
+          .highlights {
+            height: 100px;
+            @include font-size($fz-14);
+          }
+        }
+      }
+    }
+  }
+  .dublicate-ivent {
+    &__desc {
+      @include font-size($fz-14);
+      margin-bottom: 9px;
+    }
+  }
+  .event-creator {
+    padding: 12px 10px;
+    margin: 15px 0 17px;
+  }
+  .select-creator {
+    &__dropdown {
+      .dropdown-item {
+        @include font-size($fz-14);
+        padding: 5px 20px;
+      }
+    }
+
+    &__btn {
+      @include font-size($fz-14);
+      max-width: 100%;
+    }
+  }
+  .date-time {
+    &__inputs {
+      margin-right: 15px;
+    }
+
+    p-calendar input,
+    #timezone {
+      @include font-size($fz-14)
+    }
+
+    .remove-date {
+      button {
+        @include font-size($fz-14);
+      }
+    }
+
+    .see-more {
+      @include font-size($fz-14)
+    }
+
+    &__create {
+      margin: 35px 0 0;
+      @include size(210px, 40px);
+      padding: 0;
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .create {
+    &__container {
+      width: 100%;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .create {
+    &__container {
+      width: 100%;
+
+      app-filter-category,
+      app-filter {
+        + p {
+          @include font-size($fz-10);
+        }
+      }
+
+      &.description {
+        margin: 33px 0;
+
+        .form-group.textarea-container {
+          height: 100px;
+
+          textarea.form-control,
+          .highlights {
+            @include font-size($fz-12);
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+          }
+        }
+      }
+    }
+  }
+  .dublicate-ivent {
+    &__desc {
+      @include font-size($fz-12);
+      margin-bottom: 9px;
+    }
+  }
+  .select-creator {
+    &__dropdown {
+      .dropdown-item {
+        @include font-size($fz-12);
+        padding: 5px 20px;
+      }
+    }
+
+    &__btn {
+      @include font-size($fz-12);
+      max-width: 100%;
+    }
+  }
+  .date-time {
+    &__inputs {
+      margin-right: 15px;
+    }
+
+    p-calendar input,
+    #timezone {
+      @include size(155px, 34px);
+      @include font-size($fz-12)
+    }
+
+    .remove-date {
+      width: 155px;
+
+      button {
+        @include font-size($fz-12);
+      }
+    }
+
+    .see-more {
+      @include font-size($fz-12)
+    }
+
+    &__create {
+      margin: 30px 0;
+      @include size(155px, 34px);
+      padding: 0;
+    }
+  }
+  .max-event {
+    @include font-size($fz-12)
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .create__container {
+    width: 100%;
+  }
+  .dublicate-ivent__btn {
+    width: 100%;
+  }
+  .mobile-filters {
+    .filter-btn {
+      @include size(calc((100% / 2) - 5px));
+
+      button {
+        @include border-radius(5px);
+        @include font-size($fz-12);
+        border: 1px solid $gray-border;
+        background: $white;
+        padding: 8px;
+
+        i {
+          color: $blue;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  .date-time {
+    margin-right: 0;
+
+    &__inputs {
+      margin-right: 0;
+
+      .form-group {
+        @include size(calc((100% / 2) - 5px), auto);
+      }
+
+      p-calendar {
+        width: 100%;
+
+        input,
+        .ui-calendar {
+          width: 100%;
+        }
+      }
+    }
+
+    #timezone {
+      @include size(220px, 34px);
+      max-width: 100%;
+    }
+
+    .remove-date {
+      width: 100%;
+      margin-top: 17px;
+    }
+
+    &__create {
+      margin: 30px 0;
+      @include size(calc((100% / 2) - 5px), 34px);
+    }
+  }
+  .event-creator > div {
+    &:first-of-type {
+      min-width: 100%;
+      margin-bottom: 10px;
+
+    }
+
+    width: auto;
+  }
+  .ui-widget-overlay {
+    z-index: 8000 !important;
+  }
+  .ui-datepicker-touch-ui.ui-datepicker td {
+    padding: 2px;
+  }
+  .ui-datepicker-touch-ui, .ui-calendar .ui-datepicker-touch-ui {
+    z-index: 8100 !important;
+  }
+
+}

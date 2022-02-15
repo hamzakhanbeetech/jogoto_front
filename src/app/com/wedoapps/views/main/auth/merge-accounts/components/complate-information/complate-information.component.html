@@ -1,0 +1,41 @@
+<section class="marging">
+  <h3 class="marging__title text-center m-0">{{'complate-information.title' | translate}}</h3>
+  <p class="marging__desc d-flex justify-content-center text-center" [innerHTML]="'complate-information.desc' | translate">
+  </p>
+
+  <!--TODO add 'marging__input-error' class if input isn't valid-->
+  <div class="form-group marging__input position-relative"
+       [ngClass]="{'marging__input-error': emailForm.touched && emailForm.invalid }">
+    <input type="email" class="form-control shadow-none"
+           [formControl]="emailForm"
+           [placeholder]="'login.email' | translate"/>
+            <p class="m-0 position-absolute"
+               *ngIf="emailForm.touched && emailForm.hasError('required')">
+              {{'registration.email_required' | translate}}
+            </p>
+            <p class="m-0 position-absolute"  *ngIf="emailForm.touched && emailForm.hasError('pattern')">
+              {{'registration.invalid_email' | translate}}
+            </p>
+  </div>
+
+  <div class="form-group mb-0 position-relative">
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+    <button class="marging__btn text-white text-uppercase w-100 border-0 d-flex
+    justify-content-center align-items-center"
+            [ngClass]="{'disabled':emailForm.invalid || loading}"
+            (click)="completeInfo()"
+            [disabled]="emailForm.invalid || loading" type="submit">
+      <span>{{'complate-information.btn' | translate}} </span>
+      <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+      <span class="spinner-border" role="status" *ngIf="loading">
+        <span class="sr-only">Loading...</span>
+      </span></button>
+    <p class="error position-absolute" *ngIf="servErr && !emailForm.dirty">{{servErr}}</p>
+  </div>
+  <div class="marging__singnup">
+    <p class="mb-0 text-center">
+      {{'marging.return_to' | translate}}
+      <a [routerLink]="'auth/login'|localize"
+         class="marging__singnup__link text-decoration-none">{{'marging.login' | translate}}</a></p>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+
+::ng-deep{
+  @include modals-header;
+  app-import-file {
+    display: block;
+    max-height: 240px;
+    overflow: hidden;
+  }
+  .upload__title{
+    display: none;
+  }
+  .progress-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -40px;
+  }
+  .upload-container{
+    margin-top: 20px;
+    #file {
+      max-width: 100%;
+    }
+  }
+}
+
+.user-invite-by-doc{
+  padding:0  15px 40px;
+  max-height: 170px;
+}
+.error{
+  @include error;
+  margin-top: 10px;
+}
+
+@include media-breakpoint-down(xs){
+  .header{
+    padding-top: 0;
+  }
+}

@@ -1,0 +1,99 @@
+<form novalidate #myform="ngForm" class="container-fluid p-0" [formGroup]="groupForm">
+  <section class="container bg-white create shadow">
+    <section class="mx-auto create__container">
+      <app-created-pages-type (value)="groupForm.get('visibility').setValue($event)"
+                              [checked]="groupForm.get('visibility').value"
+                              [checkType]='checkGroupType'
+                              [title]="'create-group.group_status' | translate">
+      </app-created-pages-type>
+    </section>
+
+    <section class="mx-auto create__container">
+      <app-crop-image class="d-block" (value)="handleCrop($event)" [isEdit]="_isEdit" [imageLoading]="imageLoading" [info]="info"></app-crop-image>
+    </section>
+
+    <section class="mx-auto create__container">
+      <app-create-name formControlName="title"
+                       [serverErr]="titleErr"
+                       (eventForMarkingTouched)="markControlAsTouched(groupForm.get('title'))"
+                       [hasError]="groupForm.get('title').invalid && groupForm.get('title').touched"
+                       [description]="'create-group.group_name'"></app-create-name>
+    </section>
+
+    <section class="mx-auto create__container description">
+      <div>
+        <p class="create__container__title">{{"create-group.description_title" | translate}}</p>
+        <p class="create__container__desc mb-0">{{"create-group.description_desc" | translate}}</p>
+      </div>
+      <div class="form-group textarea-container">
+          <textarea type="text" class="form-control shadow-none"
+                    [placeholder]="'create-group.description_placeholder' | translate"
+                    [ngClass]="{'error':groupForm.get('description').invalid && myform.submitted}"
+                    #textarea
+                    formControlName="description"
+                    maxlength="500"
+
+          >
+          </textarea>
+      </div>
+      <ul class="list-unstyled d-flex justify-content-end characters mb-0">
+        <li>{{groupForm.get('description').value ? groupForm.get('description').value.length : '0'}}</li>
+        <li>500</li>
+      </ul>
+    </section>
+
+    <section class="mx-auto create__container">
+      <app-create-location class="d-block"
+                           formControlName="location"
+                           [description]="'create-group.location_desc' | translate"
+                           [hasError]="groupForm.get('location').hasError('invalidLocation') && groupForm.get('location').touched"
+                           (eventForMarkingTouched)="markControlAsTouched(groupForm.get('location'))"
+                           (value)="getAutocomplete($event)">
+      </app-create-location>
+    </section>
+
+    <section class="mx-auto create__container">
+      <div>
+        <p class="create__container__title">{{"create-group.add_moderators" | translate}}</p>
+        <p class="create__container__desc mb-0">{{"create-group.search_users" | translate}}</p>
+      </div>
+      <div class="form-group position-relative">
+        <input type="text" class="form-control shadow-none"
+               [placeholder]="'create-group.user_placeholder' | translate" [formControl]="userSearchField"
+               [ngbTypeahead]="autocomplete"
+               [resultFormatter]="formatMatches"
+               [inputFormatter]="formatMatches"
+               (selectItem)="chooseUser($event)"
+               (input)="getInputValue($event)" #searchValue/>
+        <button class="border-0 bg-transparent reset-inputs position-absolute" *ngIf="resetbtn"
+                (click)="resetSearch()">
+          <i class="icon-close"></i>
+        </button>
+      </div>
+      <ul class="list-unstyled d-flex flex-wrap m-0">
+        <li class="create__container__user d-flex justify-content-between"
+            *ngFor="let user of selectedUsers; let i = index"><span>{{user.name}} {{user.surname}}</span>
+          <button class="bg-transparent border-0" type="button">
+            <i class="icon-close" (click)="deleteUser(i)"></i>
+          </button>
+        </li>
+      </ul>
+    </section>
+    <section class="mx-auto create__container mt-0">
+      <app-upload-file class="d-block" (value)="getFile($event)"></app-upload-file>
+    </section>
+    <section class="mx-auto create__container date-time mt-0">
+      <div class="text-right">
+        <button type="submit" class="create text-white mb-0 border-0  ml-auto d-flex align-items-center justify-content-center"
+                [disabled]="groupForm.invalid || loading"
+                [ngClass]="{'disabled': groupForm.invalid || loading || imageLoading}"
+                (click)="onCreateGroup()">{{"save" | translate}}
+          <span class="spinner-border" role="status" *ngIf="loading">
+                    <span class="sr-only">Loading...</span>
+                    </span>
+        </button>
+      </div>
+    </section>
+  </section>
+</form>
+<app-allert-message></app-allert-message>

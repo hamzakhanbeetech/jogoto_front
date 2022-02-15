@@ -1,0 +1,8 @@
+<div>
+    <p class="location__title">{{"create-event.location" | translate}}</p>
+    <p class="location__desc mb-0">{{description}}</p>
+</div>
+<div class="form-group position-relative">
+    <app-mat-autocomplete class="d-block" [inCreatePage]="isInCreatePage" [isDynamicSearch]="false" [placeholder]="'create-event.location_placeholder'" (blur)="onTouchedCallback()" (autocomplete)="getAutocomplete($event)"></app-mat-autocomplete>
+  <p class="m-0 position-absolute text-danger" *ngIf="hasError">{{"create-event.location_error" | translate}}</p>
+</div>

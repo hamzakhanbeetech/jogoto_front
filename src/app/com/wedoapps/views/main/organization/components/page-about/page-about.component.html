@@ -1,0 +1,26 @@
+<app-map-image class="d-block w-100" [latLng]="latLng" [category]="'icon-health-bg'"></app-map-image>
+<div class="flex-grow-1" *ngIf="address">
+  <div class="info d-flex">
+    <i class="icon-pin-location"></i>
+    <a [href]="mapUrl" target="_blank" class="text-decoration-none">
+      {{ address.full_address }}
+    </a>
+  </div>
+
+  <div class="info d-flex mb-0" *ngFor="let phone of phones; let first = first">
+    <i class="icon-phone" [ngStyle]="{'visibility' : !first ? 'hidden': ''}"></i>
+    <div>
+      <a href="tel:{{ phone }}" class="text-decoration-none d-inline-block tel">{{ phone }}</a>
+    </div>
+  </div>
+
+  <div class="info" *ngIf="emails.length > 1">
+    <i class="icon-mail"></i>
+      <a href="mailto:{{ emails[1] }}" title="{{ 'page.public_email'  | translate}}" class="email">{{ emails[1] }}</a>
+  </div>
+
+  <div class="info d-flex" *ngIf="websiteUrl">
+    <i class="icon-globe"></i>
+    <a [href]="websiteUrl" target="_blank" class="url">{{ websiteUrl }}</a>
+  </div>
+</div>

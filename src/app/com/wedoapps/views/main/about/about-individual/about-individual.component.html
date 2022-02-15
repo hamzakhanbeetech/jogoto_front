@@ -1,0 +1,54 @@
+<main class="container-fluid p-0 about-individual">
+  <section class="about-individual__hero d-flex align-items-center justify-content-center">
+    <h1 class="about-individual__hero__title text-white container text-center">{{"individual-page.title" | translate}}</h1>
+  </section>
+  <section class="description container text-center">
+    <p class="description__about mb-0 mx-auto">{{"individual-page.about" | translate}}</p>
+    <h2 class="description__why">{{"individual-page.why" | translate}}</h2>
+    <p class="description__desc" [innerHTML]="'individual-page.description' | translate"></p>
+    <p class="description__desc mb-0">{{"individual-page.centralizes" | translate}}</p>
+  </section>
+  <section class="container about-individual__block d-flex px-sm-0 flex-wrap">
+    <article class="about-individual__block__item overflow-hidden d-flex flex-column flex-md-row  flex-xl-column">
+      <figure class="about-individual__block__item__image my-0 overflow-hidden">
+        <img class="w-100 h-100" src="./assets/images/about/have-fun.jpg"
+             [alt]="'individual-page.have_fun_title' | translate">
+      </figure>
+      <div class="container about-individual__block__item__info">
+        <h3
+          class="container about-individual__block__item__info__title">{{"individual-page.have_fun_title" | translate}}</h3>
+        <p
+          class="container about-individual__block__item__info__desc">{{"individual-page.have_fun_desc_one" | translate}}</p>
+        <p
+          class="container about-individual__block__item__info__desc mb-0">{{"individual-page.have_fun_desc_two" | translate}}</p>
+      </div>
+    </article>
+    <article class="about-individual__block__item overflow-hidden d-flex flex-column flex-md-row flex-xl-column">
+      <figure class="about-individual__block__item__image my-0 overflow-hidden">
+        <img class="w-100 h-100" src="./assets/images/about/optimize-time.jpg"
+             [alt]="'individual-page.have_fun_title' | translate">
+      </figure>
+      <div class="container about-individual__block__item__info">
+        <h3
+          class="container about-individual__block__item__info__title">{{"individual-page.optimize_time" | translate}}</h3>
+        <p
+          class="container about-individual__block__item__info__desc">{{"individual-page.optimize_time_desc_one" | translate}}</p>
+        <p
+          class="container about-individual__block__item__info__desc mb-0">{{"individual-page.optimize_time_desc_two" | translate}}</p>
+      </div>
+    </article>
+    <article class="about-individual__block__item overflow-hidden d-flex flex-column flex-md-row  flex-xl-column">
+      <figure class="about-individual__block__item__image my-0 overflow-hidden">
+        <img class="w-100 h-100" src="./assets/images/about/our-information.jpg"
+             [alt]="'individual-page.have_fun_title' | translate">
+      </figure>
+      <div class="container about-individual__block__item__info">
+        <h3
+          class="container about-individual__block__item__info__title">{{"individual-page.our_information" | translate}}</h3>
+        <p
+          class="container about-individual__block__item__info__desc">{{"individual-page.our_information_desc" | translate}}</p>
+      </div>
+    </article>
+  </section>
+  <app-about-footer></app-about-footer>
+</main>

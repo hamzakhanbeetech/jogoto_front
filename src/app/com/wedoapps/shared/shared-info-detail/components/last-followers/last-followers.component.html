@@ -1,0 +1,18 @@
+<section class="d-flex  justify-content-between block-header align-items-center" *ngIf="followUsers?.length > 0">
+  <h2 class="block-header__title my-0">
+    {{ (isFollowerPage && userType === 'individual' ? "mutual_followers" : "lastest_followers") | translate}}
+  </h2>
+  <a [routerLink]="['/basic/followers/'+ userId|localize]" [queryParams]="{type: 'followers'}" class="block-header__link text-decoration-none">
+    {{"user.view_all_users" | translate}}
+    <i class="icon-right-open-big"></i></a>
+</section>
+<section class="d-flex flex-wrap">
+  <div class="follower text-center" *ngFor="let follower of followUsers">
+    <a [routerLink]="[(follower.register_type === 'individual' ? '/user/' + follower._id : '/organization/' + follower._id)|localize]"
+      class="rounded-circle overflow-hidden follower__image d-block mx-auto">
+      <img [src]="follower.poster.min" class="w-100 h-100" alt="">
+    </a>
+    <a [routerLink]="[(follower.register_type === 'individual' ? '/user/' + follower._id : '/organization/' + follower._id)|localize]" class="follower__name text-decoration-none">
+      {{ follower.name }} {{ follower.surname  ?  follower.surname.slice(0, 1) : ''}}</a>
+  </div>
+</section>

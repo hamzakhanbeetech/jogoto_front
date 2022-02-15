@@ -1,0 +1,95 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../assets/scss/base/mixins';
+
+.crop {
+  @include size(100%, 375px);
+  @include create-title-desc;
+  &-actions {
+    z-index: 10;
+  }
+  .upload-btn-wrapper {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    .btn {
+      white-space: nowrap;
+    }
+  }
+  .btn-group {
+    top: 20px;
+    right: 20px;
+    &.save-cancle{
+      top: auto;
+      bottom:20px
+    }
+  }
+  &__btn {
+    @include crop-buttons;
+  }
+  &__image {
+    &.error {
+      border: 1px solid $error-alert
+    }
+    ::ng-deep{
+      image-cropper{
+        div{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+.image-formats {
+  @include font-size($fz-14);
+  color: $text-color;
+  margin-bottom: 24px;
+  &.warning {
+    color: $error-alert;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .crop {
+    @include size(100%, 340px);
+    &__btn {
+      @include font-size($fz-14);
+      width: 80px;
+      padding: 6px;
+    }
+  }
+  .image-formats {
+    @include font-size($fz-12);
+    margin-bottom: 18px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .crop {
+    @include size(100%, 300px);
+    &__btn{
+      @include font-size($fz-12);
+      padding: 6px;
+    }
+  }
+  .image-formats {
+    @include font-size($fz-10);
+    margin-bottom: 18px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .crop {
+    @include size(calc(100% + 30px), 170px);
+    margin-left: -15px;
+    margin-right: -15px;
+    .btn-group {
+      top: 10px;
+      right: 15px;
+      &.save-cancle{
+        bottom:10px
+      }
+    }
+  }
+}

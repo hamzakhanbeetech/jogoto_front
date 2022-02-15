@@ -1,0 +1,60 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+    <h3 class="mb-0 header__title" mat-dialog-title>{{"create-event.duplicate_past_events" | translate}}</h3>
+    <button type="button" mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+        <i class="icon-close"></i>
+    </button>
+</header>
+<div mat-dialog-content class="dublicated-event">
+    <form action="" class="col-12">
+        <div class="form-group position-relative">
+            <input [formControl]="queryControl" type="text" class="form-control shadow-none" [placeholder]="'create-event.search_events' | translate">
+            <button class="bg-transparent border-0 position-absolute dublicated-event__search " type="button"><i
+                    class="icon-search"></i>
+            </button>
+          <button type="reset" class="bg-transparent border-0 position-absolute search-user__reset" *ngIf="resetBtn"
+                  (click)="resetInputText()"><i class="icon-close"></i>
+          </button>
+        </div>
+    </form>
+    <!--TODO show if there isn't search result-->
+    <!--<app-no-result class="d-block"></app-no-result>-->
+    <ul *ngIf="allEvents.length > 0" class="list-unstyled col-12 date-time" infiniteScroll>
+        <li *ngFor="let item of allEvents" class="d-flex justify-content-between align-items-center dublicated-event__group">
+            <div class="d-flex" (click)="onClickEventBlock(item._id)">
+                <div class="d-flex flex-column">
+                    <a class="d-block overflow-hidden border-0 dublicated-event__group__image float-left text-decoration-none">
+                        <!-- <img [src]="item.poster.cropped.link" class="w-100 h-100" alt=""> -->
+                        <img [src]="item.poster.cropped.link" class="w-100 h-100" [alt]="item.name">
+                    </a>
+                    <div class="d-flex justify-content-between">
+                        <div class="dublicated-event__category" *ngFor="let category of item.category" [style.backgroundColor]="category.styleData.color"></div>
+                    </div>
+                </div>
+                <div class="dublicated-event__group__info d-flex flex-column justify-content-around">
+                    <a class="dublicated-event__group__title text-decoration-none text-truncate">
+                        {{item.name}}
+                    </a>
+                    <p class="dublicated-event__group__type">
+                        {{(item.visibility=='public') ? 'Public Event' : 'Private Event'}}</p>
+                    <p class="dublicated-event__group__location mb-0 text-truncate">{{item.location.address.address}}</p>
+                </div>
+            </div>
+            <button (click)="chooseEvent(item)" class="dublicated-event__group__share border-0 text-white mb-0" type="button">
+                {{"choose" | translate}}</button>
+        </li>
+    </ul>
+    <div *ngIf="allEvents.length == 0 && !pendingForEvents">
+        <p class="text-center">{{'event.duplicate_no_event'|translate}}</p>
+    </div>
+    <div *ngIf="allEvents.length >= 5" class="form-group mb-0 position-relative col-12">
+        <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+        <button (click)="updateList()" class="dublicated-event__see-more w-100  d-flex
+    justify-content-center" [disabled]="pendingForEvents" [ngClass]="{'disabled':pendingForEvents}" type="button">
+            <span *ngIf="loadMore">{{'see_more' | translate}} </span>
+            <span *ngIf="!loadMore" (click)="onClickSeeLess()">{{'see_less' | translate}}</span>
+            <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+            <span class="spinner-border" role="status" *ngIf="pendingForEvents">
+                <span class="sr-only" *ngIf="pendingForEvents">Loading...</span>
+            </span></button>
+    </div>
+</div>

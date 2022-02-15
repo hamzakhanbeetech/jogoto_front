@@ -1,0 +1,8 @@
+<div class="position-relative">
+    <mat-slider [disabled]="isOnline" (pointerup)="emitRadius()" (slideend)="emitRadius()" thumbLabel [displayWith]="formatLabel" [value]="value" (input)="itChanged($event.value)" tickInterval="1000" min="1" max="50" class="w-100 p-0">
+    </mat-slider>
+    <div class="d-flex justify-content-between radius position-absolute w-100">
+        <p class="m-0">1km</p>
+        <p class="m-0">50km</p>
+    </div>
+</div>

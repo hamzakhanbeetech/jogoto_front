@@ -1,0 +1,26 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.btn__filter {
+  @include filter-btn;
+}
+
+.where {
+  color: $dark-gray;
+  .dropdown-menu {
+    width: 320px;
+    padding: 20px;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: calc(100% + 10px) !important;
+  }
+}
+
+@include media-breakpoint-down(sm){
+  .where {
+    .dropdown-menu {
+      left: 0 !important;
+      transform: translateX(0) !important;
+    }
+  }
+}

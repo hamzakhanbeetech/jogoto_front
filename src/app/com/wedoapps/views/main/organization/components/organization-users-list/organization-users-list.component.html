@@ -1,0 +1,43 @@
+<section class="w-100 user d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center">
+    <a [routerLink]="[(user?.register_type === 'individual' ? '/user/' + user?._id : '/organization/' + user?._id)|localize]"
+       class="user__image d-block overflow-hidden rounded-circle text-decoration-none">
+      <img [src]="user?.poster?.min" class="w-100 h-100" [alt]="user?.name + ' ' + user?.surname ">
+    </a>
+    <div class="use__info d-flex flex-column justify-content-center">
+      <a [routerLink]="[('/user/'+user?._id)|localize]"
+         class="user__info__name text-decoration-none">{{user?.name}} {{user?.surname}}</a>
+      <p class="user__info__position text-truncate">
+        <span *ngIf="isModerator">{{"moderator" | translate}}</span>
+      </p>
+    </div>
+  </div>
+
+  <!--TODO hide all block if the role admin creater-->
+  <div class="d-flex">
+    <button type="button" class="follow-user border-0 text-white d-none d-sm-block"
+            *ngIf="!user?.im_follow && !isCurrentUser"
+            [ngClass]="{'disabled': isFollowLoading}"
+            [disabled]="isFollowLoading"
+            (click)="toggleFollow(user?._id)">
+      {{"event.follow" | translate}}
+      <span class="spinner-border" role="status" *ngIf="isFollowLoading">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </button>
+    <div class="btn-group" dropdown *ngIf="isAuthorized && isCurrentUserPageOwner">
+      <button id="member" dropdownToggle type="button"
+              class="user__settings dropdown-toggle" aria-controls="dropdown-basic">
+        <i class="icon-more"></i>
+      </button>
+      <ul id="member" *dropdownMenu class="dropdown-menu user__settings__dropdown border-0 shadow"
+          role="menu" aria-labelledby="button-basic">
+        <li role="menuitem">
+          <button type="button" class="dropdown-item position-relative" (click)="isModerator ? removeModeratorFromList(user?._id) : addNewModerator(user?._id)">
+            {{(isModerator ? "page.remove_moderator" : "page.make_moderator") | translate}}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

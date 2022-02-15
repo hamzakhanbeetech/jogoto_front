@@ -1,0 +1,34 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+  <h3 class="mb-0 header__title" mat-dialog-title>{{"event.give_feedback_title" | translate}}</h3>
+  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+<div mat-dialog-content class="feedback-modal">
+
+  <div class="form-group mb-0 col-12">
+    <p class="feedback-modal__subtitle">{{"event.not_interested_modal" | translate}}</p>
+    <form [formGroup]="feedBackForm">
+      <div >
+        <label class="feedback-modal__btn border-0"  *ngFor="let reason of reasonsList,let i = index"
+          [ngClass]="{'active': reason == feedBackForm.get('reasonForForm').value }" >{{reason}}
+          <input type="radio" formControlName="reasonForForm" [value]="reason">
+        </label>
+
+      </div>
+      <div class="form-group" *ngIf="otherReason">
+        <textarea name="" id="" class="form-control feedback-modal__textarea shadow-none"
+          [placeholder]="'event.feedback_placeholder' | translate" formControlName = "otherReasonText"></textarea>
+      </div>
+    </form>
+    <div class="position-relative">
+      <button type="submit" class="feedback-modal__send text-uppercase w-100 border-0 text-white  d-flex
+    justify-content-center align-items-center" [ngClass] = "{'disabled' : forDisableOrNot()}" (click) = "unJoinToEvent()">
+        <span>{{'save' | translate}} </span>
+        <span class="spinner-border" role="status" [ngClass] = "{'d-block': loading , 'd-none': !loading}">
+      <span class="sr-only">Loading...</span>
+    </span > </button>
+      <!-- <p class="feedback-modal__error position-absolute">This is an error message from server</p> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+.map-container{
+  height: calc(100vh - 70px);
+  min-height: 200px;
+}
+
+.map-info {
+  margin-bottom: 5px;
+  &:not(:last-child) {
+    padding-bottom: 5px;
+    border-bottom: 1px solid $lighter-gray;
+  }
+
+  &__image {
+    @include size(125px, auto);
+    margin-right: 8px;
+    min-width: 125px;
+    max-width: 125px;
+  }
+
+  &__title {
+    @extend %proxima-semibold;
+    @include font-size($fz-16);
+    @include hover-focus-active{
+      color: $event-title;
+    }
+    color: $event-title;
+    margin: 0 0 13px;
+    display: block;
+  }
+
+  &__date {
+    @include font-size($fz-14);
+    color: $dark-orange
+  }
+}
+
+#floating-panel {
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  cursor: pointer;
+}
+
+#floating-panel span{
+  cursor: pointer;
+}
+
+@include media-breakpoint-down(lg) {
+  .map-info {
+    &__title {
+      margin: 10px 0;
+      @include font-size($fz-14);
+    }
+    &__date {
+      @include font-size($fz-12);
+    }
+  }
+}

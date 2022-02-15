@@ -1,0 +1,56 @@
+<main class="container-fluid">
+  <section class="container">
+    <div class="row flex-wrap justify-content-between align-items-center search-user">
+      <h3 class="search-user__title m-0">
+        <ng-container *ngIf="name && surname; else profuser">
+          {{ name}} <span> {{surname}}</span>{{'s' | translate}}  {{"followers.connections" | translate}}
+        </ng-container>
+        <ng-template  #profuser>
+            {{'followers.connections_of'|translate}} {{ profUserName }}
+        </ng-template>
+      </h3>
+
+      <form action="">
+        <div class="form-group position-relative ml-auto">
+          <button class="bg-transparent border-0 position-absolute search-user__btn"><i class="icon-search"></i>
+          </button>
+          <input type="text" class="form-control shadow-none search-user__input"
+                 (input)="takeInputLength($event)"
+                 #searchConnection
+                 [placeholder]="'followers.search_connection' | translate">
+          <button type="reset" class="bg-transparent border-0 position-absolute search-user__reset" *ngIf="searchText"
+                  (click)="resetInputText()"><i class="icon-close"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <section class="row">
+      <tabset class="position-relative">
+        <tab [heading]="('followers.followers' | translate) + ' ' + allFollowersCount" id="followers"
+             [active]="activeTab === 'followers'"
+             (selectTab)="changeTab($event)">
+          <section class="d-flex flex-wrap">
+            <app-user-block (changeFollowings)="changeFollowingsCount($event)" class="d-block" *ngFor="let follower of followersList; trackBy: trackByFn" [user]="follower"
+                            [isAuthorized]="true"></app-user-block>
+            <app-no-event class="d-block w-100"
+                          [noResult]="noResult"
+                          *ngIf="!isLoading && !followersList.length"></app-no-event>
+          </section>
+          <app-loading class="d-flex align-items-center justify-content-center" *ngIf="isLoading"></app-loading>
+        </tab>
+        <tab [heading]="('followers.following' | translate)  + ' ' + allFollowingsCount" id="following"
+              (selectTab)="changeTab($event)"
+              [active]="activeTab !== 'followers'">
+          <section class=" d-flex flex-wrap">
+        <app-user-block (changeFollowings)="changeFollowingsCount($event)" class="d-block" *ngFor="let follower of followingsList; trackBy: trackByFn" [user]="follower"
+                        [isAuthorized]="true"></app-user-block>
+    </section>
+          <app-no-event class="d-block w-100"
+                        [noResult]="noResult"
+                        *ngIf="!isLoading && !followingsList.length"></app-no-event>
+    <app-loading class="d-flex align-items-center justify-content-center" *ngIf="isLoading"></app-loading>
+    </tab>
+    </tabset>
+  </section>
+  </section>
+</main>

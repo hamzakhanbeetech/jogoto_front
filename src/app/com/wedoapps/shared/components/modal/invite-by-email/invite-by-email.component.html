@@ -1,0 +1,40 @@
+<header class="d-flex justify-content-between align-items-center header col-12">
+  <h3 class="mb-0 header__title" mat-dialog-title>{{"invite_via_email" | translate}}</h3>
+  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+
+<div mat-dialog-content class="invite-email d-flex flex-column">
+  <form class="col-12 d-flex flex-column justify-content-between flex-grow-1" [formGroup]="inviteByEmail">
+    <div class="flex-grow-1">
+      <div class="d-flex">
+        <input type="email" class="invite-email__input flex-grow-1" [placeholder]="'enter_email' | translate"
+               formControlName="email">
+        <button type="button"
+                class="invite-email__add-btn text-white border-0 text-capitalize mb-0"
+                [disabled]="inviteByEmail.invalid" [ngClass]="{'disabled': inviteByEmail.invalid}"
+                (click)="addEmailToListOfInvition()">{{"add" | translate}}
+        </button>
+      </div>
+      <ul class="list-unstyled invite-email__users">
+        <li class="d-flex justify-content-between invite-email__users__item"
+            *ngFor="let emailAddress of invitedEmailsList,let i = index">
+          <span class="text-truncate">{{emailAddress}}</span>
+          <button type="button" class="bg-transparent border-0 invite-email__delete" (click)="deleteAddressFromList(i)">
+            <i class="icon-close"></i></button>
+        </li>
+      </ul>
+    </div>
+    <div class="form-group mb-0 position-sticky bg-white send-btn-block">
+      <button type="button" class="invite-email__send-invitation text-white w-100 border-0 d-flex
+    justify-content-center align-items-center" [disabled]="invitedEmailsList.length == 0"
+              [ngClass]="{'disabled': invitedEmailsList.length == 0}" (click)="organization ? inviteByEmailForOrganization() : inviteByEmails()">
+        <span>{{"invite_users.send_invitation" | translate}} </span>
+        <span class="spinner-border" role="status" [ngClass]="{'d-block': loading, 'd-none': !loading}">
+        <span class="sr-only">Loading...</span>
+      </span></button>
+      <p class="error position-absolute" *ngIf="errorMessage">{{errorMessage}}</p>
+    </div>
+  </form>
+</div>

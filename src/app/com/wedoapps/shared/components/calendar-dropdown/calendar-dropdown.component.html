@@ -1,0 +1,9 @@
+<ul [ngStyle]="{'top': elementPosition.top + 'px',
+                'left': !!elementPosition.left ? elementPosition.left + 'px' : '',
+                'right': !!elementPosition.right ? elementPosition.right + 'px' : ''}"
+    class="calendar-dropdown position-absolute list-unstyled bg-white">
+  <li><a [href]="fbShare" target="_blank" class="calendar-dropdown__item position-relative text-decoration-none">{{ "calendar-page.share_on_facebook" | translate}}</a></li>
+  <li><a [href]="inShare" target="_blank" class="calendar-dropdown__item position-relative text-decoration-none">{{ "calendar-page.share_on_Linkedin" | translate}}</a></li>
+  <li><a (click)="goToEventPage()" class="calendar-dropdown__item position-relative text-decoration-none d-flex">{{ "calendar-page.dropdown_option" | translate}}</a></li>
+  <li><a (click)="deleteEvent()" *ngIf="showDeleteEvent" class="calendar-dropdown__item position-relative text-decoration-none">{{"calendar-page.delete_event"| translate}}</a></li>
+</ul>

@@ -1,0 +1,31 @@
+{
+  "short_name": "Jogoto",
+  "name": "Jogoto.com App",
+  "icons": [
+    {
+      "src": "assets/jogoto_64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "assets/jogoto_128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "assets/jogoto_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/jogoto_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "theme_color": "#0c88c3",
+  "background_color": "#F8F8FA",
+  "display": "standalone"
+}

@@ -1,0 +1,75 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.autocomplete {
+  @include redesign-am-input;
+}
+
+.location {
+  @extend %proxima-regular;
+  @include font-size($fz-14);
+  ::ng-deep {
+    .input-container {
+      position: relative;
+      input {
+        @include login-input;
+        padding: 15px 40px 15px 15px;
+        line-height: 1;
+      }
+    }
+    .suggestions-container {
+      @include border-radius(5px);
+      z-index: 10;
+      ul li {
+        @include hover-focus-active {
+          background: transparent;
+        }
+        a {
+          @extend %proxima-regular;
+          @include font-size($fz-14);
+          position: relative;
+          line-height: 1;
+          padding: 10px 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          white-space: nowrap;
+          color: $dark-gray;
+          @include dropdown-list-hover;
+        }
+      }
+    }
+
+    .x {
+      &::before {
+        @include font-size($fz-14);
+        @extend %fontello;
+        content: '\e814';
+        color: $blue;
+      }
+      .material-icons {
+        display: none;
+      }
+    }
+  }
+}
+@include media-breakpoint-down(lg){
+  ::ng-deep{
+    .input-container {
+      input {
+        padding: 15px 35px 15px 15px !important;
+      }
+    }
+  }
+}
+@include media-breakpoint-down(sm) {
+  .location {
+    @include font-size($fz-12);
+    ::ng-deep {
+      .suggestions-container ul li a {
+        @include font-size($fz-12);
+        padding: 15px 30px 15px 15px;
+      }
+    }
+  }
+}

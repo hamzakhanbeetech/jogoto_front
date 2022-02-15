@@ -1,0 +1,77 @@
+<main class="container-fluid" *ngIf="organization; else notAvailable">
+  <section class="container profile-page">
+    <section class="row d-flex">
+      <div class="profile-page__left__section">
+        <app-user-image [userData]="{poster:organization?.poster, id:organization?._id, name: organization?.name + ' ' + (organization?.surname?organization?.surname:''), isProf: true, isFollower:isFollowerPage}" (toggleFollowType)="toggleFollow($event)" [isFollow]="isFollow"
+                        [isFollowerPage]="isFollowerPage"></app-user-image>
+        <div class="d-none d-xl-block">
+          <!--          <app-block-title-see-more [title]="'page.about_us' | translate"></app-block-title-see-more>-->
+          <section class="d-flex  justify-content-between block-header align-items-center">
+            <h2 class="block-header__title my-0">{{'page.about_us' | translate}}</h2>
+            <a role="button" class="block-header__link text-decoration-none"
+               *ngIf="activeTab !== 'about'"
+               (click)="activateAboutUsTab()">{{"see_more"
+              | translate}}</a>
+          </section>
+
+          <app-page-about [address]="organization?.address"
+                          [phones]="organization?.phones"
+                          [emails]="organization?.emails"
+                          [coordinates]="organization?.location?.coordinates"
+                          [websiteUrl]="organization?.website">
+          </app-page-about>
+
+          <app-social-links [socialLinks]="organization?.socialLinks" class="d-block sidebar"></app-social-links>
+        </div>
+      </div>
+      <div class="profile-page__right-section">
+        <h1 class="user-name">{{organization?.name}}</h1>
+        <p class="date">{{ 'user.joined' | translate }} {{ organization?.createdAt | date: 'mediumDate':undefined:locale}}</p>
+        <p class="business-type">{{organization?.professional_category}}</p>
+        <app-invite-btn class="d-inline-block"
+                        [evenId]="organization?._id"
+                        [organization]="organization"
+                        [showInviteButton]="true"></app-invite-btn>
+        <app-social-links [socialLinks]="organization?.socialLinks"
+                          class="d-xl-none d-block social-mobile "></app-social-links>
+        <app-organization-tabs [organization]="organization"
+                               [isFollowerPage]="isFollowerPage"
+                               [createdEvents]="createdEvents"
+                               (activeTab)="changeActiveTab($event)"
+                               (phonesData)="updatePhones($event)"
+                               (organData)="updateOrganizationInfo($event)"
+                               (businessData)="updateBusinessInfo($event)"
+                               (addNewModeratorOutput)="addNewModerator($event)"
+                               (deleteModeratorOutput)="deleteModerator($event)"
+                               class="d-none d-xl-block"></app-organization-tabs>
+      </div>
+      <!--<div class="d-block d-lg-none w-100" *ngIf="organization?.moderators.length > 0">-->
+      <!--<h4 class="title">{{"user.moderators" | translate}}</h4>-->
+      <!--<ul class="moderators list-unstyled overflow-auto">-->
+      <!--<li class="d-flex align-items-center moderators__item"-->
+      <!--*ngFor="let moderator of organization?.moderators.slice(0, 2)">-->
+      <!--<a [routerLink]="['/user/', moderator._id]"-->
+      <!--class="d-block moderators__item__image rounded-circle text-decoration-none overflow-hidden">-->
+      <!--<img [src]="moderator.image" class="w-100 h-100" alt="">-->
+      <!--</a>-->
+      <!--<a [routerLink]="['/user/', moderator._id]" class="moderators__item__name text-decoration-none">{{-->
+      <!--moderator.name }} {{ moderator.surname }}</a>-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--<app-pages-categories [user]="organization" [isFollowerPage]="isFollowerPage"-->
+      <!--class="d-block w-100"></app-pages-categories>-->
+      <!--</div>-->
+      <app-organization-tabs [organization]="organization"
+                             [isFollowerPage]="isFollowerPage"
+                             [createdEvents]="createdEvents"
+                             (phonesData)="updatePhones($event)"
+                             (organData)="updateOrganizationInfo($event)"
+                             (deleteModeratorOutput)="deleteModerator($event)"
+                             (addNewModeratorOutput)="addNewModerator($event)"
+                             class="d-block d-xl-none w-100"></app-organization-tabs>
+    </section>
+  </section>
+</main>
+<ng-template #notAvailable>
+  <app-not-available *ngIf="organUnavailable"></app-not-available>
+</ng-template>

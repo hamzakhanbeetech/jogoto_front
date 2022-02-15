@@ -1,0 +1,119 @@
+<section class="container-fluid search-page">
+  <section
+    class="text-center home__filter d-flex flex-column align-items-center justify-content-center position-relative">
+    <form [formGroup]="searchForm" class="search__block mx-auto" >
+      <div class=" d-flex flex-wrap">
+        <div
+          class="form-group mb-0 col p-0 d-flex search__block__select-input position-relative bg-white position-relative  order-sm-2 order-1">
+          <input type="text" class="form-control search__block__input shadow-none"
+                 [placeholder]="'home.search_placeholder' | translate" (input)="searchText($event)"
+                 (keyup)="closeKeyBoard($event)"
+                 (clickOutside)="inputBlur($event)"
+                 #searchInputText
+                 formControlName="search"/>
+          <button class="border-0 bg-transparent position-absolute reset-inputs"
+                  *ngIf="resetButton"
+                  id="reset"
+                  (click)="resetSearchText()" type="button"><i class="icon-close" id="close"></i></button>
+        </div>
+        <mat-form-field class="d-flex align-items-center justify-content-center order-2 order-sm-1 bg-white">
+          <mat-select formControlName="searchBy">
+            <mat-option value="event">{{'filter.events' | translate}}</mat-option>
+            <mat-option value="group">{{'filter.groups' | translate}}</mat-option>
+            <mat-option value="user">{{'filter.users' | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="search__block__btn border-0 text-white order-3" type="submit" (click)="onClickSearch()"><i
+          class="icon-search"></i></button>
+      </div>
+      <div [ngClass]="{'d-block':isShowFilters,'d-none':!isShowFilters}">
+        <div class="d-sm-flex d-none flex-wrap justify-content-between search__block__btn-group w-100"
+             *ngIf="!smallDisplay">
+          <app-filter-where #filterWhere></app-filter-where>
+          <app-filter-when></app-filter-when>
+<!--          <app-filter></app-filter>-->
+          <app-filter-category></app-filter-category>
+        </div>
+      </div>
+      <div [ngClass]="{'d-block':isShowFilters,'d-none':!isShowFilters}">
+        <div class="d-flex flex-wrap justify-content-between search__block__btn-group d-sm-none w-100">
+          <button mat-button (click)="openDialog('dropdownWhere',title.dropdownWhere)" type="button" class="filter-btn">
+            <i class="icon-pin-location"></i>
+          </button>
+          <button mat-button (click)="openDialog('dropdownWhen',title.dropdownWhen)" type="button" class="filter-btn">
+            <i class="icon-when-calendar"></i>
+          </button>
+<!--          <button mat-button (click)="openDialog('dropdownFilter',title.filter)" type="button" class="filter-btn">-->
+<!--            <i class="icon-filter"></i>{{'filter.filter' | translate}}</button>-->
+          <button mat-button (click)="openDialog('dropdownCats',title.dropdownCats)" type="button" class="filter-btn">
+            <i class="icon-category"></i></button>
+        </div>
+      </div>
+    </form>
+  </section>
+</section>
+
+<!--TODO show if searched event-->
+<app-selected-filters [searchingData]="eventSearchingData"
+                      (openFilter)="openFilter($event)"
+                      [style.display]="(isShowFilters) ? 'block' : 'none'">
+</app-selected-filters>
+<div class="tabs-height  container" #searchTabs
+     [ngClass]="{'d-none':searchType=='user' || searchType=='group'}">
+  <app-search-tabs class="tabs-height d-block" *ngIf="searchType == 'event' && isShowFilters"
+                   (onChanged)="tabChange($event)"
+                   [searchDate]="{end:eventSearchingData.end_date, start:eventSearchingData.start_date}"
+                   [loading]="loading && !isScroll" [isScroll]="isScroll" (checkPopularToggle)="checkPopularToggle($event)"></app-search-tabs>
+
+</div>
+<!--TODO show if search only users-->
+<div class="container-fluid">
+  <div class="container" [ngClass]="{'d-none':searchType!='user', 'users-section-height': !emptyResult}" #searchUsers>
+    <app-search-users *ngIf="searchType=='user'" [searchingData]="userSearchingData" [isAuthorized]="isAuthorized"
+                      [users]="users"></app-search-users>
+
+  </div>
+</div>
+
+<section class="container-fluid">
+  <section class="container position-relative search-group" [ngClass]="{'d-none':searchType!='group' || emptyResult}"
+           #searchGroupsTab>
+    <section class="row d-flex" *ngIf="searchType=='group'">
+      <app-group-column class="shadow overflow-hidden" [isSearchPage]="true" [currentGroup]="group"
+                        [userIsLoggedIn]="isAuthorized" *ngFor="let group of groups"></app-group-column>
+    </section>
+  </section>
+</section>
+
+
+<section class="container p-sm-0">
+  <app-loading *ngIf="loading && searchType !=='event'" class="d-flex justify-content-center pt-5"></app-loading>
+  <app-no-search-result *ngIf="!loading && emptyResult && searchType=='group'" [noSearchResult]="noSearchResult?.group">
+  </app-no-search-result>
+  <section *ngIf="(!loading && emptyResult && searchType=='event' && !isFullMap) || (!loading && searchType=='event' && suggestedEventsblock && !isFullMap)">
+    <app-block-title-see-more class="w-100 mt-3 d-block" [title]=" 'search.suggested_events' | translate">
+    </app-block-title-see-more>
+    <section
+      class="d-flex flex-wrap suggested-events">
+      <app-event-column *ngFor="let event of suggestedEvents" [eventItem]="event" [isShowUserIcons]="false"
+                        [searchDate]="{end: eventSearchingData.end_date, start: eventSearchingData.start_date, isMultiDate:event.dates.length > 1}"
+                        [isShowDescription]="false" [userIsLoggedIn]="isAuthorized"></app-event-column>
+      <div class="text-center w-100">
+        <app-loading *ngIf="suggestedEventLoading"></app-loading>
+      </div>
+      <div infiniteScroll [infiniteScrollDistance]="0.5" [infiniteScrollThrottle]="700"
+           (scrolled)="onEventScroll()" *ngIf="suggestedEventsCount>suggestedEvenSkip"></div>
+    </section>
+  </section>
+  <app-no-search-result *ngIf="!loading && emptyResult && searchType=='user'" [noSearchResult]="noSearchResult?.user">
+  </app-no-search-result>
+</section>
+<div class="search-results" infiniteScroll [infiniteScrollDistance]="0.1" [infiniteScrollThrottle]="500"
+     (scrolled)="onScroll()"></div>
+<!--error success messages block-->
+<app-allert-message></app-allert-message>
+
+<!-- Event snippet for Website traffic conversion page -->
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-745214556/pYyFCKmR4dYCENykrOMC'});
+</script>

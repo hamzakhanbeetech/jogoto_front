@@ -1,0 +1,115 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.event {
+  @include font-size($fz-16);
+  @include border-radius(5px);
+  padding: 20px;
+  &__image {
+    @include border-radius(5px);
+    @include size(270px, 180px);
+    min-width: 270px;
+    margin-right: 20px;
+    overflow: hidden;
+    img {
+      @include size(inherit);
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &__close {
+    &__btn {
+      color: $lighter-gray;
+      margin-left: 50px;
+      background: transparent;
+    }
+  }
+  app-event-iterested-section {
+    .event__interested {
+      padding: 10px 40px;
+    }
+  }
+  app-event-short-descriptiopn {
+    .event-data__date {
+      @extend %proxima-semibold;
+    }
+  }
+  footer {
+    app-event-column {
+      app-event-category-btn {
+        .event__category-btn {
+          min-width: auto;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+
+@include media-breakpoint-down(lg) {
+  .event {
+    padding: 15px;
+    &__image {
+      @include size(250px, 166px);
+      min-width: 250px;
+      margin-right: 10px;
+    }
+    app-event-iterested-section {
+      .event__interested {
+        padding: 8px 20px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event {
+    padding: 15px;
+    &__image {
+      @include size(200px, 166px);
+      min-width: 200px;
+      margin-right: 10px;
+    }
+    app-event-iterested-section {
+      .event__interested {
+        padding: 8px 20px;
+      }
+    }
+    &__close {
+      &__btn {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .event {
+    @include border-radius(0);
+    border: none;
+    padding: 15px;
+    &__image {
+      @include size(100%, 190px);
+      min-width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px !important;
+    }
+    app-event-iterested-section {
+      .event__interested {
+        padding: 8px 20px;
+      }
+    }
+    &__close {
+      position: absolute;
+      right: 30px;
+      top: 30px;
+      &__btn {
+        background: rgba(0, 0, 0, .5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

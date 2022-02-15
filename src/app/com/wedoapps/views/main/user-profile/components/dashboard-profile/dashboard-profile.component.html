@@ -1,0 +1,378 @@
+<div class="tab-section position-relative">
+  <tabset #staticTabs>
+    <tab
+      [heading]="(!isFollowerPage ? 'dashboard' : '') | translate"
+      id="tab1"
+      class="tab"
+    >
+      <section class="d-flex justify-content-between flex-wrap">
+        <div
+          class="
+            d-flex
+            justify-content-between
+            align-items-center
+            statistics-block
+            blue
+            shadow
+            text-decoration-none
+            overflow-hidden
+          "
+        >
+          <div class="statistics-block__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li>
+                <a
+                  [routerLink]="['/basic/events/' + user?._id || '' | localize]"
+                  [queryParams]="{ type: 'created', filter: 'all' }"
+                  class="
+                    statistics-block__items__item
+                    d-flex
+                    text-decoration-none
+                    justify-content-between
+                  "
+                >
+                  <span>{{ "created" | translate }}</span>
+                  <span>{{ user?.created_events_count }}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/basic/events/' + user?._id || '' | localize]"
+                  [queryParams]="{ type: 'created', filter: 'incoming' }"
+                  class="
+                    statistics-block__items__item
+                    d-flex
+                    text-decoration-none
+                    justify-content-between
+                  "
+                >
+                  <span>{{ "upcoming" | translate }}</span>
+                  <span>{{ user?.upcoming_events_count }}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/basic/events/' + user?._id || '' | localize]"
+                  [queryParams]="{ type: 'created', filter: 'past' }"
+                  class="
+                    statistics-block__items__item
+                    d-flex
+                    text-decoration-none
+                    justify-content-between
+                  "
+                >
+                  <span>{{ "past" | translate }}</span>
+                  <span>{{ user?.past_events_count }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="
+              statistics-block__icon
+              text-white
+              d-flex
+              align-items-center
+              justify-content-center
+            "
+          >
+            <div
+              class="
+                d-flex
+                justify-content-center
+                flex-column
+                align-items-center
+              "
+            >
+              <i class="icon-calendar"></i>
+              <p class="mb-0 statistics-block__icon__text">
+                {{ "statistic.events" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            d-flex
+            justify-content-between
+            align-items-center
+            overflow-hidden
+            statistics-block
+            orange
+            shadow
+            text-decoration-none
+          "
+        >
+          <div class="statistics-block__items w-100 h-100">
+            <ul class="list-unstyled m-0">
+              <li>
+                <a
+                  [routerLink]="['/basic/groups/' + user?._id || '' | localize]"
+                  [queryParams]="{ type: 'manage' }"
+                  class="
+                    statistics-block__items__item
+                    d-flex
+                    text-decoration-none
+                    justify-content-between
+                  "
+                >
+                  <span>{{ "created" | translate }}</span>
+                  <span>{{ user?.my_groups_count }}</span></a
+                >
+              </li>
+              <li>
+                <a
+                  [routerLink]="['/basic/groups/' + user?._id || '' | localize]"
+                  [queryParams]="{ type: 'in' }"
+                  class="
+                    statistics-block__items__item
+                    d-flex
+                    text-decoration-none
+                    justify-content-between
+                  "
+                >
+                  <span>{{ "membership" | translate }}</span>
+                  <span>{{ user?.group_membership }}</span></a
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            class="
+              statistics-block__icon
+              text-white
+              d-flex
+              align-items-center
+              justify-content-center
+            "
+          >
+            <div
+              class="
+                d-flex
+                justify-content-center
+                flex-column
+                align-items-center
+              "
+            >
+              <i class="icon-group"></i>
+              <p class="mb-0 statistics-block__icon__text">
+                {{ "groups" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <app-last-followers
+        [userType]="user?.professional_type"
+        [followUsers]="followUsers"
+        [userId]="user?._id"
+        [isFollowerPage]="isFollowerPage"
+      ></app-last-followers>
+    </tab>
+
+    <tab [heading]="'profile' | translate" *ngIf="!isFollowerPage">
+      <button
+        type="button"
+        [disabled]="profileForm.invalid && profileForm.touched"
+        class="position-absolute tab__edit__btn border-0 bg-transparent"
+        (click)="editInfo()"
+      >
+        {{ "page.edit" | translate }}
+      </button>
+      <p class="text-right analitics">
+        {{ "user.data_analiysis" | translate }} <i class="icon-secury"></i>
+      </p>
+
+      <form action="" class="edit-profile" [formGroup]="profileForm">
+        <div class="d-flex flex-wrap justify-content-between">
+          <div class="form-group edit-profile__input">
+            <label for="firstname">{{ "user.firstname" | translate }}</label>
+            <input
+              type="text"
+              class="form-control shadow-none"
+              [readonly]="isEditable"
+              formControlName="name"
+              [value]="user?.name"
+              id="firstname"
+            />
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="profileForm.get('name').hasError('required')"
+            >
+              {{ "user.name_is_required" | translate }}
+            </p>
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="profileForm.get('name').hasError('pattern')"
+            >
+              {{ "registration.invalid_first_name" | translate }}
+            </p>
+          </div>
+          <div class="form-group edit-profile__input">
+            <label for="lastname">{{ "user.lastname" | translate }}</label>
+            <input
+              type="text"
+              class="form-control shadow-none"
+              [readonly]="isEditable"
+              formControlName="surname"
+              [value]="user?.surname"
+              id="lastname"
+            />
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="profileForm.get('surname').hasError('required')"
+            >
+              {{ "user.lastname_is_required" | translate }}
+            </p>
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="profileForm.get('surname').hasError('pattern')"
+            >
+              {{ "registration.invalid_last_name" | translate }}
+            </p>
+          </div>
+          <div class="form-group edit-profile__input">
+            <label for="email"
+              >{{ "user.email" | translate }} <i class="icon-secury"></i
+            ></label>
+            <input
+              type="email"
+              class="form-control shadow-none"
+              [readonly]="true"
+              formControlName="email"
+              value="my.profile@example.com "
+              id="email"
+            />
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="profileForm.get('email').hasError('required')"
+            >
+              {{ "registration.email_required" | translate }}
+            </p>
+          </div>
+          <div class="edit-profile__input">
+            <label class="d-block"
+              >{{ "user.date_of_birth" | translate }} <i class="icon-secury"></i
+            ></label>
+        
+
+            <p-calendar
+            formControlName="dob"
+            class="w-100 d-block"
+              required
+              [showIcon]="true"
+              
+            dateFormat="dd/mm/yy"
+            [locale]="calendarSettings"
+            [defaultDate]="defDate"
+            
+            [monthNavigator]="true" [yearNavigator]="true"
+            (onSelect)="daySelected($event)"
+            (onMonthChange)="monthSelected($event)"
+            (onYearChange)="monthSelected($event)"
+         
+            [yearRange]="dateRange" 
+            (yearSelected)="chosenYearHandler($event)"
+            (monthSelected)="chosenMonthHandler($event)" 
+            [placeholder]="'registration.dateOfBirth' | translate "
+            ></p-calendar>
+
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="profileForm.get('dob').hasError('required')"
+            >
+              {{ "user.date_is_required" | translate }}
+            </p>
+            <p
+              class="m-0 position-absolute text-danger"
+              *ngIf="
+                !profileForm.get('dob').hasError('required') &&
+                profileForm.get('dob').hasError('invalidDate')
+              "
+            >
+              {{ "user.date_is_invalid" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="gender">
+          <p class="gender__title">{{ "user.gender" | translate }}</p>
+          <div class="registration__radioBtn">
+            <mat-radio-group
+              class="d-flex"
+              aria-label="Select an option"
+              formControlName="gender"
+            >
+              <mat-radio-button value="M" checked="">{{
+                "registration.male" | translate
+              }}</mat-radio-button>
+              <mat-radio-button value="F">{{
+                "registration.female" | translate
+              }}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div
+          class="form-group edit-profile__input w-100 position-relative"
+          formGroupName="address"
+        >
+          <label for="location"
+            >{{ "user.address_location" | translate }}
+            <i class="icon-secury"></i
+          ></label>
+          <input
+            type="text"
+            class="form-control shadow-none"
+            [readonly]="isEditable"
+            formControlName="full_address"
+            [ngbTypeahead]="autocomplete"
+            (selectItem)="handleAddressChange($event)"
+            [value]="user?.address.full_address || ''"
+            id="location"
+          />
+        </div>
+        <app-social-network
+          [googleData]="user?.google"
+          [appleData]="user?.apple"
+          [fbData]="user?.facebook"
+        ></app-social-network>
+        <div class="edit text-right" *ngIf="!isEditable">
+          <button
+            class="edit__close"
+            type="button"
+            (click)="resetForm()"
+            [disabled]="isEditable"
+          >
+            {{ "user.cancel" | translate }}
+          </button>
+          <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+          <button
+            class="
+              edit__save
+              text-white text-uppercase
+              border-0
+              d-inline-flex
+              justify-content-center
+              align-items-center
+            "
+            (click)="updateUserInfo()"
+            type="button"
+            [ngClass]="{
+              disabled: isEditable || profileForm.invalid || isLoading
+            }"
+            [disabled]="isEditable || profileForm.invalid || isLoading"
+          >
+            <span>{{ "user.save" | translate }} </span>
+            <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+            <span
+              class="spinner-border"
+              [ngClass]="isLoading ? 'd-block' : 'd-none'"
+              role="status"
+            >
+              <span class="sr-only">Loading...</span>
+            </span>
+          </button>
+        </div>
+      </form>
+    </tab>
+  </tabset>
+</div>

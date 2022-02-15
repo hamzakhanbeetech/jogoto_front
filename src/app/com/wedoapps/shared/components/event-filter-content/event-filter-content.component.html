@@ -1,0 +1,15 @@
+<form [formGroup]="filtersForm">
+  <div class="filter-content">
+    <h3 class="mt-0 w-100 text-center where__title text-center where__title-header d-none d-sm-block">
+      {{"filter.event_filters" | translate}}</h3>
+    <ul class="d-flex flex-wrap list-unstyled mb-0">
+      <li role="menuitem" class="w-50" *ngFor="let fname of itemsControl.controls;let i = index;">
+        <app-checkbox class="d-block" [formControl]="fname" [filterName]="filterNames[i].name"></app-checkbox>
+      </li>
+    </ul>
+  </div>
+  <footer class="filter__btn__footer">
+    <app-checkbox class="check-all mb-0" [value]="isCheckAll" (chackboxValue)="onClickCheckAll($event)" [filterName]="'check_all' | translate">
+    </app-checkbox>
+  </footer>
+</form>

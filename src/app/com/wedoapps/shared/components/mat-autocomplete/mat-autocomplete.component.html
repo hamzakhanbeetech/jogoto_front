@@ -1,0 +1,26 @@
+<div class="ng-autocomplete location w-100">
+  <ng-autocomplete
+    (closed)="blur.emit()"
+    (selected)='choose($event)'
+    (inputChanged)='_getPlaceAutocomplete($event)'
+    (inputCleared)="inputCleared()"
+    [data]="options"
+    [notFoundText]="'not-found.autocomplete'|translate"
+    [placeHolder]="(placeholder || 'filter.enter_location') | translate"
+    [searchKeyword]="keyword"
+    [itemTemplate]="itemTemplate"
+    [formControl]="myControl"
+    [notFoundTemplate]="notFoundTemplate"
+    (keyup.enter)="enterKeyEvent()"
+    [disabled]="isOnline"
+    >
+  </ng-autocomplete>
+
+  <ng-template #itemTemplate let-item>
+    <a [innerHTML]="item?.description"></a>
+  </ng-template>
+
+  <ng-template #notFoundTemplate  let-notFound>
+    <div [innerHTML]="notFound" class="text-left"></div>
+  </ng-template>
+</div>

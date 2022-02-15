@@ -1,0 +1,65 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+.group__sidebar__container  {
+  @include border-radius(5px);
+  box-shadow: 0 0 10px $border-color;
+  padding: 23px 15px;
+  margin-bottom: 20px;
+  @include group-sidebar;
+  &.interested-section {
+    z-index: 1000;
+    top: 90px;
+  }
+}
+.sugessted-group {
+  @include border-radius(5px);
+  border: 1px solid $border-color;
+  &:not(:last-of-type) {
+    margin-bottom: 20px;
+  }
+  &__image{
+    @include size(100%,180px);
+    @include border-top-left-radius(5px);
+    @include border-top-right-radius(5px);
+  }
+  &__info {
+    padding: 18px 15px;
+    &__title {
+      @include font-size($fz-16);
+      color: $dark-gray;
+      @include hover-focus-active {
+        color: $dark-gray;
+      }
+    }
+    &__type {
+      @include font-size($fz-14);
+      color: $lighter-gray;
+      margin: 5px 0 9px;
+    }
+    &__members {
+      @include members-list;
+      &__item{
+        @include font-size($fz-14);
+      }
+    }
+  }
+  &__btn {
+    @include gray-btn-icon;
+    margin-left: 20px;
+    i{
+      margin-right: 0;
+    }
+  }
+}
+
+.title {
+  @extend %proxima-semibold;
+  @include font-size($fz-16);
+  color: $dark-gray;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.btn-link {
+  color: $blue;
+  line-height: 1;
+}

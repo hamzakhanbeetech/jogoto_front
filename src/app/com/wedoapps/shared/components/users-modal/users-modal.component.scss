@@ -1,0 +1,39 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+@include modals-header;
+
+app-users-modal {
+  display: block;
+
+  .form-control {
+    @include login-input;
+    padding: 14px 20px 14px 50px;
+  }
+
+  app-no-result {
+    padding: 60px;
+    min-height: 210px;
+  }
+}
+
+.user-modal {
+  @include users-list-modal;
+
+  &__user {
+    &__follow {
+      @include size(106px, 30px !important);
+      min-width: 106px;
+      @include login-btn;
+      padding: 0;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  app-users-modal {
+    .form-control {
+      padding: 14px 20px 14px 50px;
+    }
+  }
+}

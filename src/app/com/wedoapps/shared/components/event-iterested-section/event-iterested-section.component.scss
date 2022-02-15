@@ -1,0 +1,71 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+@import '../../../../../../assets/scss/base/variables';
+
+.interested-containe{
+  border-top:1px solid $light-gray;
+  padding-top: 20px;
+}
+.event__interested {
+@include gray-btn-icon;
+  &__users__container {
+    line-height: 0;
+
+  }
+  &__user {
+    figure {
+      line-height: 0;
+      img {
+        @include img-fluid;
+      }
+    }
+    &__img {
+      @include size(30px);
+      border: 1px solid $event-title;
+      &:nth-child(2) {
+        transform: translateX(-10px);
+      }
+      &:nth-child(3) {
+        transform: translateX(-20px);
+      }
+    }
+    &__count {
+      @extend %proxima-regular;
+      color: $event-title;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .event__interested {
+    @include font-size($fz-14);
+    &__user {
+      &__img {
+        @include size(26px);
+        &:nth-child(2) {
+          transform: translateX(-5px);
+        }
+        &:nth-child(3) {
+          transform: translateX(-10px);
+        }
+      }
+      &__count {
+        @include font-size($fz-14);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .event__interested {
+    @include font-size($fz-12);
+    i{
+      margin-right: 5px;
+  }
+    &__user {
+      &__count {
+        @include font-size($fz-12);
+      }
+    }
+  }
+}

@@ -1,0 +1,299 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.my-invitations {
+  &__header {
+    color: $dark-gray;
+    border-bottom: 1px solid $blue;
+    margin: 45px 0 23px;
+    &__title {
+      @include font-size($fz-24);
+      margin: 0 0 20px;
+    }
+  }
+}
+
+
+:host::ng-deep {
+  @include tabs;
+  .nav-tabs {
+    border-bottom: none;
+  }
+}
+
+.invitation {
+  width: 710px;
+  &-block {
+    @include border-radius(5px);
+    width: 100%;
+    margin-bottom: 30px;
+    background: $gray;
+    line-height: 1;
+    &__header {
+      border-bottom: 1px solid $border-color;
+      padding: 20px 20px 25px;
+      &__image {
+        @include user-image(50px, 45px, 40px)
+      }
+      &__info {
+        width: calc(100% - 65px);
+        &__name {
+          @include font-size($fz-16);
+          color: $dark-gray;
+          margin-bottom: 8px;
+          a {
+            @extend %proxima-semibold;
+            color: $dark-gray;
+            @include hover-focus-active {
+              color: $dark-gray;
+            }
+          }
+        }
+        &__date {
+          @include font-size($fz-14);
+          color: $text-color;
+        }
+      }
+    }
+    &__body {
+      padding: 20px;
+      &__image {
+        @include size(208px, 110px);
+        @include border-radius(5px);
+        border: 1px solid $gray70;
+        margin-right: 20px;
+        &.page-image{
+          @include size(120px);
+        }
+        img {
+          @include object-fit;
+        }
+      }
+      &__categories {
+        width: 208px;
+        padding-top: 10px;
+        &__category {
+          @include size(75px, 12px);
+          @include border-radius(2px);
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+      }
+      &__info {
+        width: calc(100% - 228px);
+        &__location, &__name {
+          color: $dark-gray;
+          @include hover-focus-active {
+            color: $dark-gray;
+          }
+        }
+        &__name {
+          @include font-size($fz-20);
+          @extend %proxima-semibold;
+        }
+        &__type {
+          color: $text-color;
+          margin: 10px 0 14px;
+        }
+        &__location, &__type, &__date {
+          @include font-size($fz-16);
+        }
+        &__location {
+          margin-bottom: 10px;
+        }
+        &__date {
+          color: $dark-orange;
+        }
+        &__counts {
+          @include members-list;
+          margin: 5px 0 0;
+          &__item {
+            @include font-size($fz-16);
+            color: $dark-gray;
+          }
+        }
+      }
+    }
+    &__footer {
+      padding: 0 20px 20px;
+      &__decline {
+        @include gray-btn-icon;
+        margin-right: 20px;
+      }
+      &__accept {
+        @include login-btn
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .my-invitations {
+    &__header {
+      margin: 45px 0 17px;
+      &__title {
+        @include font-size($fz-18);
+        margin: 0 0 16px;
+      }
+    }
+  }
+
+  .invitation {
+    width: 100%;
+    &-block {
+      margin-bottom: 15px;
+      &__header {
+        padding: 10px 15px;
+        &__info {
+          width: calc(100% - 60px);
+          &__name {
+            @include font-size($fz-14);
+          }
+          &__date {
+            @include font-size($fz-12);
+          }
+        }
+      }
+      &__body {
+        padding: 15px;
+        &__image {
+          @include size(190px, 100px);
+          margin-right: 15px;
+          &.page-image{
+            @include size(100px);
+          }
+        }
+        &__categories {
+          width: 190px;
+          padding-top: 5px;
+          &__category {
+            @include size(65px, 10px);
+          }
+        }
+        &__info {
+          width: calc(100% - 205px);
+          &__name {
+            @include font-size($fz-18);
+          }
+          &__type {
+            color: $text-color;
+            margin: 8px 0 13px;
+          }
+          &__location, &__type, &__date {
+            @include font-size($fz-14);
+          }
+          &__location {
+            margin-bottom: 8px;
+          }
+          &__counts {
+            margin: 5px 0 0;
+            &__item {
+              @include font-size($fz-14);
+            }
+          }
+        }
+      }
+      &__footer {
+        padding: 0 15px 15px;
+        &__decline {
+          margin-right: 15px;
+        }
+        &__decline, &__accept {
+          @include size(94px, 30px);
+          @include font-size($fz-14);
+          padding: 5px;
+          line-height: 1;
+        }
+      }
+    }
+  }
+  ::ng-deep {
+    .tab-content {
+      width: 100%;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .my-invitations {
+    &__header {
+      margin: 22px 0 12px;
+      &__title {
+        @include font-size($fz-16);
+        margin: 0 0 11px;
+      }
+    }
+  }
+
+  .invitation-block {
+    &__header {
+      &__info {
+        width: calc(100% - 55px);
+        &__name {
+          @include font-size($fz-12);
+        }
+        &__date {
+          @include font-size($fz-10);
+        }
+      }
+    }
+    &__body {
+      &__image {
+        @include size(100px, 52px);
+        margin-right: 10px;
+        &.page-image{
+          @include size(56px);
+        }
+      }
+      &__categories {
+        width: 100px;
+        &__category {
+          @include size(45px, 10px);
+        }
+      }
+      &__info {
+        width: calc(100% - 110px);
+        &__name {
+          @include font-size($fz-14);
+        }
+        &__type {
+          margin: 4px 0 7px;
+        }
+        &__location, &__type, &__date {
+          @include font-size($fz-12);
+        }
+        &__location {
+          margin-bottom: 7px;
+        }
+        &__counts {
+          margin: 0;
+          &__item {
+            @include font-size($fz-12);
+          }
+        }
+      }
+    }
+    &__footer {
+      &__decline, &__accept {
+        @include size(98px, 28px);
+        @include font-size($fz-12);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .my-invitations-page {
+    padding: 0;
+    .my-invitations {
+      margin: 0;
+      padding: 0 15px;
+    }
+    ::ng-deep {
+      .nav-tabs {
+        padding: 0 15px;
+      }
+    }
+  }
+}

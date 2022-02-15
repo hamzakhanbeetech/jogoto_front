@@ -1,0 +1,85 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.user {
+  line-height: 1;
+  padding: 15px 0;
+  border-bottom: 1px solid $border-color;
+  &__image {
+    @include user-image(75px, 65px, 45px)
+  }
+  &__info {
+    &__name {
+      @include font-size($fz-16);
+      color: $dark-gray;
+      @include hover {
+        color: $dark-gray;
+      }
+      word-break: break-word;
+    }
+    &__position {
+      @include font-size($fz-14);
+      color: $blue;
+      margin: 8px 0 0;
+    }
+  }
+  &__settings {
+    @include border-radius(5px);
+    border: 1px solid $border-color;
+    background: $gray;
+    color: $text-color;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 0;
+    &__dropdown {
+      left: auto !important;
+      right: 0 !important;
+
+      .dropdown-item {
+        @include font-size($fz-14);
+        @include dropdown-list-hover;
+      }
+    }
+  }
+}
+.follow-user{
+  @include blue-btn;
+  @extend %proxima-regular;
+  padding: 0 40px;
+  margin-right: 20px;
+  height: 40px;
+}
+@include media-breakpoint-down(lg) {
+  .user {
+    &__info {
+      &__name {
+        @include font-size($fz-14);
+      }
+    }
+    &__settings {
+      padding: 0 13px;
+    }
+    &__settings,.follow-user{
+      @include font-size($fz-14);
+      height: 36px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .user {
+    &__info {
+      &__name, &__position {
+        @include font-size($fz-12);
+
+      }
+    }
+    &__settings {
+      padding: 0 10px;
+    }
+    &__settings,.follow-user{
+      @include font-size($fz-12);
+      height: 26px;
+    }
+  }
+}

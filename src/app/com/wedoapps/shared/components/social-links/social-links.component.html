@@ -1,0 +1,12 @@
+<ul class="list-unstyled social-icons mb-0">
+  <li class="d-inline-block" *ngFor="let link of socialLinks">
+    <ng-container *ngIf="link.link">
+      <a [href]="link.link"
+         [title]="link.text"
+         class="d-inline-flex align-items-center justify-content-center"
+         target="_blank">
+        <i class="m-0" [ngClass]="link.className"></i>
+      </a>
+    </ng-container>
+  </li>
+</ul>

@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('./assets/fonts/fontello/fontello.eot') format('eot'),
+  url('./assets/fonts/fontello/fontello.woff2') format('woff2'),
+  url('./assets/fonts/fontello/fontello.woff') format('woff'),
+  url('./assets/fonts/fontello/fontello.ttf') format('ttf'),
+  url('./assets/fonts/fontello/fontello.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+//fonts ProximaNova start
+@font-face {
+  font-family: 'ProximaNova-Regular';
+  src: url('./assets/fonts/proxima/ProximaNova-Regular.eot');
+  src: local('./assets/fonts/proxima/Proxima Nova Regular'), local('ProximaNova-Regular'),
+  url('./assets/fonts/proxima/ProximaNova-Regular.eot') format('embedded-opentype'),
+  url('./assets/fonts/proxima/ProximaNova-Regular.woff') format('woff'),
+  url('./assets/fonts/proxima/ProximaNova-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova-Semibold';
+  src: url('./assets/fonts/proxima/ProximaNova-Semibold.eot');
+  src: local('./assets/fonts/proxima/Proxima Nova Semibold'), local('ProximaNova-Regular'),
+  url('./assets/fonts/proxima/ProximaNova-Semibold.eot') format('embedded-opentype'),
+  url('./assets/fonts/proxima/ProximaNova-Semibold.woff') format('woff'),
+  url('./assets/fonts/proxima/ProximaNova-Semibold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova-Semibold-It';
+  src: url('./assets/fonts/proxima/ProximaNova-SemiboldIt.eot');
+  src: local('./assets/fonts/proxima/Proxima Nova Semibold It'), local('ProximaNova-Regular'),
+  url('./assets/fonts/proxima/ProximaNova-SemiboldIt.eot') format('embedded-opentype'),
+  url('./assets/fonts/proxima/ProximaNova-SemiboldIt.woff') format('woff'),
+  url('./assets/fonts/proxima/ProximaNova-SemiboldIt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nova-Lt';
+  src: url('./assets/fonts/proxima/ProximaNova-Semibold.eot');
+  src: local('./assets/fonts/proxima/Proxima Nova Semibold'), local('ProximaNova-Semibold'),
+  url('./assets/fonts/proxima/ProximaNova-Semibold.eot') format('embedded-opentype'),
+  url('./assets/fonts/proxima/ProximaNova-Semibold.woff') format('woff'),
+  url('./assets/fonts/proxima/ProximaNova-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+//fonts ProximaNova end
+
+
+//roboto fonts start
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: url('./assets/fonts/roboto/Roboto-Regular.eot'),
+  url('./assets/fonts/roboto/Roboto-Regular.woff') format('woff'),
+  url('./assets/fonts/roboto/Roboto-Regular.ttf') format('truetype'),
+  url('./assets/fonts/roboto/Roboto-Regular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'display-bold';
+  src: url('./assets/fonts/blacker/Blacker-Display-Bold.eot'),
+  url('./assets/fonts/blacker/Blacker-Display-Bold.woff') format('woff'),
+  url('./assets/fonts/blacker/Blacker-Display-Bold.ttf') format('truetype'),
+  url('./assets/fonts/blacker/Blacker-Display-Bold.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

@@ -1,0 +1,5 @@
+<section class="d-flex  justify-content-between block-header align-items-center">
+  <h2 class="block-header__title my-0 text-orange">{{title}}</h2>
+  <a *ngIf="link" [routerLink]="link|localize" [queryParams]="queryParams"
+     class="block-header__link text-decoration-none">{{"see_more" | translate}}<i class="icon-right-open-big"></i></a>
+</section>

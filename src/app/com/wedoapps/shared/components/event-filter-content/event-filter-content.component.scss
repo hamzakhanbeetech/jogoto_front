@@ -1,0 +1,16 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.filter-content {
+  .where__title-header {
+    color: $blue;
+    @include filter-title;
+    margin-bottom: 20px;
+  }
+  app-checkbox {
+    margin-bottom: 15px;
+  }
+  li{
+    min-width: 155px !important;
+  }
+}

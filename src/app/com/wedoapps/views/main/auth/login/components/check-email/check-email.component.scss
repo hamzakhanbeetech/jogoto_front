@@ -1,0 +1,67 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../../../assets/scss/base/mixins';
+
+.check {
+  &__title {
+    @include login-title
+  }
+
+  &__description {
+    @include font-size($fz-16);
+    color: $text-color;
+    margin: 20px 0;
+  }
+
+  &__sub {
+    @include font-size($fz-14);
+    color: $text-color;
+    margin: 0 0 30px;
+  }
+
+  &__btn {
+    @include login-btn;
+  }
+
+  .error {
+    @include font-size($fz-12);
+    color: $error;
+    top: 40px;
+    left: 10px;
+  }
+
+  &__singnup {
+    @include login-footer
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .check {
+    &__description {
+      @include font-size($fz-14);
+      margin: 20px auto;
+    }
+    &__sub {
+      @include font-size($fz-12);
+      margin: 0 0 50px;
+    }
+    .error {
+      top: 38px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .reset {
+    &__description {
+      @include font-size($fz-12);
+    }
+    &__sub {
+      @include font-size($fz-10);
+      margin: 0 0 40px;
+    }
+    .error {
+      @include font-size($fz-10);
+      top: 39px;
+    }
+  }
+}

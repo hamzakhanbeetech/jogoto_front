@@ -1,0 +1,114 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+::ng-deep {
+  .fc-toolbar h2 {
+    @extend %proxima-semibold;
+    @include font-size($fz-18);
+    color: $dark-gray;
+  }
+  .fc-right > .fc-today-button.fc-button.fc-button-primary {
+    display: none;
+  }
+  .fc-view.fc-dayGridMonth-view.fc-dayGrid-view {
+    @extend %proxima-semibold
+  }
+  .fc th {
+    background: $gray;
+  }
+  body .fc .fc-toolbar {
+    @include border-top-right-radius(5px);
+    @include border-top-left-radius(5px);
+    justify-content: center;
+    padding: 30px 20px;
+    margin: 0;
+    background: $white;
+    border: 1px solid $border-color;
+    border-bottom: none;
+    .fc-button {
+      background: transparent;
+      color: $blue;
+      border: 1px solid $blue;
+      padding: 4px 14px 10px;
+      line-height: 1;
+      .fc-icon-chevron-right:before,
+      .fc-icon-chevron-left:before {
+        @include font-size($fz-16);
+        @extend %fontello;
+      }
+      .fc-icon-chevron-right:before {
+        content: '\e816';
+      }
+      .fc-icon-chevron-left:before {
+        content: '\e817';
+      }
+      @include hover {
+        background: $blue;
+        outline: none;
+      }
+    }
+    .fc-right {
+      position: absolute;
+      left: 20px;
+      .fc-button-group {
+        margin-left: 0;
+      }
+    }
+  }
+  .fc-view-container {
+    @include border-bottom-left-radius(5px);
+    @include border-bottom-right-radius(5px);
+    padding: 0 20px 20px 20px;
+    border: 1px solid $border-color;
+    border-top: none;
+    background: $white;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  ::ng-deep {
+    .fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number, body .fc th {
+      @include font-size($fz-14);
+    }
+    .fc-toolbar h2 {
+      @include font-size($fz-16);
+    }
+  }
+  body .fc .fc-toolbar .fc-button {
+    padding: 4px 10px 10px;
+    .fc-icon-chevron-right:before,
+    .fc-icon-chevron-left:before {
+      @include font-size($fz-14);
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  ::ng-deep {
+    .fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number, body .fc th {
+      @include font-size($fz-12);
+    }
+    .fc-toolbar h2 {
+      @include font-size($fz-14);
+    }
+    body .fc .fc-toolbar {
+      .fc-button {
+        padding: 0 5px 9px;
+        .fc-icon-chevron-right:before,
+        .fc-icon-chevron-left:before {
+          @include font-size($fz-12);
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  ::ng-deep {
+    body .fc .fc-toolbar,.fc-view-container {
+      @include border-radius(0);
+      border-left: none;
+      border-right: none;
+    }
+  }
+}

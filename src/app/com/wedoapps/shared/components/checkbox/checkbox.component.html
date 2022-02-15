@@ -1,0 +1,6 @@
+<label class="container-checkbox position-relative">
+  <input type="checkbox" (change)="onChangeFilterData($event)" [attr.id]="checkboxId != undefined?'checkbox'+checkboxId:null" class="position-absolute" [formControl]="c" >
+  <span class="checkmark"></span>
+  <span class="text">{{filterName}}</span>
+</label>
+

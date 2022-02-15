@@ -1,0 +1,55 @@
+<section class="marging"  *ngIf="true">
+  <h3 class="marging__title text-center">{{'marging.title' | translate}}</h3>
+  <figure class="marging__image overflow-hidden rounded-circle mx-auto">
+    <img class="img-fluid w-100 h-100" [src]="user?.imageLink" [alt]="user?.name + ' ' + user?.surname">
+  </figure>
+  <p class="marging__name d-flex align-items-center justify-content-center">
+    {{user?.name}}
+    {{user?.surname}}
+  </p>
+  <p class="marging__email d-flex align-items-center justify-content-center mb-0">
+    {{user?.email}}
+  </p>
+  <p class="marging__desc d-flex text-center">
+    {{'marging.desc' | translate}}
+  </p>
+
+  <!--TODO add 'marging__input-error' class if input isn't valid-->
+  <div class="form-group marging__input position-relative"
+       [ngClass]="{'marging__input-error': isFormValid() || password.hasError('minlength')}">
+    <input type="password" class="form-control shadow-none"
+           [placeholder]="'login.password' | translate"
+           [formControl]="password"
+    />
+    <p class="m-0 position-absolute"
+       *ngIf="password.touched && password.hasError('required')">
+      {{'login.required_pass' | translate}}
+    </p>
+    <p class="m-0 position-absolute"
+       *ngIf="password.hasError('minlength')">
+       {{'registration.invalid_pass' | translate}}
+    </p>
+  </div>
+  <div class="form-group mb-0 position-relative">
+    <!--TODO if the inputs are empty,or wait server response add "disabled" class-->
+    <button class="marging__btn text-white text-uppercase w-100 border-0 d-flex
+    justify-content-center align-items-center" [ngClass]="{'disabled':password.invalid || loading}"
+            (click)="onConnect()"
+            [disabled]="loading" type="submit">
+      <span>{{connectBtn}} </span>
+      <!--TODO if wait server response add class "d-block" ,else add class "d-none" -->
+      <span class="spinner-border" role="status" *ngIf="loading">
+        <span class="sr-only">Loading...</span>
+      </span></button>
+    <p class="error position-absolute" *ngIf="servErr && !password.dirty">{{servErr}}</p>
+  </div>
+  <div class="marging__singnup">
+    <p class="mb-0 text-center" (click)="removeSocialUser()">
+      {{'marging.return_to' | translate}}
+      <a [routerLink]="'/auth/login'|localize"
+         class="marging__singnup__link text-decoration-none">{{'marging.login' | translate}}</a>
+    </p>
+  </div>
+</section>
+
+<app-complate-information *ngIf="false" [user]="user" (email)="getEmail($event)"></app-complate-information>

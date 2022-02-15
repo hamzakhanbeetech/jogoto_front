@@ -1,0 +1,15 @@
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../../assets/scss/base/mixins';
+
+.invite {
+  @include gray-btn-icon;
+  &__dropdown {
+    left: auto !important;
+    right: 0 !important;
+
+    .dropdown-item {
+      @include font-size($fz-14);
+      @include dropdown-list-hover;
+    }
+  }
+}

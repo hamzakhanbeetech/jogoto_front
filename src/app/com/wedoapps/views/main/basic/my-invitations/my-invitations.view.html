@@ -1,0 +1,248 @@
+<main class="container-fluid my-invitations-page">
+  <section class="container p-0">
+    <section class="my-invitations">
+      <div class="w-100 my-invitations__header"><h3
+        class="my-invitations__header__title">{{"invitations.my_invitations" | translate}}
+        {{ inviteGroupsCount + inviteEventsCount }}</h3></div>
+    </section>
+    <tabset>
+      <!--      event invitation tab-->
+      <tab [heading]="('invitations.event_invitations' | translate) + ' ' + inviteEventsCount" id="eventInvitations"
+           (selectTab)="changeTab($event)">
+        <app-no-event class="d-block w-100" [noResult]="noResult[0]"
+                      *ngIf="!isLoading && !inviteEvents.length"></app-no-event>
+        <section class="invitation">
+          <div class="invitation-block shadow" *ngFor="let invite of inviteEvents; trackBy: trackByFn; let i = index;">
+            <ng-container *ngIf="inviteEvents.length > 0 && invite.event">
+              <header class="invitation-block__header d-flex align-items-center">
+                <a [routerLink]="['/user/'+invite.who_invited._id|localize]"
+                   class="invitation-block__header__image overflow-hidden d-block rounded-circle text-decoration-none">
+                  <img [src]="invite?.who_invited.poster.min" class="w-100 h-100" [alt]="invite?.who_invited.name + ' ' + invite?.who_invited.surname">
+                </a>
+                <div class="invitation-block__header__info">
+                  <p class="invitation-block__header__info__name text-truncate">
+                    <a [routerLink]="['/user/'+invite.who_invited._id|localize]" class="text-decoration-none">{{
+                        invite.who_invited.name }} {{ invite.who_invited.surname }}</a>
+                    {{'invitations.invited_you'|translate}} <a [routerLink]="['/event/'+invite.event._id|localize]"
+                                                class="text-decoration-none">
+                    {{ invite.event && invite.event.name }}
+                  </a>
+                  </p>
+                  <p
+                    class="invitation-block__header__info__date m-0">
+                    {{ (invite.date | date: 'MMMM d,':undefined:locale|titlecase) + ' ' + (invite.date | date: 'EEEE':undefined:locale|titlecase)}}
+                    {{'invitations.at'|translate}} {{ (invite.date | date: 'HH:mm':undefined:locale|titlecase) }}
+                  </p>
+                </div>
+              </header>
+              <section class="invitation-block__body d-flex">
+                <div>
+                  <a [routerLink]="['/event/'+invite.event._id|localize]"
+                     class="invitation-block__body__image d-block text-decoration-none overflow-hidden">
+                    <img [src]="invite.event.poster.cropped.link" class="w-100 h-100" [alt]="invite.event.name">
+                  </a>
+                  <div class="invitation-block__body__categories d-flex">
+                    <div class="invitation-block__body__categories__category" *ngFor="let cat of invite?.event.category"
+                         [ngStyle]="{'background': cat.styleData.color}">
+                    </div>
+                  </div>
+                </div>
+                <div class="invitation-block__body__info">
+                  <a [routerLink]="['/event/'+invite.event._id|localize]"
+                     class="invitation-block__body__info__name text-decoration-none text-truncate d-block">
+                    {{ invite.event.name }}</a>
+                  <p class="invitation-block__body__info__type">{{ (invite.event.visibility === 'public' ? 'create-event.public_event' : 'create-event.private_event')|translate }}</p>
+                  <p class="invitation-block__body__info__date m-0">
+                    <ng-container *ngIf="!invite.event.dates[0].isSameDay && !invite.event.archive;else hours">
+                      {{invite.event.dates[0].start| date:'EEEE, d MMM':undefined:locale|titlecase}}
+                      <span *ngIf="!invite.event.startTimeHidden">{{invite.event.dates[0].start| date:'HH:mm':undefined:locale|titlecase}}</span>
+                      <ng-container *ngIf="!invite.event.endDateAndTimeHidden">{{!!invite.event.dates[0].end?" - ":""}}{{invite.event.dates[0].end| date:'EEEE, d MMM':undefined:locale|titlecase}}</ng-container>
+                      <span *ngIf="!invite.event.endDateAndTimeHidden && !invite.event.endTimeHidden">{{invite.event.dates[0].end| date:' HH:mm':undefined:locale|titlecase}}</span>
+                    </ng-container>
+                    <ng-template #hours>
+                      <ng-container *ngIf="!invite.event.archive">
+                        {{invite.event.dates[0].start| date:'EEEE, d MMM':undefined:locale|titlecase}}
+                        <span *ngIf="!invite.event.startTimeHidden"> {{invite.event.dates[0].start| date:'HH:mm':undefined:locale|titlecase}}</span>
+                        <span *ngIf="!invite.event.endDateAndTimeHidden && !invite.event.endTimeHidden"> {{!!invite.event.dates[0].end?"-":""}}{{invite.event.dates[0].end| date:' HH:mm'}}</span>
+                      </ng-container>
+                    </ng-template>
+                  </p>
+                </div>
+              </section>
+              <footer class="invitation-block__footer d-flex justify-content-end">
+                <button type="button"
+                        (click)="declineToJoinEvent(invite.event, i)"
+                        [ngClass]="{'disabled': loaders[i]}"
+                        class="invitation-block__footer__decline">
+                  {{"invitations.decline" | translate}}
+                </button>
+                <button type="button"
+                        (click)="acceptToJoinEvent(invite.event, i)"
+                        [ngClass]="{'disabled': loaders[i]}"
+                        class="invitation-block__footer__accept text-white m-0 border-0">
+                  {{"invitations.accept" | translate}}
+                </button>
+              </footer>
+            </ng-container>
+          </div>
+        </section>
+        <app-loading class="d-flex align-items-center justify-content-center mb-5" *ngIf="isLoading"></app-loading>
+      </tab>
+      <!--group invitation tab-->
+      <tab [heading]="('invitations.group_invitations' | translate) + ' ' + inviteGroupsCount" id="groupInvitations"
+           (selectTab)="changeTab($event)">
+        <app-no-event class="d-block w-100" [noResult]="noResult[1]"
+                      *ngIf="!isLoading && !inviteGroups.length"></app-no-event>
+        <section class="invitation">
+          <div class="invitation-block shadow" *ngFor="let invite of inviteGroups; trackBy: trackByFn; let i = index">
+            <ng-container *ngIf="invite.group">
+              <header class="invitation-block__header d-flex align-items-center">
+                <a [routerLink]="['/user/'+invite.who_invited._id|localize]"
+                   class="invitation-block__header__image overflow-hidden d-block rounded-circle text-decoration-none">
+                  <img [src]="invite?.who_invited.poster.min" class="w-100 h-100" [alt]="invite?.who_invited.name + ' ' + invite?.who_invited.surname">
+                </a>
+                <div class="invitation-block__header__info">
+                  <p class="invitation-block__header__info__name text-truncate">
+                    <a [routerLink]="['/user/'+invite.who_invited._id|localize]" class="text-decoration-none">
+                      {{ invite.who_invited.name }} {{ invite.who_invited.surname }}</a>
+                    <ng-template [ngIf]="!invite.group.admin && !invite.group.moderator">
+                      {{ 'group.join_group' | translate }}
+                    </ng-template>
+                    <ng-template [ngIf]="invite.group.admin === true">
+                      {{ 'group.admin_group' | translate }}
+                    </ng-template>
+                    <ng-template [ngIf]="invite.group.moderator === true">
+                      {{ 'group.moderator_group' | translate }}
+                    </ng-template>
+                    <a [routerLink]="['/group/'+invite.group._id|localize]" class="text-decoration-none">
+                      {{ invite.group.name }}
+                    </a>
+                  </p>
+                  <p class="invitation-block__header__info__date m-0">
+                    {{ (invite.date | date: 'MMMM d,':undefined:locale|titlecase) + ' ' + (invite.date | date: 'EEEE':undefined:locale|titlecase)}}
+                    {{'invitations.at'|translate}} {{ (invite.date | date: 'HH:mm':undefined:locale|titlecase) }}
+                  </p>
+                </div>
+              </header>
+              <section class="invitation-block__body d-flex">
+                <div>
+                  <a [routerLink]="['/group/'+invite.group._id|localize]"
+                     class="invitation-block__body__image d-block text-decoration-none overflow-hidden">
+                    <img [src]="invite.group.poster?.cropped?.link" class="w-100 h-100" [alt]="invite.group.name">
+                  </a>
+                </div>
+                <div class="invitation-block__body__info d-flex flex-column justify-content-center">
+                  <a [routerLink]="['/group/'+invite.group._id|localize]"
+                     class="invitation-block__body__info__name text-decoration-none text-truncate d-block">
+                    {{ invite.group.name }}</a>
+                  <p
+                    class="invitation-block__body__info__type">{{ (invite.group.group_type === 'open' ? 'create-group.open_group' : 'create-group.close_group')|translate}}
+                    </p>
+                  <ul class="list-unstyled d-flex invitation-block__body__info__counts">
+                    <li
+                      class="invitation-block__body__info__counts__item">{{ invite.group.adminsAndModeratorsCount +
+                    invite.group.standart_users_count }} {{"members" | translate}}
+                    </li>
+                    <li
+                      class="invitation-block__body__info__counts__item">{{ invite.group.events.length }}
+                      {{"invitations.events" | translate}}
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <footer class="invitation-block__footer d-flex justify-content-end">
+                <button type="button"
+                        (click)="declineToJoinGroupEvent(invite.group._id, i)"
+                        [ngClass]="{'disabled': loaders[i] || isPending}"
+                        class="invitation-block__footer__decline">
+                  {{"invitations.decline" | translate}}
+                </button>
+                <button type="button"
+                        (click)="acceptToJoinGroupEvent(invite.group, i, invite.who_invited._id)"
+                        [ngClass]="{'disabled': loaders[i]}"
+                        class="invitation-block__footer__accept text-white m-0 border-0">
+                  {{(isPending ? "invitations.pending" : "invitations.accept") | translate}}
+                </button>
+              </footer>
+            </ng-container>
+          </div>
+        </section>
+        <app-loading class="d-flex align-items-center justify-content-center mb-5" *ngIf="isLoading"></app-loading>
+      </tab>
+      <!--    page invitation tab-->
+      <tab [heading]="('invitations.page_invitations' | translate) + ' ' + invitePageCount" id="pageInvitations"
+           (selectTab)="changeTab($event)">
+        <app-no-event class="d-block w-100" [noResult]="noResult[2]"
+                      *ngIf="!isLoading && !invitePages.length"></app-no-event>
+        <section class="invitation">
+          <div class="invitation-block shadow" *ngFor="let invite of invitePages; trackBy: trackByFn; let i = index">
+            <ng-container *ngIf="invite.page">
+              <header class="invitation-block__header d-flex align-items-center">
+                <a [routerLink]="['/user/'+invite.who_invited._id|localize]"
+                   class="invitation-block__header__image overflow-hidden d-block rounded-circle text-decoration-none">
+                  <img [src]="invite?.who_invited.poster.min" class="w-100 h-100" [alt]="invite?.who_invited.name + ' ' + invite?.who_invited.surname">
+                </a>
+                <div class="invitation-block__header__info">
+                  <p class="invitation-block__header__info__name text-truncate">
+                    <a [routerLink]="['/user/'+invite.who_invited._id|localize]" class="text-decoration-none">
+                      {{ invite.who_invited.name }} {{ invite.who_invited.surname }}</a>
+                    {{ 'invitations.invite_page' | translate }}
+                    <a [routerLink]="['/organization/'+ invite.page._id|localize]" class="text-decoration-none">
+                      {{ invite.page.name }}
+                    </a>
+                  </p>
+                  <p class="invitation-block__header__info__date m-0">
+                    {{ (invite.date | date: 'MMMM d,':undefined:locale|titlecase) + ' ' + (invite.date | date: 'EEEE':undefined:locale|titlecase)}}
+                    {{'invitations.at'|translate}} {{ (invite.date | date: 'HH:mm':undefined:locale|titlecase) }}
+                  </p>
+                </div>
+              </header>
+              <section class="invitation-block__body d-flex">
+                <div>
+                  <a [routerLink]="['/organization/'+invite.page._id|localize]"
+                     class="invitation-block__body__image d-block text-decoration-none overflow-hidden page-image">
+                    <img [src]="invite.page.poster?.cropped?.link" class="w-100 h-100" [alt]="invite.page.name">
+                  </a>
+                </div>
+                <div class="invitation-block__body__info d-flex flex-column justify-content-center">
+                  <a [routerLink]="['/organization/'+invite.page._id|localize]"
+                     class="invitation-block__body__info__name text-decoration-none text-truncate d-block">
+                    {{ invite.page.name }}</a>
+                  <p class="invitation-block__body__info__type">{{invite.page.professional_category}}</p>
+                  <p class="invitation-block__body__info__location text-truncate">{{invite.page.address.full_address}}</p>
+                  <ul class="list-unstyled d-flex invitation-block__body__info__counts">
+                    <li
+                      class="invitation-block__body__info__counts__item">{{invite.followersCount }} {{"members" | translate}}
+                    </li>
+                    <li
+                      class="invitation-block__body__info__counts__item">{{ invite.eventsCount}}
+                      {{"invitations.events" | translate}}
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <footer class="invitation-block__footer d-flex justify-content-end">
+                <button type="button"
+                        (click)="declineToJoinPageInvite(invite.page._id, i)"
+                        [ngClass]="{'disabled': loaders[i] || isPending}"
+                        class="invitation-block__footer__decline">
+                  {{"invitations.decline" | translate}}
+                </button>
+                <button type="button"
+                        (click)="acceptToJoinPageInvite(invite.page, i)"
+                        [ngClass]="{'disabled': loaders[i]}"
+                        class="invitation-block__footer__accept text-white m-0 border-0">
+                  {{(isPending ? "invitations.pending" : "invitations.accept") | translate}}
+                </button>
+              </footer>
+            </ng-container>
+          </div>
+        </section>
+        <app-loading class="d-flex align-items-center justify-content-center mb-5"
+                     *ngIf="isLoading"></app-loading>
+      </tab>
+
+    </tabset>
+
+  </section>
+</main>

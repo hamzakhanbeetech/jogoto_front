@@ -1,0 +1,22 @@
+@import '../../../../../../../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../../../../../../assets/scss/base/mixins';
+
+.social-icons{
+    li {
+      a {
+        @include social-icons;
+        @include size(36px);
+      }
+      &:first-child{
+        a{
+          margin-left: 0;
+        }
+      }
+      &:not(:first-child){
+        a{
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+

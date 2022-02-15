@@ -1,0 +1,28 @@
+<section class="d-flex justify-content-between align-items-center interested-containe">
+  <!--TODO add 'active' class if the ivet is in user inerested list-->
+  <button type="button" class="event__interested"
+          *ngIf="!isSettingsPage"
+          (click)="joinToEvent()"
+          [ngClass]="{'active': isInterested}"
+          [disabled]="iAmOrgnizer">
+    <i class="icon-bookmark"></i>{{"event.interested" | translate}}
+  </button>
+  <button type="button" class="event__interested"
+          *ngIf="isSettingsPage"
+          (click)="unblockEvent()"
+          [ngClass]="{'active': isInterested}"
+          [disabled]="iAmOrgnizer">{{"settings.unblock" | translate}}
+  </button>
+  <section class="event__interested__user d-flex align-items-center" *ngIf="joinedUsers?.length > 10">
+    <div class="mb-0 event__interested__users__container" *ngIf="isShowUserIcons">
+      <figure class="d-inline-block rounded-circle overflow-hidden event__interested__user__img m-0"
+        *ngFor="let user of joinedUsers| slice:0:3">
+        <img [src]="user.poster.min" class="img-fluid w-100 h-100" alt="" /></figure>
+    </div>
+    <p class="event__interested__user__count mb-0" [ngClass]="{'ml-2': joinedUsers?.length === 1}">
+      {{joinedUsers?.length}}
+      <span *ngIf="joinedUsers?.length > 1; else plural">{{'event.users' | translate}}</span>
+      <ng-template #plural>{{'event.user' | translate}}</ng-template>
+    </p>
+  </section>
+</section>
