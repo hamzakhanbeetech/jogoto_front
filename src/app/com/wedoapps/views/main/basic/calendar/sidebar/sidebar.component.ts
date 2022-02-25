@@ -4,7 +4,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {MatModalComponent} from '../../../../../shared/components/mat-modal/mat-modal.component';
 import { IviteModalComponent } from 'src/app/com/wedoapps/shared/components/modal/ivite-modal/ivite-modal.component';
-import { InviteByEmailComponent } from 'jogoto_front/src/app/com/wedoapps/shared/components/modal/invite-by-email/invite-by-email.component';
 import { GetEmailModalComponent } from 'src/app/com/wedoapps/shared/components/modal/get-email-modal/get-email-modal.component';
 import { SubjectsInteractionsService } from 'src/app/com/wedoapps/services';
 

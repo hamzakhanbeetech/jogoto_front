@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit, OnDestroy} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SubjectsInteractionsService } from 'jogoto_front/src/app/com/wedoapps/services/subjects-interactions.service';
 
 
 
