@@ -4,7 +4,7 @@
 
   <section class="container">
     <div class="row">
-      <app-sidebar [saveState]="true" (resetData)="resetFilterData()" class="d-block"></app-sidebar>
+      <app-sidebar [saveState]="true" (resetData)="resetFilterData()" (exportEvents)="addEvents()" class="d-block"></app-sidebar>
       <section class="calendar__tabs position-relative">
         <button (click)="exportCalendar($event)" class="calendar__tabs__export position-absolute text-white border-0"
                 type="button">

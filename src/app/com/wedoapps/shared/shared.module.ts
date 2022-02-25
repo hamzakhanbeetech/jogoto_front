@@ -93,6 +93,8 @@ import { SearchUsersComponent } from "./components/search-users/search-users.com
 import { NotAvailableComponent } from "./components/not-available/not-available.component";
 import { ContactOrganizorComponent } from "./components/modal/contact-organizor/contact-organizor.component";
 import { AddToCalendarComponent } from "./components/modal/add-to-calendar/add-to-calendar.component";
+import { GetEmailModalComponent } from './components/modal/get-email-modal/get-email-modal.component';
+import { InfoModalComponent } from './componenets/modal/info-modal/info-modal.component';
 
 @NgModule({
   imports: [
@@ -189,6 +191,8 @@ import { AddToCalendarComponent } from "./components/modal/add-to-calendar/add-t
     NotAvailableComponent,
     ContactOrganizorComponent,
     AddToCalendarComponent,
+    GetEmailModalComponent,
+    InfoModalComponent,
   ],
   exports: [
     TranslateModule,
@@ -273,6 +277,8 @@ import { AddToCalendarComponent } from "./components/modal/add-to-calendar/add-t
     ContactOrganizorComponent,
     ProfileImageModalComponent,
     AddToCalendarComponent,
+    GetEmailModalComponent,
+    InfoModalComponent
   ],
   providers: [DatePipe, GroupService, DeleteService, FiltersService],
 })

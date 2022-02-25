@@ -95,6 +95,10 @@
   margin-top: 15px;
 }
 
+.a-tag-color{
+  color: #3B86BD;
+}
+
 @include media-breakpoint-down(lg) {
   .event__sidebar {
     @include size(100%, auto);

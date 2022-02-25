@@ -13,22 +13,25 @@ import {SidebarFilterService} from '../../../../services/sidebar-filter.service'
 import {CreateEventService} from '../create-event/create-event.service';
 import {CalendarSelectors} from '../../../../constants/calendar.constants';
 import {SubjectsInteractionsService, UtilitesService} from '../../../../services';
-import {EventInCalendar} from '../../../../models';
+import {EventInCalendar, UserModel} from '../../../../models';
 import * as moment from 'moment-timezone';
 import {CookieService} from "ngx-cookie";
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddToCalendarModalComponent } from 'src/app/com/wedoapps/shared/components/add-to-calendar-modal/add-to-calendar-modal.component';
+import { IviteModalComponent } from 'src/app/com/wedoapps/shared/components/modal/ivite-modal/ivite-modal.component';
+import { GetEmailModalComponent } from 'src/app/com/wedoapps/shared/components/modal/get-email-modal/get-email-modal.component';
+import { InfoModalComponent } from 'src/app/com/wedoapps/shared/componenets/modal/info-modal/info-modal.component';
 
 
-// This is for testing purposes. Please use your own API KEY. You can get it from https://developers.google.com/calendar/quickstart/js
-const API_KEY = 'AIzaSyDwFc-wdOkYOEzmlN-d0CFme5upSKJYAP0';
+//  Please use your own API KEY. You can get it from https://developers.google.com/calendar/quickstart/js
+const API_KEY = 'AIzaSyBXxBNCcC1KF382yB_H3fgpu3AW-GhUg3E';
 
-// This is for testing purposes. Please use your own CLIENT ID. You can get it from https://developers.google.com/calendar/quickstart/js
-const CLIENT_ID = '1097538590454-c06lp866krvugnrh3q0ht0s2hn04obr0.apps.googleusercontent.com';
+// Please use your own CLIENT ID. You can get it from https://developers.google.com/calendar/quickstart/js
+const CLIENT_ID = '705773148611-1a2t7o54dhnnt4qt6l53cpmskkgupeau.apps.googleusercontent.com';
 
-const CALENDAR_ID = 'hamzakhan.beetech@gmail.com';
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
 const SCOPES = 'https://www.googleapis.com/auth/calendar';
 const win: any = window;
-const now = new Date();
 
 let calApiLoaded: boolean;
 
@@ -70,6 +73,8 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
   public dayCalendarComponent: FullCalendarComponent;
   @ViewChild('calendarMonth', { static: true })
   public monthCalendarComponent: FullCalendarComponent;
+  private _userInformation: UserModel;
+  public calendarId: string
 
   @HostListener('document:click', ['$event.target'])
   onMouseEnter() {
@@ -87,8 +92,14 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
     }).then(() => {
         calApiLoaded = true;
         // alert("hi")
-        win.gapi.auth2.getAuthInstance().signIn();
-        this.loadEvents(new Date, new Date);
+        win.gapi.auth2.getAuthInstance().signIn().then((result) => {
+          console.log("successfully authorized ", JSON.stringify(result.Du.tv))
+          this.calendarId = result.Du.tv
+          this.loadEvents(new Date, new Date);
+          this.insertGoogleCalEvents();
+        }).catch((err) => {
+          console.log("Error authorization: ", err)
+        });;
     });
 }
 
@@ -97,16 +108,12 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
               private calendarDropdownService: CalendarDropdownService,
               private _subjects: SubjectsInteractionsService,
               private _utilitiesService: UtilitesService,
-              private _cookieService: CookieService) {
+              private _cookieService: CookieService,
+              private _dialog: MatDialog,) {
   }
 
   ngOnInit() {
-    win.gapi.load('client:auth2', this.initClient)
     this.loadGoogleSDK()
-    setTimeout( () => {
-      this.loadEvents(new Date, new Date);
-
-    }, 10000)
     SidebarFilterService.getFilterAsObservable()
       .pipe(distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)))
       .subscribe((data) => {
@@ -122,6 +129,7 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
       });
       this.removeEvent(val)
     })
+    this._fetchUserInformation();
   }
 
   ngOnDestroy() {
@@ -160,6 +168,10 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
       this.activeTab = 'dayCalendarComponent';
       this.getCalendarEvent('dayCalendarComponent')
     });
+  }
+
+  private _fetchUserInformation(): void {
+    this._userInformation = JSON.parse(localStorage.getItem("user_data"));
   }
 
   btnListener(type){
@@ -309,7 +321,7 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
     // Only load events if the Google API finished loading
     if (calApiLoaded) {
       win.gapi.client.calendar.events.list({
-        calendarId: CALENDAR_ID,
+        calendarId: this.calendarId,
         showDeleted: false,
         singleEvents: true,
         maxResults: 100,
@@ -326,27 +338,39 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
           end = new Date(event.end.date || event.end.dateTime);
 
         }
-        this.addEvent();
       }).catch(err => console.log("err: ",err));
     }
   }
+  public today = new Date().toISOString();
+  public tomorrow = new Date();
 
-  addEvent(){
+  addEvents(){
+
+    // if(!this._userInformation.email.includes('gmail')){
+    //   this.openExportModal()
+    //   return
+    // }
+    win.gapi.load('client:auth2', this.initClient)
+
+
+  }
+
+  public insertGoogleCalEvents(){
+
+    this.events.map((x, index) => {
+
     var event = {
-      'summary': 'Google I/O 2015',
-      'location': '800 Howard St., San Francisco, CA 94103',
-      'description': 'A chance to hear more about Google\'s developer products.',
+      'summary': x.title,
+      'location': 'Abbottabad, KPK, Pakistan',
+      'description': 'A chance to hear more about Pakistan\'s developer products.',
       'start': {
-        'dateTime': '2015-05-28T09:00:00-07:00',
-        'timeZone': 'America/Los_Angeles'
+        'dateTime': x.start,
+        'timeZone': 'Asia/Karachi'
       },
       'end': {
-        'dateTime': '2015-05-28T17:00:00-07:00',
-        'timeZone': 'America/Los_Angeles'
+        'dateTime': x.end,
+        'timeZone': 'Asia/Karachi'
       },
-      'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=2'
-      ],
       'attendees': [
         {'email': 'lpage@example.com'},
         {'email': 'sbrin@example.com'}
@@ -361,14 +385,30 @@ export class CalendarView implements OnInit, OnDestroy, AfterViewInit {
     };
 
     var request = win.gapi.client.calendar.events.insert({
-      'calendarId': 'primary',
+      'calendarId': this.calendarId,
       'resource': event
     });
 
     request.execute(function(event) {
       console.log('Event created: ' , event.htmlLink);
+    }, err => {
+      console.log("err event create: ", err)
     });
 
+    })
+    this.openInfoModal()
+
+  }
+
+  public openInfoModal(){
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      description: "All events has been exported to your google calendar",
+      header: "Exported Successfully ",
+      email: this.calendarId
+    }
+    let dialogRef = this._dialog.open(InfoModalComponent, dialogConfig);
 
   }
 

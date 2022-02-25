@@ -1,6 +1,6 @@
 <header class="d-flex justify-content-between align-items-center header col-12 shadow-none">
   <h3 class="mb-0 header__title" mat-dialog-title>{{texts.header}}</h3>
-  <button mat-button mat-dialog-close class="bg-transparent border-0  header__close">
+  <button type="button" (click)="closeDialog()" class="bg-transparent border-0  header__close">
     <i class="icon-close"></i>
   </button>
 </header>

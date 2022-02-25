@@ -6,7 +6,7 @@
 
     <div *ngIf="showCropperActions && cropperReady" class="btn-group position-absolute text-white crop-actions save-cancle" role="group" aria-label="">
         <button (click)="resetCropper()" type="button" class="btn text-white crop__btn">{{"user.cancel" | translate}}</button>
-        <button (click)="saveImage()" type="button" class="btn text-white crop__btn">{{"user.save_capital" | translate}}</button>
+        <!-- <button (click)="saveImage()" type="button" class="btn text-white crop__btn">{{"user.save_capital" | translate}}</button> -->
     </div>
     <div *ngIf="!showCropperActions && isSaved && !imageLoading" class="btn-group position-absolute text-white crop-actions">
         <button class="btn text-white crop__btn" *ngIf="!loading" (click)="returnInitialState()">

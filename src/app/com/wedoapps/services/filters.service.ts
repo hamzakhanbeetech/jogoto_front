@@ -19,9 +19,9 @@ export class FiltersService {
         this._selectedFilters.distance = distance;
     }
 
-    public setOnline(): void {
-        this._selectedFilters.isOnline = !this._selectedFilters.isOnline;
-        this.isOnline.next(this._selectedFilters.isOnline)
+    public setOnline(value): void {
+        this._selectedFilters.isOnline = value
+        this.isOnline.next(value)
     }
 
     public setFilters(filters: SelectedFiltersModel): void {

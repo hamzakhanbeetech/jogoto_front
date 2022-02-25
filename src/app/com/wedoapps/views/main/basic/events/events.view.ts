@@ -716,6 +716,10 @@ export class EventsView implements OnInit, OnDestroy {
         };
         const dialogRef = this._dialog.open(DeleteComponent, dialogConfig);
         dialogRef.afterClosed().subscribe((id) => {
+          if(!id){
+            this.deleteEventReady = true;
+            return
+          }
           if (this.tabName === "created") {
             this.eventsListCreated = this.eventsListCreated.filter(
               (eventM: EventModel) => {

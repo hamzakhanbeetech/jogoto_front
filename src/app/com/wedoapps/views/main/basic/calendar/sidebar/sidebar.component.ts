@@ -3,6 +3,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {MatModalComponent} from '../../../../../shared/components/mat-modal/mat-modal.component';
+import { IviteModalComponent } from 'src/app/com/wedoapps/shared/components/modal/ivite-modal/ivite-modal.component';
+import { InviteByEmailComponent } from 'jogoto_front/src/app/com/wedoapps/shared/components/modal/invite-by-email/invite-by-email.component';
+import { GetEmailModalComponent } from 'src/app/com/wedoapps/shared/components/modal/get-email-modal/get-email-modal.component';
+import { SubjectsInteractionsService } from 'src/app/com/wedoapps/services';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,9 +26,11 @@ export class SidebarComponent implements OnInit {
 
   @Output()
   public resetData: EventEmitter<void> = new EventEmitter<void>();
+  @Output()
+  public exportEvents: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private translate: TranslateService,
-              private _dialog: MatDialog) {
+              private _dialog: MatDialog,) {
   }
 
   ngOnInit() {
@@ -38,5 +44,9 @@ export class SidebarComponent implements OnInit {
 
   public resetFilterData(): void {
     this.resetData.emit();
+  }
+
+  public exportEventsToGoogleCalendar(){
+    this.exportEvents.emit()
   }
 }

@@ -247,9 +247,10 @@ export class CreateEventView implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+
+public eventDefaultStartDateTime =  new Date(Date.now());
   private _formBuilder(): void {
-    let now = new Date(Date.now());
-    now.setHours(now.getHours() + 1);
+    this.eventDefaultStartDateTime.setHours(this.eventDefaultStartDateTime.getHours() + 1);
     const nonWhitespaceRegExp: RegExp = new RegExp(
       "\\s*(?:[\\w\\S+\\.]\\s*){4,}$"
     );
@@ -278,7 +279,7 @@ export class CreateEventView implements OnInit, AfterViewInit, OnDestroy {
       visibility: [null, Validators.required],
       defaultTime: this._fb.group(
         {
-          startDate: [this.roundTime(now), Validators.required],
+          startDate: [this.roundTime(this.eventDefaultStartDateTime), Validators.required],
           endDate: [this.roundTime(this._tomorrow), Validators.required],
           timeZone: [this._defaultTimeZone, Validators.required],
         },
@@ -287,7 +288,7 @@ export class CreateEventView implements OnInit, AfterViewInit, OnDestroy {
       multiTimes: this._fb.array([]),
     });
     this.defaultTimeMaxData = new Date(
-      new Date(now).setMonth(now.getMonth() + 1)
+      new Date(this.eventDefaultStartDateTime).setMonth(this.eventDefaultStartDateTime.getMonth() + 1)
     );
     this._eventForm.get("description").valueChanges.subscribe((value) => {
       const highlightedText = this._applyHighlights(value);
@@ -327,10 +328,12 @@ export class CreateEventView implements OnInit, AfterViewInit, OnDestroy {
           },
           ...this.multiTimeFormArray.getRawValue(),
         ]);
-        if (this._getDateDiff(selectDate, latestDate) <= 30) {
-          latestDate = this.endDateMin;
-          this._eventForm.get("defaultTime.endDate").setValue(this.endDateMin);
-        }
+        latestDate = this.endDateMin;
+        this._eventForm.get("defaultTime.endDate").setValue(this.endDateMin);
+        // if (this._getDateDiff(selectDate, latestDate) <= 30) {
+        //   latestDate = this.endDateMin;
+        //   this._eventForm.get("defaultTime.endDate").setValue(this.endDateMin);
+        // }
         selectDate.setMonth(selectDate.getMonth() + 1);
         this.defaultTimeMaxData = selectDate;
         this.checkMaxDate(this.defaultTimeMaxData);
@@ -1061,10 +1064,12 @@ export class CreateEventView implements OnInit, AfterViewInit, OnDestroy {
         imageData.original.data = data.data.imageName;
         this._eventForm.get("poster").setValue({ ...imageData });
         this.imageLoading = false;
-        if (this.isClickedCreated) {
-          const sendingData = this.prepareDataForUpload();
-          this.uploadFullData(sendingData);
-        }
+        // if (this.isClickedCreated) {
+        //   const sendingData = this.prepareDataForUpload();
+        //   this.uploadFullData(sendingData);
+        // }
+        const sendingData = this.prepareDataForUpload();
+        this.uploadFullData(sendingData);
       });
     }
   }

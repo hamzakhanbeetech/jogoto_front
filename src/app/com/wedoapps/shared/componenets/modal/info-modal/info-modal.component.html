@@ -1,0 +1,20 @@
+
+<header class="d-flex justify-content-between align-items-center header col-12">
+  <h4 class="mb-0 header__title" mat-dialog-title>{{texts.header}} </h4><br>
+  <button mat-button mat-dialog-close class="ml-5 mb-5 text-danger bg-transparent border-0  header__close">
+    <i class="icon-close"></i>
+  </button>
+</header>
+
+<div mat-dialog-content class="invite-email d-flex flex-column mt-2">
+    <div class="flex-grow-1 pl-3">
+      <div class="d-flex">
+        <p class="delete__description"> {{texts.description}} CalendarID: {{texts.email}}</p>
+      </div>
+    </div>
+    <br>
+    <div class="pull-right form-group mb-0 position-sticky bg-white send-btn-block  pl-3">
+      <button type="button" class="btn btn-primary btn-xs" style="background-color: #FF6602;" (click)="closeModal()">OK</button>
+    </div>
+</div>
+

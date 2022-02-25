@@ -30,7 +30,9 @@
 <!--    {{'event.event_filters' | translate}}</button>-->
 </div>
 
+
 <footer class="text-right">
+  <button type="button" (click)="exportEventsToGoogleCalendar()" class="sidebar__reset border-0 bg-transparent" style="float: left;">{{'Export to google calendar'}}</button>
   <button type="reset" (click)="resetFilterData()" class="sidebar__reset border-0 bg-transparent">{{"calendar-page.reset" | translate}}</button>
 </footer>
 

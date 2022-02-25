@@ -105,7 +105,7 @@
                     translate}}
                 </button>
               </li>
-              <li role="menuitem" *ngIf="groupData?.imJoined && groupData?.state">
+              <li role="menuitem" *ngIf="groupData?.imJoined && groupData?.state && groupData.admin">
                 <button class="dropdown-item position-relative" (click)="createGroupEvent()">
                   {{"group.create_group_event" |
                     translate}}

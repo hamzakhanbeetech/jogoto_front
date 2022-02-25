@@ -79,4 +79,10 @@ export class DeleteComponent implements OnInit {
 
 
   }
+  public closeDialog() {
+    try {
+      this.dialogRef.close(); // make sure it only closes if the upper async fn succesfully ran!
+    } catch(e) {
+    }
+}
 }

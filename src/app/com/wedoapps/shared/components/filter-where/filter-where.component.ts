@@ -11,7 +11,6 @@ export class FilterWhereComponent implements OnInit {
     public buttonClick: boolean = false;
     public isOk:boolean = false;
     public data;
-    public isOnline = 'isOnline'
     @Output() selectedWhereValues = new EventEmitter<{ radius: number, autocomplete: string }>();
 
     @ViewChild('button', { static: true }) public button: any;
@@ -38,8 +37,9 @@ export class FilterWhereComponent implements OnInit {
         this.selectedWhereValues.emit(this.objectOfWhereValues);
     }
 
-    public setOnlineFilter(){
-      this._filtersService.setOnline();
+    public setOnlineFilter(event){
+      let checkBoxValue =  event.checkboxValue
+      this._filtersService.setOnline(checkBoxValue);
 
     }
 
