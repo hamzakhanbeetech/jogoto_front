@@ -147,7 +147,7 @@
   </section>
 
 
-  <section *ngIf="eventData.event_create_type" class="event__sidebar__container bg-white pb-0 overflow-hidden" itemprop="web address">
+  <section *ngIf="eventData.event_create_type.event_link" class="event__sidebar__container bg-white pb-0 overflow-hidden" itemprop="web address">
     <p class="event__sidebar__container__title col-12">{{'event.event_link' | translate}}</p>
     <a [href]="eventData.event_create_type.event_link"
     class=" d-block col-12 mb-3 border-0 bg-transparent a-tag-color"
